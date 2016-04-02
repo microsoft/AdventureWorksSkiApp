@@ -1,0 +1,69 @@
+@import '../../base/variables';
+
+$initial-menu-x: 100%;
+$menu-animation-speed: $animation-speed-default;
+$menu-animation-easing: cubic-bezier(.06, .83, .58, 1);
+$menu-width: 240px;
+$menu-footer-lateral-margin: 12px;
+
+.menu {
+    background-color: $calm;
+    opacity: .98;
+    transform: translate3d($initial-menu-x, 0, 0);
+    transition: all $menu-animation-speed $menu-animation-easing;
+    z-index: 1 !important;
+
+    .menu-open &,
+    .aside-open & {
+        transform: translate3d(0, 0, 0);
+    }
+
+    .bar {
+        background-image: none !important;
+        border: 0;
+    }
+
+    .bar-footer {
+        border-top: 1px solid rgba($color-background-light, .42);
+        margin-left: $menu-footer-lateral-margin;
+        overflow: hidden;
+        padding: 0;
+        width: $menu-width - ($menu-footer-lateral-margin * 2);
+
+        .title {
+            display: none;
+
+            +.buttons {
+                bottom: 0;
+                right: 0;
+                top: 0;
+            }
+        }
+
+        .buttons {
+            padding: 0;
+        }
+
+        button {
+            border: 0;
+            border-radius: 0;
+            font-size: .9em;
+            padding: 0;
+
+            &:active,
+            &.activated {
+                background-color: rgba($color-background-dark, .2);
+            }
+
+            > * {
+                font-weight: 100;
+                vertical-align: middle;
+            }
+
+            [class^='ski-icon-'],
+            [class*=' ski-icon-'] {
+                font-size: 1.7em;
+            }
+        }
+    }
+}

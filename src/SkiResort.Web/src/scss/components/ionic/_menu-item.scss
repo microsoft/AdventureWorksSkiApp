@@ -1,0 +1,25 @@
+@import '../../base/variables';
+
+.menu .item {
+    background-color: transparent;
+    border: 0;
+    color: $color-foreground-light;
+    font-size: 1.15em;
+    font-weight: 200;
+    padding: 10px 18px;
+
+    &:active {
+        background-color: rgba($color-background-dark, .2);
+    }
+
+    > * {
+        vertical-align: middle;
+    }
+
+    > .ski-avatar,
+    > [class^='ski-icon-'],
+    > [class*=' ski-icon-'] {
+        font-size: 1.7em;
+        margin-right: 12px;
+    }
+}

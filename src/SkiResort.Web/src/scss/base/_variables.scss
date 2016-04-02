@@ -1,0 +1,41 @@
+// Colors
+$color-brand: #1A90C9;
+$color-brand-darker: #15719E;
+$color-brand-dark: #105D82;
+$color-background-dark: #141414;
+$color-background-semidark: #0A0F19;
+$color-background-grey: #323232;
+$color-background-light: #FFF;
+$color-foreground-dark: #000;
+$color-foreground-semidark: #808080;
+$color-foreground-dimmed: #A4A6A6;
+$color-foreground-light: #FFF;
+$color-border-light: rgba(#FFF, .7);
+$color-error: #E13F3F;
+$color-rating: #E32D2D;
+
+// Animations
+$animation-speed-default: .35s;
+
+// Sizes
+$size-menu-item-home: 8vh;
+$size-summary-info: 7vh;
+$size-header-height: 44px;
+
+// Override Ionic variables
+$light: $color-foreground-light;
+$royal: $color-brand-darker;
+$positive: $color-brand-dark;
+$calm: $color-brand;
+$dark: $color-background-dark;
+$assertive: $color-error;
+$font-family-sans-serif: 'Roboto', sans-serif;
+$font-family-light-sans-serif: 'Roboto-Light', sans-serif-light;
+
+// Intelligence
+$intelligence-enabled: false;
+
+// Medias
+$media-screen-max-mobile-small: 390px;
+$media-screen-max-mobile: 500px;
+$media-screen-min-tablet: 720px;

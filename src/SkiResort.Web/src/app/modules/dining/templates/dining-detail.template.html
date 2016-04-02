@@ -1,0 +1,109 @@
+<ion-view title="Dining detail">
+
+    <ion-header-bar class="bar-royal"
+                    ski-nav-bar
+                    title="Dining detail"
+                    back="true"></ion-header-bar>
+
+    <ion-content>
+        <div class="ski-loading" ng-if="$ctrl.loading">
+            <span class="ski-icon-spinner spin"></span>
+        </div>
+        <div class="ski-dining_detail"
+             ng-if="!$ctrl.loading">
+             <div class="ski-dining_detail-container">
+                 <img class="ski-dining_detail-image" src="{{$ctrl.getImage($ctrl.restaurant.restaurantId)}}" />
+             </div>
+
+             <div class="ski-dining_detail-scroll">
+                
+                <div class="ski-dining_detail-info u-table">
+                    <div class="u-table-row">
+                        <div class="u-table-cell">
+                            <h2 class="ski-dining_detail-title">{{$ctrl.restaurant.name}}</h2>
+                        </div>
+                        <div class="u-table-cell u-align-right">
+                            <ski-rating class="ski-dining-rating"
+                                        value="{{$ctrl.restaurant.rating}}"
+                                        max="5"
+                                        class-on="ski-icon-star-filled"
+                                        class-off="ski-icon-star">
+                            </ski-rating>
+                        </div>
+                    </div>
+                    <div class="u-table-row u-pb-5">
+                        <div class="u-table-cell">
+                            <h3 class="ski-dining_detail-subtitle">
+                                Level of noise:
+                            </h3>
+                            <span class="ski-dining_detail-result">
+                                {{$ctrl.getLevelOfNoise($ctrl.restaurant.levelOfNoise)}}
+                            </span>
+                        </div>
+                        <div class="u-table-cell u-align-right">
+                            <ski-rating class="ski-dining_detail-priceLevel"
+                                        value="{{$ctrl.restaurant.priceLevel}}"
+                                        max="3"
+                                        class-on="ski-dining-priceLevelOn"
+                                        class-off="ski-dining-priceLevelOff">
+                            </ski-rating>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ski-dining_detail-info u-table">
+                    <div class="u-table-row">
+                        <div class="u-table-cell u-pt-5 u-pb-5">
+                            <h3 class="ski-dining_detail-subtitle">
+                                Family friendly:
+                            </h3>
+                            <span class="ski-dining_detail-result">
+                                {{$ctrl.restaurant.familyFriendly ? 'Yes' : 'No'}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="u-table-row">
+                        <div class="u-table-cell u-pb-15">
+                            <h3 class="ski-dining_detail-subtitle">
+                                Address:
+                            </h3>
+                            <span class="ski-dining_detail-result">
+                                {{$ctrl.restaurant.address}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="u-table-row">
+                        <div class="u-table-cell">
+                            <h3 class="ski-dining_detail-subtitle">
+                                Description:
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ski-dining_detail-description u-table">
+                    <div class="u-table-row">
+                        <div class="u-table-cell u-table-cell--full u-pt-5">
+                            <p class="ski-dining_detail-result">
+                                {{$ctrl.restaurant.description}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+             </div>
+         </div>
+
+         <div class="ski-dining_recommendations show-intelligence"
+              ng-show="$ctrl.recommendations.length">
+             <h2 class="ski-dining_recommendations-title">
+                 Similar restaurants recommendations
+             </h2>
+             <ul class="ski-dining_recommendations-list">
+                 <li class="ski-dining_recommendations-item"
+                     ng-repeat="recommendation in $ctrl.recommendations">
+                     {{recommendation.name}}
+                 </li>
+             </ul>
+         </div>
+     </ion-content>
+</ion-view>

@@ -1,0 +1,40 @@
+@import '../../base/variables';
+
+.bar {
+    .title {
+        font-size: 1.7em !important;
+        font-weight: 300;
+        left: 0 !important;
+        right: 0 !important;
+        text-align: center !important;
+
+        @media screen and (max-width: $media-screen-max-mobile-small) {
+            font-size: 1.2em !important;
+            text-align: right !important;
+        }
+    }
+
+    .ski-logo {
+        height: 32px;
+        margin-left: 2px;
+        margin-top: 1px;
+        vertical-align: middle;
+        width: 176px;
+    }
+
+    .ski-logo-mountain-button {
+        max-width: 52px;
+        overflow: visible;
+    }
+
+    .ski-logo-mountain {
+        height: 23px;
+        margin-bottom: 5px;
+        vertical-align: middle;
+    }
+
+    .ski-icon-back {
+        font-size: 1.5em;
+        vertical-align: middle;
+    }
+}

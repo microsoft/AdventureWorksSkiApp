@@ -1,0 +1,12 @@
+@import '../../base/variables';
+
+.ski-avatar {
+    background-color: rgba($color-background-dark, .6);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    display: inline-block;
+    height: 1em;
+    vertical-align: middle;
+    width: 1em;
+}

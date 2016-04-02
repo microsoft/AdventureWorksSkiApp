@@ -1,0 +1,80 @@
+.ski-lift-list {
+    $color-lift-lvl1: #79BD46;
+    $color-lift-lvl2: $color-brand;
+    $color-lift-lvl3: #DF3D3D;
+    $color-lift-lvl4: #323232;
+
+    .ski-cell {
+        padding: .5em 0;
+
+        &:first-child {
+            padding-right: 1em;
+            text-align: right;
+        }
+    }
+
+    .ski-lift-list-name {
+        color: $color-brand;
+        font-size: 1.1em;
+        font-weight: 500;
+
+        @if $intelligence-enabled {
+            &--stay-away {
+                color: $color-lift-lvl3;
+            }
+        }
+
+        .ski-icon-alert {
+            color: $color-lift-lvl3;
+            font-size: .8em;
+        }
+    }
+
+    .ski-lift-list-wait {
+        color: rgba($color-foreground-dark, .5);
+        font-size: .8em;
+        font-weight: 500;
+        padding-right: .5em;
+        text-align: right;
+    }
+
+    .ski-lift-list-icons {
+        font-size: .8em;
+
+        &:last-child {
+            text-align: center;
+        }
+
+        .ski-icon-lift-circle {
+            color: $color-lift-lvl1;
+        }
+
+        .ski-icon-lift-square {
+            color: $color-lift-lvl2;
+        }
+
+        .ski-icon-lift-diamond {
+            color: $color-lift-lvl4;
+            font-size: 1.1em;
+        }
+    }
+
+    .ski-lift-list-icons:last-child {
+        color: $color-foreground-semidark;
+    }
+
+    .ski-lift-list-header {
+        background-color: $color-brand;
+        color: $light;
+        font-size: 1.1em;
+        font-weight: 100;
+
+        .ski-lift-list-icons {
+            font-size: 1.7em;
+            padding-left: 0;
+            padding-right: 5px;
+            text-align: right;
+            width: 45px;
+        }
+    }
+}

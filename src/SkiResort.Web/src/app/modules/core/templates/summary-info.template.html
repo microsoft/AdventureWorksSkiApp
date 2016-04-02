@@ -1,0 +1,33 @@
+<ion-list class="ski-summary_info">
+    <ion-item class="ski-summary_info-item">
+        <i class="icon ski-summary_info-icon ski-icon-snow"></i>
+        <div class="ski-summary_info-details">
+            <span class="u-font-light">Weather Now</span>
+            <span>{{$ctrl.getWeather($ctrl.summaryInfo.weather) || '-'}}</span>
+        </div>
+    </ion-item>
+
+    <ion-item class="ski-summary_info-item">
+        <i class="icon ski-summary_info-icon ski-icon-temp"></i>
+        <div class="ski-summary_info-details">
+            <span class="u-font-light">Temperature</span>
+            <span>{{$ctrl.summaryInfo.minTemperature || '-'}}/{{$ctrl.summaryInfo.maxTemperature || '-'}}&ordm; F</span>
+        </div>
+    </ion-item>
+
+    <ion-item class="ski-summary_info-item">
+        <i class="icon ski-summary_info-icon ski-icon-wind"></i>
+        <div class="ski-summary_info-details">
+            <span class="u-font-light">Wind</span>
+            <span>{{$ctrl.summaryInfo.wind || '-'}} mph</span>
+        </div>
+    </ion-item>
+
+    <ion-item class="ski-summary_info-item">
+        <i class="icon ski-summary_info-icon ski-icon-base"></i>
+        <div class="ski-summary_info-details">
+            <span class="u-font-light">Base Depth</span>
+            <span>{{$ctrl.summaryInfo.baseDepth || '-'}} inch</span>
+        </div>
+    </ion-item>
+</ion-list>

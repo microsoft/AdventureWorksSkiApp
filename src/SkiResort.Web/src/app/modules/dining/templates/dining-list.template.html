@@ -1,0 +1,94 @@
+<ion-view title="Dining">
+
+    <ion-header-bar class="bar-royal"
+                    ski-nav-bar
+                    title="Dining"
+                    back="true"></ion-header-bar>
+
+    <ion-content>
+        <div class="ski-loading" ng-if="$ctrl.loading">
+            <span class="ski-icon-spinner spin"></span>
+        </div>
+        <div class="ski-info show-intelligence" ng-if="!$ctrl.loading">
+            <p>
+                Shawn Bice, based on your location AZURE Cafe is the nearest restaurant.
+            </p>
+        </div>
+
+        <div class="ski-info ski-dining_filters" ng-if="!$ctrl.loading">
+            <div class="ski-dining_filters-search">
+                <label class="item item-input">
+                    <input type="text"
+                           placeholder="Search..."
+                           ng-model="$ctrl.query">
+                    <i class="icon ion-ios-search"></i>
+                </label>
+            </div>
+
+            <div class="ski-dining_filters-category">
+                <div class="ski-dining_filters-select">
+                    <ski-select model="$ctrl.orderBy"
+                                placeholder="Sort by..."
+                                select-options="$ctrl.filters"></ski-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="ski-info ski-info--title" ng-if="$ctrl.restaurants.length > 0">
+            Nearby restaurants
+        </div>
+
+        <ion-list class="ski-dining_list">
+            <a class="item ski-dining_list-item"
+               ui-sref="app.dining-detail({id: restaurant.restaurantId, restaurant: restaurant})"
+               ng-repeat="restaurant in $ctrl.restaurants | filter: $ctrl.query | orderBy: $ctrl.orderBy.id ">
+
+               <div class="u-table">
+                    <div class="u-table-cell ski-dining_list-image_container">
+                        <img class="ski-dining_list-image" ng-src="{{$ctrl.getImage(restaurant.restaurantId)}}" />
+                    </div>
+                    <div class="u-table-cell">
+                        <div class="ski-dining_list-details u-table u-p-5 u-pr-15">
+                            <div class="u-table-row">
+                                <div class="u-table-cell">
+                                    <h2 class="ski-dining_list-name">{{restaurant.name}}</h2>
+                                    <div class="u-mt-5 u-mb-10">
+                                        <ski-rating class="ski-dining-rating"
+                                                    value="{{restaurant.rating}}"
+                                                    max="5"
+                                                    class-on="ski-icon-star-filled"
+                                                    class-off="ski-icon-star">
+                                        </ski-rating>
+                                        |
+                                        <ski-rating class="ski-dining-priceLevel"
+                                                    value="{{restaurant.priceLevel}}"
+                                                    max="3"
+                                                    class-on="ski-dining-priceLevelOn"
+                                                    class-off="ski-dining-priceLevelOff">
+                                        </ski-rating>
+                                    </div>
+                                </div>
+                                <div class="u-table-cell u-align-right">
+                                    <span class="ski-dining_list-distance">
+                                        <i class="icon ski-icon-marker"></i>
+                                        {{restaurant.distance}} miles away
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="u-table-row">
+                                <div class="u-table-cell">
+                                    <span>Family friendly: {{restaurant.familyFriendly ? 'Yes' : 'No'}}</span>
+                                </div>
+                                <div class="u-table-cell u-align-right">
+                                    <span>Level noise: {{$ctrl.getLevelOfNoise(restaurant.levelOfNoise)}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </ion-list>
+
+    </ion-content>
+</ion-view>

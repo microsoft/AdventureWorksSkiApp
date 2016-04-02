@@ -1,0 +1,96 @@
+@import 'variables';
+
+@mixin width-offset-generator($type, $t, $size, $suffix, $jump) {
+    $offsets: '', top, left, bottom, right;
+    $off: '', t, l, b, r;
+    $max: $size / $jump;
+
+    @for $i from 0 through $max {
+        @each $offset in $offsets {
+            $o: nth($off, index($offsets, $offset));
+            $value: if($i == 0, 0, $jump * $i);
+            $uni: if($i == 0, #{''}, px);
+            $off-value: if($o == '', #{''}, '-' + $offset);
+
+            .u-#{$t}#{$o}-#{$value} {
+                #{$type}#{$off-value}#{$suffix}: $value + $uni;
+            }
+        }
+    }
+}
+
+@mixin generate-offsets($type, $t, $size) {
+    @include width-offset-generator($type, $t, $size, #{''}, 5);
+}
+
+@mixin generate-widths($type, $t, $size) {
+    @include width-offset-generator($type, $t, $size, '-width', 1);
+}
+
+@include generate-offsets(margin, m, 50);
+@include generate-offsets(padding, p, 50);
+@include generate-widths(border, b, 10);
+
+@mixin show-intelligence() {
+    @if $intelligence-enabled == false {
+        display: none !important;
+    }
+}
+
+.show-intelligence {
+    @include show-intelligence();
+}
+
+// Text align
+.u-align-right {
+    text-align: right;
+}
+
+// Backgrounds
+.u-bg-semidark {
+    background-color: $color-background-semidark;
+}
+
+// Fonts
+.u-font-light {
+    font-weight: 200;
+}
+
+// Tables
+.u-table {
+    display: table;
+    width: 100%;
+
+    &-row {
+        display: table-row;
+        width: 100%;
+    }
+
+    &-cell {
+        display: table-cell;
+        vertical-align: top;
+
+        &--full {
+            width: 100%;
+        }
+    }
+}
+
+// Positioning
+.u-relative {
+    position: relative;
+}
+
+.u-absolute-right {
+    position: absolute;
+    right: .2em;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+// Ellipsis
+.u-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
