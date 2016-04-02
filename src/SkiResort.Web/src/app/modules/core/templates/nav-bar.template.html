@@ -1,0 +1,19 @@
+<div class="buttons">
+    <button class="button ski-logo-mountain-button"
+            ng-if="!logoBig"
+            ng-click="$ctrl.goHome()">
+        <img class="ski-logo-mountain" src="images/mountain.svg" alt="">
+    </button>
+    <img class="ski-logo" ng-if="logoBig" src="images/logo.svg" alt="">
+    <button class="button"
+            ng-if="back"
+            ng-click="$ctrl.goBack()">
+        <span class="ski-icon-back"></span>
+    </button>
+</div>
+<h1 class="title">{{ title }}</h1>
+<div class="buttons">
+    <button class="button button-icon button-clear ion-navicon"
+            ng-if="hamburguer"
+            menu-toggle="right"></button>
+</div>

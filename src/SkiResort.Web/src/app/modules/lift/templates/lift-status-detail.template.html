@@ -1,0 +1,32 @@
+<ion-view>
+    
+    <ion-header-bar class="bar-royal"
+                    ski-nav-bar
+                    title="Lift status"
+                    back="true"></ion-header-bar>
+    
+    <ion-content scroll="false">
+
+        <div class="ski-loading" ng-if="$ctrl.loading">
+            <span class="ski-icon-spinner spin"></span>
+        </div>
+        <div class="ski-info" ng-if="!$ctrl.loading">
+            <p>
+                You are <b>{{$ctrl.distance}}</b> mile{{$ctrl.distance !== 1 ? 's' : ''}} away from {{$ctrl.lift.name}}
+            </p>
+        </div>
+        <div class="ski-map" ng-if="!$ctrl.loading">
+            <ski-summary-info></ski-summary-info>
+            <div class="ski-map-marker">
+                <div class="ski-map-marker-info">
+                    {{$ctrl.lift.name}} <b>300ft</b>
+                </div>
+                <div class="ski-map-marker-title">
+                    You are here!
+                </div>
+                <div class="ski-icon-arrow-down"></div>
+                <div class="ski-icon-location-map"></div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

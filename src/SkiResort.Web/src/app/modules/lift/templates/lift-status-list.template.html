@@ -1,0 +1,66 @@
+<ion-view>
+    
+    <ion-header-bar class="bar-royal"
+                    ski-nav-bar
+                    title="Lift status"
+                    back="true"></ion-header-bar>
+    
+    <ion-content>
+        <div class="ski-loading" ng-if="$ctrl.loading">
+            <span class="ski-icon-spinner spin"></span>
+        </div>
+        <div class="ski-info show-intelligence" ng-if="!$ctrl.loading">
+            <p>
+                {{currentUser.fullName}}, based on your location and preference,
+                Sammamish Valley has the shorter wait.
+            </p>
+        </div>
+        <div class="ski-table ski-lift-list">
+            <div class="ski-row ski-lift-list-header" ng-if="$ctrl.openLifts.length > 0">
+                <div class="ski-cell ski-lift-list-icons"><span class="ski-icon-lift"></span></div> 
+                <div class="ski-cell">Open lifts</div>
+                <div class="ski-cell show-intelligence"></div>
+                <div class="ski-cell"></div>
+            </div>
+            <div class="ski-row"
+                 ng-repeat="lift in $ctrl.openLifts track by lift.liftId"
+                 ui-sref="app.lift-status-detail({liftId: lift.liftId})">
+                <div class="ski-cell ski-lift-list-icons">
+                    <span ng-if="lift.rating === 1" class="ski-icon-lift-circle"></span>
+                    <span ng-if="lift.rating === 2" class="ski-icon-lift-square"></span>
+                    <span ng-if="lift.rating === 3" class="ski-icon-lift-diamond"></span>
+                </div>
+                <div class="ski-cell ski-lift-list-name"
+                     ng-class="{'ski-lift-list-name--stay-away': lift.stayAway}">
+                    {{ lift.name }}
+                    <span ng-if="lift.stayAway" class="ski-icon-alert show-intelligence"></span>
+                </div>
+                <div class="ski-cell ski-lift-list-wait show-intelligence">5-10 minutes wait</div>
+                <div class="ski-cell ski-lift-list-icons"><span class="ski-icon-marker"></span></div>
+            </div>
+            <div class="ski-row ski-lift-list-header" ng-if="$ctrl.closedLifts.length > 0">
+                <div class="ski-cell ski-lift-list-icons"><span class="ski-icon-lift-closed"></span></div>
+                <div class="ski-cell">Closed lifts</div>
+                <div class="ski-cell show-intelligence"></div>
+                <div class="ski-cell"></div>
+            </div>
+            <div class="ski-row"
+                 ng-repeat="lift in $ctrl.closedLifts track by lift.liftId"
+                 ui-sref="app.lift-status-detail({liftId: lift.liftId})">
+                 <div class="ski-cell ski-lift-list-icons">
+                    <span ng-if="lift.rating === 1" class="ski-icon-lift-circle"></span>
+                    <span ng-if="lift.rating === 2" class="ski-icon-lift-square"></span>
+                    <span ng-if="lift.rating === 3" class="ski-icon-lift-diamond"></span>
+                </div>
+                <div class="ski-cell ski-lift-list-name"
+                     ng-class="{'ski-lift-list-name--stay-away': lift.stayAway}">
+                    {{ lift.name }}
+                    <span ng-if="lift.stayAway" class="ski-icon-alert show-intelligence"></span>                    
+                </div>
+                <div class="ski-cell ski-lift-list-wait show-intelligence">5-10 minutes wait</div>
+                <div class="ski-cell ski-lift-list-icons"><span class="ski-icon-marker"></span></div>
+            </div>
+        </div>
+        
+    </ion-content>
+</ion-view>

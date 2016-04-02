@@ -1,0 +1,12 @@
+{
+  "name": "ski-resort",
+  "dependencies": {},
+  "devDependencies": {},
+  "ambientDependencies": {
+    "angular": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#c2ae01b0b4c046a7f986183c792fbccedec0b1fc",
+    "angular-ui-router": "github:DefinitelyTyped/DefinitelyTyped/angular-ui-router/angular-ui-router.d.ts#655f8c1bf3c71b0e1ba415b36309604f79326ac8",
+    "ionic": "github:CKGrafico/ionic-typescript-definitions/ionic.d.ts#708b47b81084657eeb375fe2f4254ec8fb3d28ad",
+    "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#661fc869669af796c6048483e999dce5732eed72",
+    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash-3.10.d.ts#3d572e1ee3e6492983ef01f8b7adf6150d345b11"
+  }
+}

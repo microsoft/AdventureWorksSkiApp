@@ -1,0 +1,15 @@
+@import '../../base/variables';
+
+.ski-table {
+    display: table;
+    width: 100%;
+}
+
+.ski-row {
+    display: table-row;
+}
+
+.ski-cell {
+    display: table-cell;
+    vertical-align: middle;
+}

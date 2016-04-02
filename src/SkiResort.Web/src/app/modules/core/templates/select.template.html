@@ -1,0 +1,27 @@
+<div class="ski-select">
+    <input type="hidden" name="{{name}}" required="{{required}}" ng-model="model" />
+    <div class="ski-select-button"
+         ng-click="$ctrl.showModal()">
+        {{model ? (model.label || model) : placeholder}}
+        <i class="icon ski-icon-arrow"></i>
+    </div>
+    <div class="ski-select-modal">
+        <ul class="ski-select-list">
+            <li class="ski-select-item ski-select-item--first">
+                <div class="ski-select-button"
+                    ng-click="$ctrl.resetSelection();">
+                    {{placeholder}}
+                    <i class="icon ski-icon-arrow"></i>
+                </div>
+            </li>
+            <div class="ski-select-overflow"
+                 ng-class="{'ski-select-overflow--tabs': hasTabs}">
+                <li class="ski-select-item"
+                    ng-repeat="option in selectOptions"
+                    ng-click="$ctrl.updateSelection(option);">
+                    {{option.label || option}}
+                </li>
+            </div>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<ion-view>
+    
+    <ion-header-bar class="bar-royal"
+                    ski-nav-bar
+                    title="Login"
+                    back="true"></ion-header-bar>
+    
+    <ion-content>
+        
+        <form name="$ctrl.loginForm"
+              class="ski-form ski-form-login"
+              ng-submit="$ctrl.login()"
+              novalidate>
+            <fieldset ng-disabled="$ctrl.loading">
+                
+                <input type="text"
+                       ng-model="$ctrl.loginData.username"
+                       placeholder="Username"
+                       required>
+                <input type="password"
+                       ng-model="$ctrl.loginData.password"
+                       placeholder="Password"
+                       required>
+                
+                <button class="button button-royal"
+                        ng-disabled="$ctrl.loginForm.$invalid || $ctrl.loading">
+                    {{ $ctrl.loading ? 'Logging in...' : 'Login' }}
+                </button>
+                
+                <p ng-if="$ctrl.wrongPassword" class="assertive">
+                    The combination of username and password isn't correct
+                </p>
+                
+            </fieldset>
+        </form>
+        
+    </ion-content>
+</ion-view>

@@ -1,0 +1,141 @@
+.ski-form {
+    padding: 0 1em;
+
+    fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+
+        &[disabled='disabled'] {
+            .will-disable {
+                opacity: .6;
+            }
+        }
+    }
+
+    label {
+        font-size: 1.1em;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    .ski-select {
+        appearance: none;
+        background-color: transparent;
+        border: 0;
+        border-bottom: 1px solid rgba($color-foreground-semidark, .6);
+        border-radius: 0;
+        color: $color-foreground-semidark;
+        display: block;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+
+        &:disabled {
+            background-color: transparent;
+        }
+
+        &.ng-invalid.ng-touched {
+            border-bottom-color: $color-error;
+        }
+    }
+
+    .ski-select-item {
+        color: $color-foreground-light;
+    }
+
+    input[type='date'] {
+        line-height: 2.5em;
+        position: relative;
+
+        &::-webkit-inner-spin-button,
+        &::-webkit-calendar-picker-indicator {
+            display: none;
+        }
+    }
+
+    .button {
+        border-radius: 4px;
+        font-size: 1em;
+        font-weight: 400;
+        line-height: 2.6em;
+        min-height: 2.6em;
+
+        &-grey {
+            background-color: $color-background-grey;
+            border-color: transparent;
+            color: $color-foreground-light;
+        }
+    }
+
+    &-button-group {
+        .button {
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    &-result {
+        border: 3px dotted rgba($color-foreground-dimmed, .8);
+        border-width: 3px 0;
+        display: table;
+        margin-top: 1em;
+        padding: 1em 1em 1em 0;
+        width: 100%;
+
+        > div {
+            display: table-cell;
+            vertical-align: middle;
+
+            &.ski-form-result-total {
+                color: $color-foreground-semidark;
+                font-size: 1.1em;
+                padding: 0 .5em 0 0;
+                width: 1px;
+            }
+
+            &.ski-form-result-price {
+                color: $calm;
+                font-size: 2em;
+            }
+
+            &.ski-form-result-button {
+                width: 1px;
+            }
+        }
+
+        .button {
+            border: 0;
+            border-radius: 50%;
+            height: 4em;
+            line-height: 0;
+            margin: 0;
+            min-height: 0;
+            min-width: 0;
+            padding: 0;
+            width: 4em;
+
+            span {
+                display: inline-block;
+                font-size: 1.7em;
+            }
+        }
+    }
+}
+
+.ski-form-login {
+    padding: 1.7em;
+
+    input,
+    button {
+        display: block;
+        font-size: 1.2em !important;
+        margin-bottom: .4em !important;
+        width: 100%;
+    }
+}

@@ -1,0 +1,82 @@
+.ski-reservation-card {
+    $title-color: #808080;
+    $title-border-color: lighten($title-color, 10%);
+    $title-price-color: #1780B3;
+    $icon-color: #105D82;
+    $background-color: $color-background-light;
+    $padding: 1em;
+    $edit-button-size: 3.7em;
+    $edit-button-background-color: #E13F3F;
+    $edit-button-color: $color-background-light;
+    $loading-background-color: rgba(255, 255, 255, .8);
+
+    background-color: $background-color;
+    margin-bottom: .4em;
+    padding: $padding;
+    position: relative;
+
+    .title {
+        color: $title-color;
+
+        &-price {
+            color: $title-price-color;
+            font-size: 1.8em;
+            margin-left: .3em;
+        }
+    }
+
+    .title,
+    .row:not(:last-child) {
+        border-bottom: 3px dotted $title-border-color;
+        margin-bottom: .9em;
+        padding-bottom: .8em;
+    }
+
+    .row {
+        padding: 0;
+    }
+
+    [class^='col'],
+    [class*=' col'] {
+        color: $color-background-grey;
+        font-size: .9em;
+        font-weight: 400;
+
+        h4 {
+            font-size: 1.2em;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        [class^='ski-icon-'],
+        [class*=' ski-icon-'] {
+            color: $icon-color;
+            float: left;
+            font-size: 2.1em;
+            margin-right: .2em;
+            margin-top: .2em;
+        }
+    }
+
+    &-loading {
+        background-color: $loading-background-color;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        .ski-icon-spinner {
+            color: $positive;
+            font-size: 3em;
+            left: calc(50% - .5em);
+            position: absolute;
+            top: calc(50% - .5em);
+            transform: translate(-50%, -50%);
+        }
+    }
+}

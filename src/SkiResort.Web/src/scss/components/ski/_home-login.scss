@@ -1,0 +1,81 @@
+@import '../../base/variables';
+
+.ski-home_login {
+    $button-size: 47px;
+    $button-font-size: 1.2em;
+    $button-size-paddings: $button-size + 9px;
+    $home-padding: 14%;
+    $home-padding-bottom: 4vh;
+    $vh-sizes: 100vh - $size-summary-info - ($size-menu-item-home * 5) - $home-padding-bottom;
+    $px-elements-sizes: $button-size-paddings + $size-header-height;
+    $home-login-height: calc(#{$vh-sizes} - #{$px-elements-sizes});
+    $home-avatar-border-color: #FFF;
+    $home-avatar-text-color: #FFF;
+
+    background-image: url('../images/snowboard_login.jpg');
+    background-position: center;
+    background-size: cover;
+    height: calc(#{$vh-sizes + $home-padding-bottom + $size-summary-info} - #{$px-elements-sizes - 36px} + #{$button-font-size * 2});
+    padding: $home-login-height 0 0;
+    position: relative;
+
+    &::before {
+        background: linear-gradient(to bottom, rgba($color-background-dark, 0) 0, rgba($color-background-dark, 0) 55%, rgba($color-background-dark , .9) 100%);
+        content: '';
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    &--logged-in {
+        &::before {
+            background: linear-gradient(to bottom, rgba($color-background-dark, .3) 0, rgba($color-background-dark, .3) 55%, rgba($color-background-dark , .9) 100%);
+        }
+    }
+
+    &-button {
+        padding: 0 $home-padding $home-padding-bottom;
+
+        .button {
+            background-color: rgba($color-background-dark, .7);
+            border: 1px solid $color-border-light;
+            border-radius: $button-size / 2;
+            font-size: $button-font-size;
+            line-height: $button-font-size;
+            min-height: $button-font-size * 2;
+        }
+    }
+
+    &-avatar {
+        position: absolute;
+        text-align: center;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+
+        &-image {
+            border: 5px solid $home-avatar-border-color;
+            font-size: 31vh;
+        }
+
+        &-label {
+            color: $home-avatar-text-color;
+            font-size: 1.2em;
+            font-weight: 300;
+            margin: 1em 0;
+
+            b {
+                font-weight: 400;
+            }
+        }
+    }
+
+    .ski-summary_info {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        width: 100%;
+    }
+}

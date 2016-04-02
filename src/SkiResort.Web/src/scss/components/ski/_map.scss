@@ -1,0 +1,54 @@
+.ski-map {
+    $summary-info-darker-bg-color: rgba(20, 20, 20, .8);
+    $marker-bg-color: rgba(0, 0, 0, .8);
+    $marker-border-color: #60CD7E;
+    $marker-text-color: #FFF;
+    $marker-arrow-color: #1E1E1E;
+
+    background-image: url('../images/map.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    position: relative;
+
+    &-marker {
+        background-color: $marker-bg-color;
+        border-bottom: 6px solid $marker-border-color;
+        color: $marker-text-color;
+        left: 45%;
+        padding: .5em 2em;
+        position: absolute;
+        text-align: center;
+        top: 45%;
+        transform: translate(-50%, -50%);
+
+        &-info {
+            font-size: .8em;
+            font-weight: 200;
+            white-space: nowrap;
+        }
+
+        &-title {
+            font-size: 1.1em;
+            white-space: nowrap;
+        }
+
+        .ski-icon-arrow-down,
+        .ski-icon-location-map {
+            bottom: 0;
+            color: $marker-arrow-color;
+            font-size: 1.5em;
+            left: 50%;
+            position: absolute;
+            transform: translate(-50%, 80%);
+        }
+
+        .ski-icon-location-map {
+            bottom: -17px;
+        }
+    }
+
+    .ski-summary_info .list {
+        background-color: $summary-info-darker-bg-color;
+    }
+}

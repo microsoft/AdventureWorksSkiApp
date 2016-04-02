@@ -1,0 +1,11 @@
+project.lock.json
+node_modules/
+typings/
+src/app/**/*.js
+wwwroot/css/
+wwwroot/fonts/
+wwwroot/images/
+wwwroot/js/
+wwwroot/index.html
+wwwroot/cordova.js
+wwwroot/platformOverrides.js

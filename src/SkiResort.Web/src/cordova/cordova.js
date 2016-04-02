@@ -1,0 +1,1 @@
+﻿// Cordova source, if you're in a cordova app.

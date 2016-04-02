@@ -1,0 +1,225 @@
+@import '../../base/variables';
+
+.ski-dining {
+    &-rating {
+        color: $color-rating;
+
+        .icon {
+            font-size: .8em;
+            margin: 0 1px;
+        }
+    }
+
+    &-priceLevelOn::before {
+        color: $color-brand;
+        content: '$';
+    }
+
+    &-priceLevelOff::before {
+        color: $color-foreground-dimmed;
+        content: '$';
+    }
+}
+
+.ski-dining_filters {
+    $text-color: rgba($color-foreground-light, .5);
+    display: table;
+    padding: 20px 16px 50px;
+    width: 100%;
+
+    &-search,
+    &-category {
+        display: table-cell;
+        padding: 0 4%;
+        vertical-align: middle;
+        width: 40%;
+
+        label,
+        .ski-select-item--first .ski-select-button {
+            background: transparent;
+            border-bottom: 1px solid $text-color;
+            border-width: 0;
+            color: $text-color;
+            height: 30px;
+            padding-left: 0;
+        }
+
+        input,
+        .ski-dining_filters-select {
+            background: transparent;
+            border-width: 0;
+            color: $text-color;
+        }
+
+        .ski-dining_filters-select .ski-select {
+            border-bottom: 1px solid;
+            font-size: 14px; // like label
+            font-weight: normal; // like label
+            padding: 4px 0;
+        }
+    }
+
+    &-search {
+        // Placeholder hack Standard (https://drafts.csswg.org/selectors-4/#placeholder)
+        input:input-placeholder { color: $text-color; }
+        input::placeholder { color: $text-color; opacity: 1; }
+        input:placeholder-shown { color: $text-color; }
+
+        input,
+        .icon {
+            color: $color-foreground-light;
+            display: inline-block;
+        }
+
+        label {
+            border-bottom: 1px solid $text-color;
+        }
+    }
+
+    &-category {
+        .ski-select-button {
+            max-width: 100%;
+            padding-left: 0;
+            width: 100%;
+        }
+
+        option {
+            color: $color-foreground-dark;
+            text-align: left;
+        }
+
+        .icon::after {
+            border: 0;
+        }
+
+        .icon::before {
+            color: $color-foreground-light;
+            text-align: right;
+            width: 100%;
+        }
+    }
+}
+
+.ski-dining_list {
+    $height: 100px;
+
+    &-item {
+        height: $height;
+        padding: 0;
+    }
+
+    &-image_container {
+        height: $height;
+        overflow: hidden;
+        width: $height * 1.6;
+    }
+
+    &-image {
+        max-height: $height;
+
+        @media screen and (max-width: $media-screen-max-mobile) {
+            position: absolute;
+            z-index: -1;
+        }
+    }
+
+    &-details {
+
+        @media screen and (max-width: $media-screen-max-mobile) {
+            background: $color-background-light;
+            font-size: .75em;
+            height: $height;
+            width: $height * 2.5;
+        }
+
+        @media screen and (min-width: $media-screen-min-tablet) {
+            padding-right: 5%;
+        }
+    }
+
+    &-name {
+        color: $color-brand;
+    }
+
+    &-distance {
+        .icon {
+            color: $color-brand;
+            font-size: .8em;
+        }
+    }
+}
+
+.ski-dining_detail {
+    &-container {
+        max-height: 25vh;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    &-image {
+        width: 100%;
+    }
+
+    &-scroll {
+        max-height: 60vh;
+        overflow-y: auto;
+        padding-bottom: 10vh;
+
+        @media screen and (max-width: $media-screen-max-mobile-small) {
+            max-height: 50vh;
+        }
+    }
+
+    &-info {
+        padding: 3vh 5vw 0;
+
+        &:not(:first-child) {
+            padding-top: 0;
+        }
+    }
+
+    &-description {
+        padding: 0 5vw;
+    }
+
+    &-result {
+        margin: 0 0 10px;
+        padding: 0 5vw;
+    }
+
+    &-title {
+        color: $color-brand;
+        font-size: 1.3em;
+        font-weight: normal;
+    }
+
+    &-subtitle {
+        font-size: 1.2em;
+        font-weight: normal;
+        margin: 0;
+    }
+
+    &-priceLevel {
+        display: block;
+        min-width: 100px;
+
+        span {
+            margin: 0 2px;
+        }
+    }
+}
+
+.ski-dining_recommendations {
+    background-color: $color-brand;
+    bottom: 0;
+    color: $color-foreground-light;
+    padding: 20px;
+    position: absolute;
+    width: 100%;
+
+    &-title {
+        color: $color-foreground-light;
+        font-size: 1.2em;
+        font-weight: normal;
+    }
+}

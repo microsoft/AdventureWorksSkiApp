@@ -1,0 +1,51 @@
+<ion-content class="u-bg-semidark ski-reservation-list-content">
+    <div class="ski-loading" ng-if="tabCtrl.loading">
+        <span class="ski-icon-spinner spin"></span>
+    </div>
+    <div class="ski-info" ng-if="!tabCtrl.loading && tabCtrl.showMessage">
+        <p>Thank you for making a rental reservation, please see below for your rental details.</p>
+    </div>
+    
+    <div class="ski-reservation-card"
+         ng-repeat="rental in tabCtrl.rentals | orderBy: '-rentalId' | limitTo: 2"
+         ng-click="tabCtrl.navigateToRental(rental)">
+        <div class="ski-reservation-card-loading" ng-if="tabCtrl.navigatingRental === rental">
+            <div class="ski-icon-spinner spin"></div>
+        </div>
+        <div class="title">
+            Rental {{rental.rentalId}} <span class="title-price">${{rental.totalCost}} USD</span>
+        </div>
+        <div class="row">
+            <div class="col-33">
+                <h4>Dates</h4>
+                <p class="u-pr-5">{{rental.startDate | date: 'M/d/yy' }} - {{rental.endDate | date: 'M/d/yy' }}</p>
+            </div>
+            <div class="col-33">
+                <h4>Pick up at</h4>
+                <p>{{rental.startDate | date: 'hh:mm a' }}</p>
+            </div>
+            <div class="col-33">
+                <h4>Type / Level</h4>
+                <p>{{ rental.activity | skiRentalActivity }} {{ rental.category | skiRentalCategory }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-33">
+                <span class="ski-icon-shoe"></span>
+                <h4>Shoe size</h4>
+                <p>{{rental.shoeSize}}</p>
+            </div>
+            <div class="col-33">
+                <span class="ski-icon-skies"></span>
+                <h4>Ski size</h4>
+                <p>{{rental.skiSize}} in</p>
+            </div>
+            <div class="col-33">
+                <span class="ski-icon-poles"></span>
+                <h4>Poles</h4>
+                <p>{{rental.poleSize}} in</p>
+            </div>
+        </div>
+    </div>
+    
+</ion-content>
