@@ -1,0 +1,70 @@
+@import '../../base/variables';
+
+.ski-select {
+    $button-height: 30px;
+    $item-padding-top: 10vh;
+
+    &-modal {
+        background-color: rgba($color-brand, .95);
+        color: $color-foreground-light;
+        height: 0;
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        transition: all .5s;
+        width: 100%;
+        z-index: 10;
+
+        &--opened {
+            height: 100%;
+            transition: all .5s;
+        }
+
+        &-button {
+            height: 30px;
+        }
+    }
+
+    &-item {
+        border-bottom: 1px solid rgba($color-foreground-light, .2);
+        cursor: pointer;
+        font-size: 1.1em;
+        padding: 17px 7vw 13px;
+
+        &:hover {
+            background-color: $color-brand;
+        }
+
+        &--first {
+            background-color: $color-brand;
+            border: 0;
+            padding: $item-padding-top 5% 0;
+
+            .ski-select-button {
+                border-bottom: 1px solid rgba($color-foreground-light, .2) !important;
+            }
+        }
+    }
+
+    &-button {
+        cursor: pointer;
+    }
+
+    &-overflow {
+        $vh-sizes: 100vh - $item-padding-top;
+        $px-elements-sizes: $size-header-height + $button-height;
+        height: calc(#{$vh-sizes} - #{$px-elements-sizes});
+        overflow-y: auto;
+
+        &--tabs {
+            $px-elements-sizes: $size-header-height * 2 + $button-height;
+            height: calc(#{$vh-sizes} - #{$px-elements-sizes});
+        }
+    }
+
+    .ski-icon-arrow {
+        float: right;
+        font-size: 1.5em;
+    }
+}

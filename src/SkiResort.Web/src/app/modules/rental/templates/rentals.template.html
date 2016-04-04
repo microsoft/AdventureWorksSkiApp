@@ -1,0 +1,30 @@
+<ion-view>
+    
+    <ion-header-bar class="bar-royal"
+                    ski-nav-bar
+                    title="Rental reservations"
+                    back="true"></ion-header-bar>
+                    
+    <ion-tabs class="tabs-striped tabs-top tabs-calm" delegate-handle="section-tabs">
+
+        <ion-tab title="See my reservations">
+            <ion-view>
+                <div ng-include="'rental/templates/reservation-list.template.html'" ng-controller="ReservationListController as tabCtrl"></div>
+            </ion-view>
+        </ion-tab>
+        
+        <!--<ion-tab title="See prices">
+            <ion-view>
+                <ion-content>See prices</ion-content>
+            </ion-view>
+        </ion-tab>-->
+        
+        <ion-tab title="Add a new reservation">
+            <ion-view>
+                <div ng-include="'rental/templates/new-reservation.template.html'" ng-controller="NewReservationController as tabCtrl"></div>
+            </ion-view>
+        </ion-tab>
+        
+    </ion-tabs>
+
+</ion-view>

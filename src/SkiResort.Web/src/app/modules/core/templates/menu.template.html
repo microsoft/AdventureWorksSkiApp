@@ -1,0 +1,73 @@
+<ion-side-menus enable-menu-with-back-views="false">
+
+    <ion-side-menu-content drag-content="currentUser">
+        
+        <!-- Menu Content -->
+        <ion-nav-view name="content"></ion-nav-view>
+        <ion-nav-view name="patata"></ion-nav-view>
+        
+    </ion-side-menu-content>
+
+    <ion-side-menu side="right" width="240">
+        
+        <!-- Header -->
+        <ion-header-bar align-title="left" class="bar-calm">
+            <div class="buttons">
+                <button class="button button-icon button-clear ion-navicon" menu-toggle="right"></button>
+            </div>
+        </ion-header-bar>
+        
+        <!-- Content -->
+        <ion-content scroll="false">
+            <ion-list class="ion-item-menu-list">
+                <ion-item ng-if="currentUser">
+                    <div ski-avatar="data:image/jpg;base64,{{currentUser.photo}}"></div>
+                    <span>My account</span>
+                </ion-item>
+                <ion-item ng-click="$ctrl.navigateTo('app.lift-status-list')">
+                    <span class="ski-icon-lift"></span>
+                    <span>Lift status</span>
+                </ion-item>
+                <ion-item ng-click="$ctrl.navigateTo('app.rentals')">
+                    <span class="ski-icon-rental"></span>
+                    <span>Rental Reservation</span>
+                </ion-item>
+                <ion-item ng-click="$ctrl.navigateTo('app.dining-list')">
+                    <span class="ski-icon-dining"></span>
+                    <span>Dining</span>
+                </ion-item>
+                <ion-item>
+                    <span class="ski-icon-webcam"></span>
+                    <span>Live Webcams</span>
+                </ion-item>
+                <ion-item>
+                    <span class="ski-icon-ticket"></span>
+                    <span>Lift tickets</span>
+                </ion-item>
+                <ion-item>
+                    <span class="ski-icon-gps"></span>
+                    <span>GPS trail map</span>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+        
+        <!-- Footer -->
+        <ion-footer-bar align-title="left" class="bar-calm">
+            <div class="buttons">
+                <button class="button">
+                    <span class="ski-icon-settings"></span>
+                    <span>Settings</span>
+                </button>
+            </div>
+            <h1 class="title"></h1>
+            <div class="buttons" ng-click="$ctrl.logout()">
+                <button class="button">
+                    <span>Logout</span>
+                    <span class="ski-icon-logout"></span>
+                </button>
+            </div>
+        </ion-footer-bar>
+        
+    </ion-side-menu>
+    
+</ion-side-menus>

@@ -1,0 +1,12 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "out": "../../wwwroot/js/app.js",
+        "sourceMap": true,
+        "target": "es5"
+    },
+    "exclude": [
+        "../../node_modules",
+        "../../typings"
+    ]
+}

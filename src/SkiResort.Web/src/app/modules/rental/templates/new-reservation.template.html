@@ -1,0 +1,166 @@
+<ion-content>
+    <div class="ski-info ski-info-alert" ng-if="tabCtrl.highDemandAlert">
+        <div>
+            <span class="ski-info-icon ski-icon-alert"></span>
+        </div>
+        <div>
+            <p>
+                Ski rental in high-demand on the dates you selected, please show
+                up early to secure your rental.
+            </p>
+        </div>
+    </div>
+    
+    <form class="ski-form" name="tabCtrl.rentalForm" novalidate>
+        <fieldset ng-disabled="tabCtrl.loading">
+            
+            <div class="row will-disable u-mb-10">
+                <div class="col col-40 u-ellipsis">
+                    <label for="startDate">Select start date</label>
+                    <div class="u-relative">
+                        <input type="date"
+                               id="startDate"
+                               name="startDate"
+                               ng-min="todayDate"
+                               ng-model="startDate.day"
+                               ng-model-options="{timezone: 'UTC'}"
+                               required>
+                        <span class="ski-icon-calendar u-absolute-right"></span>
+                    </div>
+                    
+                </div>
+                <div class="col col-40 col-offset-20 u-ellipsis">
+                    <label for="endDate">Select end date</label>
+                    <div class="u-relative">
+                        <input type="date"
+                            id="endDate"
+                            name="endDate"
+                            ng-min="startDate.day"
+                            ng-model="tabCtrl.rental.endDate"
+                            ng-model-options="{timezone: 'UTC'}"
+                            required>
+                        <span class="ski-icon-calendar u-absolute-right"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row will-disable u-mb-10">
+                <div class="col col-40 u-ellipsis">
+                    <label for="startDate">Pick Up Time</label>
+                    <ski-select id="startDate"
+                                name="startDate"
+                                has-tabs="true"
+                                model="startDate.hour"
+                                placeholder="Select hour..."
+                                select-options="tabCtrl.pickupHours.all"
+                                disabled="tabCtrl.loading"
+                                required="true"></ski-select>
+                </div>
+                <div class="col col-40 col-offset-20 u-ellipsis">
+                    <label for="activity">Ski or Snowboard?</label>
+                    <ski-select id="activity"
+                                name="activity"
+                                has-tabs="true"
+                                model="rentalTemp.activity"
+                                select-options="tabCtrl.rentalActivities.all"
+                                disabled="tabCtrl.loading"
+                                placeholder="Select one..."
+                                required="true"></ski-select>
+                </div>
+            </div>
+            
+            <div class="row will-disable u-mb-10">
+                <div class="col">
+                    <label for="category">Which category it's right for you?</label>
+                    <ski-select id="category"
+                                name="category"
+                                has-tabs="true"
+                                model="rentalTemp.category"
+                                select-options="tabCtrl.rentalCategories.all"
+                                disabled="tabCtrl.loading"
+                                placeholder="Select one..."
+                                required></ski-select>
+                </div>
+            </div>
+            
+            <div class="row will-disable u-mb-10">
+                <div class="col">
+                    <label>Are you for Demo, Performance or Sport?</label>
+                </div>
+            </div>
+            
+            <div class="row will-disable u-mb-10">
+                <input type="hidden" name="goal" ng-model="tabCtrl.rental.goal" required />
+                <div class="col ski-form-button-group" ng-repeat="item in tabCtrl.rentalGoals" ng-if="item.id !== 0">
+                    <button type="button"
+                            class="button button-full"
+                            ng-class="item.id === tabCtrl.rental.goal ? 'button-calm' : 'button-grey'"
+                            ng-click="tabCtrl.rental.goal = item.id"
+                            ng-disabled="tabCtrl.loading">
+                        {{item.label}}
+                    </button>
+                </div>
+            </div>
+            
+            <div class="row will-disable u-mb-10">
+                <div class="col col-33">
+                    <label for="shoeSize">Shoe size</label>
+                    <ski-select id="shoeSize"
+                                name="shoeSize"
+                                has-tabs="true"
+                                model="tabCtrl.rental.shoeSize"
+                                select-options="tabCtrl.shoeSizes"
+                                disabled="tabCtrl.loading"
+                                placeholder="Choose..."
+                                required></ski-select>
+                </div>
+                <div class="col col-33">
+                    <label for="skiSize">Ski size</label>
+                    <ski-select id="skiSize"
+                                name="skiSize"
+                                has-tabs="true"
+                                model="rentalTemp.skiSize"
+                                select-options="tabCtrl.skiSizes.all"
+                                disabled="tabCtrl.loading"
+                                placeholder="Choose..."
+                                required></ski-select>
+                </div>
+                <div class="col col-33">
+                    <label for="poleSize">Pole size</label>
+                    <ski-select id="poleSize"
+                                name="poleSize"
+                                has-tabs="true"
+                                model="rentalTemp.poleSize"
+                                select-options="tabCtrl.poleSizes.all"
+                                disabled="tabCtrl.loading"
+                                placeholder="Choose..."
+                                required></ski-select>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col">
+                    <div class="ski-form-result">
+                        <div class="ski-form-result-total">Total</div>
+                        <div class="ski-form-result-price">
+                            ${{tabCtrl.getCalculatedCost()}} USD
+                        </div>
+                        <div class="ski-form-result-button">
+                            <button type="button"
+                                    class="button button-calm"
+                                    ng-disabled="tabCtrl.rentalForm.$invalid"
+                                    ng-click="tabCtrl.submitReservation()">
+                                <span ng-class="{
+                                    'ski-icon-check': !tabCtrl.loading,
+                                    'ski-icon-spinner': tabCtrl.loading,
+                                    'spin': tabCtrl.loading,
+                                }"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </fieldset>
+    </form>
+</ion-content>

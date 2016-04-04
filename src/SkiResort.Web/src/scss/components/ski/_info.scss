@@ -1,0 +1,35 @@
+@import '../../base/variables';
+
+.ski-info {
+    background-color: $positive;
+    color: $light;
+    display: table;
+    font-size: 1.15em;
+    font-weight: 300;
+    padding: 20px 16px;
+    width: 100%;
+
+    > div {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    p:last-child {
+        margin: 0;
+    }
+
+    &-icon {
+        font-size: 2em;
+        margin-right: 14px;
+    }
+
+    &-alert {
+        background-color: $assertive;
+    }
+
+    &--title {
+        background-color: $color-brand;
+        font-size: 1.3em;
+        text-align: center;
+    }
+}

@@ -1,0 +1,51 @@
+@import '../../base/variables';
+
+.ski-home_menu {
+    .list {
+        padding-top: 0;
+    }
+
+    &-item {
+        border: 0;
+        height: $size-menu-item-home;
+        padding: 0;
+        text-align: left;
+
+        @for $i from 0 through 4 {
+            &--bg#{$i} {
+                background-color: darken($color-brand, ($i * 5));
+
+                &:hover,
+                &:active,
+                &.activated {
+                    background-color: darken($color-brand, ($i * 5 + 3));
+                }
+            }
+        }
+    }
+
+    &-image_container {
+        display: inline-block;
+        height: $size-menu-item-home;
+        overflow: hidden;
+        position: relative;
+        vertical-align: middle;
+        width: 36vw;
+    }
+
+    &-image {
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    &-text {
+        color: $color-foreground-light;
+        display: inline-block;
+        font-size: 2.5vh !important;
+        font-weight: 300 !important;
+        margin: 0 5vw !important;
+        vertical-align: middle;
+    }
+}

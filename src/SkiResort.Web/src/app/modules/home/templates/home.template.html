@@ -1,0 +1,29 @@
+<ion-view>
+    
+    <ion-header-bar class="bar-dark"
+                    ski-nav-bar
+                    logo-big="true"
+                    hamburguer="currentUser"></ion-header-bar>
+    
+    <ion-content class="u-bg-semidark">
+
+        <div class="ski-home_login"
+             ng-class="{'ski-home_login--logged-in': currentUser}">
+            <div class="ski-home_login-button" ng-if="!currentUser">
+                <button class="button button-full button-dark"
+                        ui-sref="app.login">
+                    Login
+                </button>
+            </div>
+            
+            <div class="ski-home_login-avatar" ng-if="currentUser">
+                <div class="ski-home_login-avatar-image" ski-avatar="{{$ctrl.getImage(currentUser.id)}}"></div>
+                <div class="ski-home_login-avatar-label">Welcome, <b>{{currentUser.fullName}}!</b></div>
+            </div>
+
+            <ski-summary-info></ski-summary-info>
+        </div>
+
+        <ski-home-menu></ski-home-menu>
+    </ion-content>
+</ion-view>
