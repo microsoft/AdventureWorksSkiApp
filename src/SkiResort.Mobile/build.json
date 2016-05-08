@@ -1,11 +1,11 @@
 {
      "android": {
          "release": {
-             "keystore": ".\\skiresort-release-key.keystore",
-             "storePassword": "skiresort",
-             "alias": "skiresort",
-             "password" : "skiresort",
-             "keystoreType": "jks"
+             "keystore": "",
+             "storePassword": "",
+             "alias": "",
+             "password" : "",
+             "keystoreType": ""
          }
      }
  }
