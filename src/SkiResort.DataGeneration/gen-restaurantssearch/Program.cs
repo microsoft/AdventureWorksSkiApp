@@ -33,7 +33,7 @@ namespace gen_restaurantssearch
                     var r = recos.GetRecommendation(modelId, new List<string> { id.ToString() }, 3);
                     recommendedIds.AddRange(r.Select(i => i.Id));
                 }
-                actions.Add(IndexAction.Merge(new Document { { "RestaurantId", id.ToString() }, { "RecommendedIds", recommendedIds } }));
+                actions.Add(IndexAction.MergeOrUpload(new Document { { "RestaurantId", id.ToString() }, { "RecommendedIds", recommendedIds } }));
             }
 
             // Assume < 1000 actions, otherwise we'd need to split it in 1000-actions batches
@@ -48,7 +48,7 @@ namespace gen_restaurantssearch
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT RestaurantId FROM Restaurant", con);
+                SqlCommand cmd = new SqlCommand("SELECT TOP 20 RestaurantId FROM Restaurant", con);
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
