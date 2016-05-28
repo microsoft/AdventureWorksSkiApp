@@ -1,4 +1,5 @@
 ﻿using AdventureWorks.SkiResort.Infrastructure.Context;
+using AdventureWorks.SkiResort.Infrastructure.Helpers;
 using AdventureWorks.SkiResort.Infrastructure.Infraestructure;
 using AdventureWorks.SkiResort.Infrastructure.Model;
 using AdventureWorks.SkiResort.Web.AppBuilderExtensions;
@@ -62,8 +63,6 @@ namespace AdventureWorks.SkiResort.Web
                 .AddEntityFrameworkStores<SkiResortContext>()
                 .AddDefaultTokenProviders();
 
-            //services.AddApplicationInsightsTelemetry(Configuration);
-
             // Add framework services.
             services.AddMvc().AddJsonOptions(options =>
             {
@@ -72,7 +71,7 @@ namespace AdventureWorks.SkiResort.Web
             });
 
             // Initialize anomaly detection statics
-            //AnomalyDetector.Initialize(Configuration);
+            AnomalyDetector.Initialize(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,9 +82,6 @@ namespace AdventureWorks.SkiResort.Web
             IOptions<SecurityConfig> securityConfig,
             SkiResortDataInitializer dataInitializer, AzureSearchDataInitializer azureSearchDataInitializer)
         {
-            // Add Application Insights monitoring to the request pipeline as a very first middleware.
-            //app.UseApplicationInsightsRequestTelemetry();
-
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -98,9 +94,6 @@ namespace AdventureWorks.SkiResort.Web
             );
 
             app.UseIISPlatformHandler();
-
-            // Add Application Insights exceptions handling to the request pipeline.
-            //app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
 
