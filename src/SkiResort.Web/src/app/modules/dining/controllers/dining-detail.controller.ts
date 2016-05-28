@@ -31,7 +31,7 @@ module SkiResort.App.Dining.Controllers {
         }
 
         private getExtraInformation(): void {
-            this.diningService.getRecommendations(this.restaurant.name)
+            this.diningService.getRecommendations(this.restaurant.restaurantId.toString())
                 .then((restaurants: Array<Restaurant>) => {
                     this.recommendations = restaurants;
                     this.loading = false;

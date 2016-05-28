@@ -44,6 +44,11 @@ module.exports = function (gulp) {
         gulp.src(paths.src.cordovaLibs)
             .pipe(gulp.dest(paths.dest.index));
     });
+
+    gulp.task('copy:azureSearchData', function () {
+        gulp.src(paths.src.azureSearch)
+            .pipe(gulp.dest(paths.dest.azureSearch));
+    });
     
-    gulp.task('copy', ['copy:index', 'copy:images', 'copy:templates', 'copy:fonts', 'copy:icomoon', 'copy:libs', 'copy:cordovaLibs']);
+    gulp.task('copy', ['copy:index', 'copy:images', 'copy:templates', 'copy:fonts', 'copy:icomoon', 'copy:libs', 'copy:cordovaLibs', 'copy:azureSearchData']);
 };

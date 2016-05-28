@@ -1,0 +1,36 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "webUsername": {
+      "value": "skiresort"
+    },
+    "webUserFullName": {
+      "value": "Andrew Davis"
+    },
+    "webPassword": {
+      "value": "P2ssw0rd@1"
+    },
+    "adminUsername": {
+      "value": "skiresort"
+    },
+    "adminPassword": {
+      "value": "P2ssw0rd@1"
+    },
+    "sqlserverAdminLogin": {
+      "value": "skiresort"
+    },
+    "sqlserverAdminLoginPassword": {
+      "value": "P2ssw0rd@1"
+    },
+    "dataMarketKey": {
+      "value": ""
+    },
+    "dataMarketUser": {
+      "value": ""
+    },
+    "skuCapacityAzureSearch": {
+      "value": "free"
+    }
+  }
+}

@@ -1,0 +1,791 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "webUsername": {
+      "type": "string",
+      "minLength": 1
+    },
+    "webUserFullName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "webPassword": {
+      "type": "string",
+      "minLength": 1
+    },
+    "adminUsername": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "Username for the Virtual Machine."
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
+    },
+    "sqlserverAdminLogin": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "User for the SQL Database Server"
+      }
+    },
+    "sqlserverAdminLoginPassword": {
+      "type": "securestring",
+      "minLength": 1,
+      "metadata": {
+        "description": "Password for the SQL Database Server"
+      }
+    },
+    "replicaCount": {
+      "type": "int",
+      "defaultValue": 1
+    },
+    "skuNameWeb": {
+      "type": "string",
+      "defaultValue": "F1",
+      "allowedValues": [
+        "F1",
+        "D1",
+        "B1",
+        "B2",
+        "B3",
+        "S1",
+        "S2",
+        "S3",
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "metadata": {
+        "description": "Describes plan's pricing tier and instance size. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
+      }
+    },
+    "skuCapacity": {
+      "type": "int",
+      "defaultValue": 1,
+      "minValue": 1,
+      "metadata": {
+        "description": "Describes plan's instance count"
+      }
+    },
+    "skuCapacityAzureSearch": {
+      "type": "string",
+      "allowedValues": [
+        "free",
+        "standard"
+      ],
+      "defaultValue": "free"
+    },
+    "skuCapacityStreamAnalytics": {
+      "type": "string",
+      "allowedValues": [
+        "standard"
+      ],
+      "defaultValue": "standard"
+    },
+    "partitionCount": {
+      "type": "int",
+      "defaultValue": 1
+    },
+    "dataMarketKey": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dataMarketUser": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "variables": {
+    "storageAccount_type": "Standard_LRS",
+    "storageAccount_name": "[concat('storage', uniqueString(resourceGroup().id))]",
+
+    "virtualMachine_imagePublisher": "MicrosoftSQLServer",
+    "virtualMachine_imageOffer": "SQL2016RC3-WS2012R2v2",
+    "virtualMachine_OSDiskName": "[concat('osdisk', uniqueString(resourceGroup().id))]",
+    "virtualMachine_Name": "[concat('vm', uniqueString(resourceGroup().id))]",
+    "virtualMachine_size": "Standard_A3",
+    "virtualMachine_nicName": "[concat('nic', uniqueString(resourceGroup().id))]",
+    "virtualMachine_storageContainerName": "vhds",
+    "virtualMachine_imageSku": "Evaluation",
+
+    "sql_databaseName": "AdventureWorks.SkiResort",
+
+    "publicIP_addressName": "[concat('public', uniqueString(resourceGroup().id))]",
+
+    "virtualNetwork_subnetName": "Default",
+    "virtualNetwork_name": "[concat('vnet', uniqueString(resourceGroup().id))]",
+    "virtualNetwork_addressPrefix": "10.0.0.0/16",
+    "virtualNetwork_subnetPrefix": "10.0.0.0/24",
+    "virtualNetwork_id": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetwork_Name'))]",
+    "virtualNetwork_subnetRef": "[concat(variables('virtualNetwork_id'), '/subnets/', variables('virtualNetwork_subnetName'))]",
+
+    "publicIP_addressType": "Dynamic",
+    "dnsNameForPublicIP": "[concat('vm', uniqueString(resourceGroup().id))]",
+
+    "azureSearch_name": "[concat('search', uniqueString(resourceGroup().id))]",
+
+    "eventHub_name": "[concat('hub', uniqueString(resourceGroup().id))]",
+    "eventHub_serviceBusNamespace": "[concat('hub-ns', uniqueString(resourceGroup().id))]",
+
+    "eventHub_version": "2014-09-01",
+    "eventHub_defaultSASKeyName": "RootManageSharedAccessKey",
+    "authRuleResourceId": "[resourceId('Microsoft.Eventhub/namespaces/authorizationRules', variables('eventHub_serviceBusNamespace'), variables('eventHub_defaultSASKeyName'))]",
+
+    "streamAnalytics_JobName": "[concat('stream', uniqueString(resourceGroup().id))]",
+
+    "diagnosticsStorageAccountName": "[variables('storageAccount_name')]",
+    "webApp_name": "[concat('website', uniqueString(resourceGroup().id))]",
+    "webAdvancedApp_name": "[concat('websiteadv', uniqueString(resourceGroup().id))]",
+    "hostingPlanName": "[concat('hostingplan', uniqueString(resourceGroup().id))]",
+    "sqlserverName": "[concat('sql', uniqueString(resourceGroup().id))]",
+    "dscLocation": "https://adventureworksartifacts.blob.core.windows.net/artifacts/ConfigureSQL.zip",
+    "PowershellExtensionConfigurationFunction": "ConfigureSQL.ps1\\ConfigureSQL"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[variables('storageAccount_name')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "VM Storage Account"
+      },
+      "properties": {
+        "accountType": "[variables('storageAccount_type')]"
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIP_addressName')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "PublicIP Address"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "[variables('publicIP_addressType')]",
+        "dnsSettings": {
+          "domainNameLabel": "[variables('dnsNameForPublicIP')]"
+        }
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('virtualNetwork_Name')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Virtual Network"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('virtualNetwork_addressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('virtualNetwork_subnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('virtualNetwork_subnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('virtualMachine_nicName')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Network Interface"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIP_addressName'))]",
+        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetwork_Name'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAddress": "10.0.0.5",
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIP_addressName'))]"
+              },
+              "subnet": {
+                "id": "[variables('virtualNetwork_subnetRef')]"
+              }
+            }
+          }
+        ],
+        "dnsSettings": {
+          "dnsServers": [ ]
+        },
+        "enableIPForwarding": false
+      }
+    },
+    {
+      "name": "[variables('azureSearch_name')]",
+      "type": "Microsoft.Search/searchServices",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-02-28",
+      "tags": {
+        "displayName": "Azure Search"
+      },
+      "properties": {
+        "sku": {
+          "name": "[parameters('skuCapacityAzureSearch')]"
+        },
+        "replicaCount": "[parameters('replicaCount')]",
+        "partitionCount": "[parameters('partitionCount')]"
+      }
+    },
+    {
+      "apiVersion": "2014-09-01",
+      "name": "[variables('eventHub_serviceBusNamespace')]",
+      "type": "Microsoft.EventHub/namespaces",
+      "tags": {
+        "displayName": "Event Hub NS"
+      },
+      "location": "[resourceGroup().location]",
+      "resources": [
+        {
+          "apiVersion": "2014-09-01",
+          "name": "[variables('eventHub_name')]",
+          "tags": { "displayName": "Event Hub" },
+          "type": "eventHubs",
+          "dependsOn": [
+            "[concat('Microsoft.EventHub/namespaces/', variables('eventHub_serviceBusNamespace'))]"
+          ],
+          "properties": {
+            "path": "[variables('eventHub_name')]"
+          },
+          "resources": [
+          ]
+        }
+      ]
+    },
+    {
+      "apiVersion": "2015-10-01",
+      "location": "[resourceGroup().location]",
+      "type": "Microsoft.StreamAnalytics/streamingjobs",
+      "name": "[variables('streamAnalytics_JobName')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts',variables('storageAccount_name'))]",
+        "[concat('Microsoft.Web/sites/', variables('webApp_name'))]",
+        "[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachine_Name'))]",
+        "[concat('Microsoft.EventHub/namespaces/', variables('eventHub_serviceBusNamespace'))]"
+      ],
+      "tags": {
+        "displayName": "Stream Analytics"
+      },
+      "properties": {
+        "sku": {
+          "name": "[parameters('skuCapacityStreamAnalytics')]"
+        },
+        "outputStartMode": "JobStartTime",
+        "eventsOutOfOrderPolicy": "Adjust",
+        "eventsOutOfOrderMaxDelayInSeconds": 0,
+        "inputs": [
+          {
+            "name": "locationevents",
+            "properties": {
+              "type": "stream",
+              "serialization": {
+                "type": "JSON",
+                "properties": {
+                  "encoding": "UTF8"
+                }
+              },
+              "datasource": {
+                "type": "Microsoft.ServiceBus/EventHub",
+                "properties": {
+                  "serviceBusNamespace": "[variables('eventHub_serviceBusNamespace')]",
+                  "sharedAccessPolicyName": "[variables('eventHub_defaultSASKeyName')]",
+                  "sharedAccessPolicyKey": "[listkeys(variables('authRuleResourceId'), variables('eventHub_version')).primaryKey]",
+                  "eventHubName": "[variables('eventHub_Name')]"
+                }
+              }
+            }
+          },
+          {
+            "name": "lifts",
+            "type": "Microsoft.StreamAnalytics/streamingjobs/inputs",
+            "properties": {
+              "type": "Reference",
+              "datasource": {
+                "type": "Microsoft.Storage/Blob",
+                "properties": {
+                  "blobName": "liftsin",
+                  "BlobPathPrefix": "liftsin",
+                  "pathPattern": "lifts.json",
+                  "Container": "reference",
+                  "StorageAccounts": [
+                    {
+                      "AccountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccount_name')), '2015-06-15').key1]",
+                      "AccountName": "[variables('storageAccount_name')]"
+                    }
+                  ]
+                }
+              },
+              "Serialization": {
+                "Type": "Json",
+                "Properties": {
+                  "Encoding": "UTF8",
+                  "FieldDelimiter": ","
+                }
+              }
+            }
+          }
+        ],
+        "transformation": {
+          "name": "skiresortTransformation",
+          "type": "Microsoft.StreamAnalytics/streamingjobs/transformations",
+          "properties": {
+            "streamingUnits": 1,
+            "query": " WITH liftcounts AS (\r\n
+                    SELECT lifts.name AS Name, COUNT(*) AS SkierCount, System.TimeStamp AS Time\r\n
+                    FROM locationevents\r\n
+                    INNER JOIN lifts ON locationevents.Latitude = lifts.latitude AND locationevents.Longitude = lifts.longitude\r\n
+                    GROUP BY lifts.name, TumblingWindow(minute, 1)\r\n
+                )\r\n\r\n
+                SELECT *\r\n
+                INTO liftlines\r\n
+                FROM liftcounts\r\n\r\n
+                SELECT CAST(Time AS NVARCHAR(MAX)) pkey, Name as rkey, SkierCount, Time\r\n
+                INTO liftlinesarchive\r\n
+                FROM liftcounts\r\n\r\n
+                SELECT *\r\n
+                INTO archive\r\n
+                FROM locationevents\r\n
+              "
+          }
+        },
+        "outputs": [
+          {
+            "name": "archive",
+            "type": "Microsoft.StreamAnalytics/streamingjobs/outputs",
+            "properties": {
+              "datasource": {
+                "type": "Microsoft.Storage/Blob",
+                "properties": {
+                  "BlobPathPrefix": "archive",
+                  "pathPattern": "{date}-{time}",
+                  "dateFormat": "yyyy/MM/dd",
+                  "timeFormat": "HH",
+                  "Container": "archive",
+                  "StorageAccounts": [
+                    {
+                      "AccountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_name')), '2015-06-15').key1]",
+                      "AccountName": "[variables('storageAccount_name')]"
+                    }
+                  ]
+                }
+              },
+              "Serialization": {
+                "Properties": {
+                  "Encoding": "UTF8",
+                  "FieldDelimiter": ","
+                },
+                "Type": "Csv"
+              }
+            }
+          },
+          {
+            "name": "liftlines",
+            "type": "Microsoft.StreamAnalytics/streamingjobs/outputs",
+            "properties": {
+              "datasource": {
+                "type": "Microsoft.Storage/Table",
+                "properties": {
+                  "table": "liftlines",
+                  "partitionKey": "Name",
+                  "rowKey": "Name",
+                  "AccountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_name')), '2015-06-15').key1]",
+                  "AccountName": "[variables('storageAccount_name')]"
+                }
+              }
+            }
+          },
+          {
+            "name": "liftlinesarchive",
+            "type": "Microsoft.StreamAnalytics/streamingjobs/outputs",
+            "properties": {
+              "datasource": {
+                "type": "Microsoft.Storage/Table",
+                "properties": {
+                  "table": "liftlinesarchive",
+                  "partitionKey": "pkey",
+                  "rowKey": "rkey",
+                  "AccountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_name')), '2015-06-15').key1]",
+                  "AccountName": "[variables('storageAccount_name')]"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-08-01",
+      "name": "[variables('hostingPlanName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "HostingPlan"
+      },
+      "sku": {
+        "name": "[parameters('skuNameWeb')]",
+        "capacity": "[parameters('skuCapacity')]"
+      },
+      "properties": {
+        "name": "[variables('hostingPlanName')]"
+      }
+    },
+    {
+      "apiVersion": "2014-04-01",
+      "name": "[variables('webApp_name')]",
+      "type": "Microsoft.Insights/components",
+      "location": "Central US",
+      "dependsOn": [
+        "[concat('Microsoft.Web/sites/', variables('webApp_name'))]"
+      ],
+      "tags": {
+        "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('webApp_name'))]": "Resource",
+        "displayName": "AppInsights"
+      },
+      "properties": {
+        "ApplicationId": "[variables('webApp_name')]"
+      }
+    },
+    {
+      "name": "[variables('webApp_name')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
+        "[concat('Microsoft.Sql/servers/', variables('sqlserverName'))]",
+        "[concat('Microsoft.Search/searchServices/', variables('azureSearch_name'))]"
+      ],
+      "tags": {
+        "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', variables('hostingPlanName'))]": "Resource",
+        "displayName": "Web App"
+      },
+      "properties": {
+        "name": "[variables('webApp_name')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
+      },
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[concat('Microsoft.Web/sites/', variables('webApp_name'))]"
+          ],
+          "tags": {
+            "displayName": "AppSettings"
+          },
+          "properties": {
+            "ApplicationInsights:InstrumentationKey": "[reference(concat('Microsoft.Insights/components/', variables('webApp_name'))).InstrumentationKey]",
+            "SearchConfig:UseAzureSearch": "false",
+            "SearchConfig:ServiceName": "[variables('azureSearch_name')]",
+            "SearchConfig:ApiKey": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', variables('azureSearch_name')), '2015-02-28').primaryKey]",
+            "SearchConfig:Indexer": "restaurant",
+            "SearchConfig:Suggester": "restaurant",
+            "DefaultUsername": "[parameters('webUsername')]",
+            "DefaultFullName": "[parameters('webUserFullName')]",
+            "DefaultPassword": "[parameters('webPassword')]",
+            "Security:Authority": "[concat('http://', variables('webApp_name'), '.azurewebsites.net/')]",
+            "Security:Audience": "[concat('http://', variables('webApp_name'), '.azurewebsites.net/')]"
+          }
+        },
+        {
+          "apiVersion": "2015-08-01",
+          "type": "config",
+          "name": "connectionstrings",
+          "dependsOn": [
+            "[concat('Microsoft.Web/Sites/', variables('webApp_name'))]"
+          ],
+          "properties": {
+            "DefaultConnection": {
+              "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('sql_databaseName'), ';User Id=', parameters('sqlserverAdminLogin'), '@', variables('sqlserverName'), ';Password=', parameters('sqlserverAdminLoginPassword'), ';')]",
+              "type": "SQLServer"
+            },
+            "IdentityConnection": {
+              "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('sql_databaseName'), ';User Id=', parameters('sqlserverAdminLogin'), '@', variables('sqlserverName'), ';Password=', parameters('sqlserverAdminLoginPassword'), ';')]",
+              "type": "SQLServer"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "[variables('webAdvancedApp_name')]",
+      "type": "Microsoft.Web/sites",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-08-01",
+      "dependsOn": [
+        "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
+        "[concat('Microsoft.Sql/servers/', variables('sqlserverName'))]",
+        "[concat('Microsoft.Search/searchServices/', variables('azureSearch_name'))]",
+        "[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachine_Name'))]"
+      ],
+      "tags": {
+        "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', variables('hostingPlanName'))]": "Resource",
+        "displayName": "Web App Advanced"
+      },
+      "properties": {
+        "name": "[variables('webAdvancedApp_name')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
+      },
+      "resources": [
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[concat('Microsoft.Web/sites/', variables('webAdvancedApp_name'))]"
+          ],
+          "tags": {
+            "displayName": "AppSettings"
+          },
+          "properties": {
+            "ApplicationInsights:InstrumentationKey": "[reference(concat('Microsoft.Insights/components/', variables('webApp_name'))).InstrumentationKey]",
+            "SearchConfig:UseAzureSearch": "true",
+            "SearchConfig:ServiceName": "[variables('azureSearch_name')]",
+            "SearchConfig:ApiKey": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', variables('azureSearch_name')), '2015-02-28').primaryKey]",
+            "SearchConfig:Indexer": "restaurant",
+            "SearchConfig:Suggester": "restaurant",
+            "DefaultUsername": "[parameters('webUsername')]",
+            "DefaultFullName": "[parameters('webUserFullName')]",
+            "DefaultPassword": "[parameters('webPassword')]",
+            "Data:AnomalyDetection:Key": "[parameters('dataMarketKey')]",
+            "Security:Authority": "[concat('http://', variables('webAdvancedApp_name'), '.azurewebsites.net/')]",
+            "Security:Audience": "[concat('http://', variables('webAdvancedApp_name'), '.azurewebsites.net/')]"
+          }
+        },
+        {
+          "apiVersion": "2015-08-01",
+          "type": "config",
+          "name": "connectionstrings",
+          "dependsOn": [
+            "[concat('Microsoft.Web/Sites/', variables('webAdvancedApp_name'))]"
+          ],
+          "properties": {
+            "DefaultConnection": {
+              "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Network/publicIPAddresses/', variables('publicIP_addressName'))).dnsSettings.fqdn, ',1433;Initial Catalog=', variables('sql_databaseName'), ';User Id=skiresort;Password=P2ssw0rd@1;')]",
+              "type": "SQLServer"
+            },
+            "IdentityConnection": {
+              "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Network/publicIPAddresses/', variables('publicIP_addressName'))).dnsSettings.fqdn, ',1433;Initial Catalog=', variables('sql_databaseName'), ';User Id=skiresort;Password=P2ssw0rd@1;')]",
+              "type": "SQLServer"
+            },
+            "TelemetryStorage": {
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccount_name'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccount_name')), '2015-06-15').key1)]",
+              "type": "Custom"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('virtualMachine_Name')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "Virtual Machine"
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccount_name'))]",
+        "[concat('Microsoft.Network/networkInterfaces/', variables('virtualMachine_nicName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[variables('virtualMachine_size')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('virtualMachine_Name')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('virtualMachine_imagePublisher')]",
+            "offer": "[variables('virtualMachine_imageOffer')]",
+            "sku": "[variables('virtualMachine_imageSku')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "osdisk",
+            "vhd": {
+              "uri": "[concat('http://', variables('storageAccount_name'), '.blob.core.windows.net/', variables('virtualMachine_storageContainerName'), '/', variables('virtualMachine_OSDiskName'), '.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('virtualMachine_nicName'))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "[concat('http://', variables('diagnosticsStorageAccountName'), '.blob.core.windows.net')]"
+          }
+        }
+      },
+      "resources": [
+        {
+          "name": "PowershellExtension",
+          "type": "extensions",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2015-06-15",
+          "dependsOn": [
+            "[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachine_Name'))]"
+          ],
+          "tags": {
+            "displayName": "PowershellExtension"
+          },
+          "properties": {
+            "publisher": "Microsoft.Powershell",
+            "type": "DSC",
+            "typeHandlerVersion": "2.9",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+              "modulesUrl": "[variables('dscLocation')]",
+              "configurationFunction": "[variables('PowershellExtensionConfigurationFunction')]",
+              "properties": {
+
+              }
+            },
+            "protectedSettings": { }
+          }
+        }
+      ]
+    },
+    {
+      "name": "[variables('sqlserverName')]",
+      "type": "Microsoft.Sql/servers",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2014-04-01-preview",
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "sqlserver"
+      },
+      "properties": {
+        "administratorLogin": "[parameters('sqlserverAdminLogin')]",
+        "administratorLoginPassword": "[parameters('sqlserverAdminLoginPassword')]"
+      },
+      "resources": [
+        {
+          "name": "AllowAllWindowsAzureIps",
+          "type": "firewallrules",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[concat('Microsoft.Sql/servers/', variables('sqlserverName'))]"
+          ],
+          "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "0.0.0.0"
+          }
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "webUsername": {
+      "type": "string",
+      "value": "[parameters('webUsername')]"
+    },
+    "webUserFullName": {
+      "type": "string",
+      "value": "[parameters('webUserFullName')]"
+    },
+    "webPassword": {
+      "type": "string",
+      "value": "[parameters('webPassword')]"
+    },
+    "webSiteName": {
+      "type": "string",
+      "value": "[variables('webApp_name')]"
+    },
+    "webSiteAdvancedName": {
+      "type": "string",
+      "value": "[variables('webAdvancedApp_name')]"
+    },
+    "storageServiceName": {
+      "type": "string",
+      "value": "[variables('storageAccount_name')]"
+    },
+    "evenHubName": {
+      "type": "string",
+      "value": "[variables('eventHub_name')]"
+    },
+    "streamJob": {
+      "type": "string",
+      "value": "[variables('streamAnalytics_JobName')]"
+    },
+    "defaultConnection": {
+      "type": "string",
+      "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Network/publicIPAddresses/', variables('publicIP_addressName'))).dnsSettings.fqdn, ',1433;Initial Catalog=', variables('sql_databaseName'), ';User Id=skiresort;Password=P2ssw0rd@1;')]"
+    },
+    "identityConnection": {
+      "type": "string",
+      "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Network/publicIPAddresses/', variables('publicIP_addressName'))).dnsSettings.fqdn, ',1433;Initial Catalog=', variables('sql_databaseName'), ';User Id=skiresort;Password=P2ssw0rd@1;')]"
+    },
+    "rConnection": {
+      "type": "string",
+      "value": "[concat('Driver=SQLServer;Server=', reference(concat('Microsoft.Network/publicIPAddresses/', variables('publicIP_addressName'))).dnsSettings.fqdn, ';Database=', variables('sql_databaseName'), ';Uid=skiresort;Pwd=P2ssw0rd@1;')]"
+    },
+    "sqlAzureConnection": {
+      "type": "string",
+      "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('sql_databaseName'), ';User Id=', parameters('sqlserverAdminLogin'), '@', variables('sqlserverName'), ';Password=', parameters('sqlserverAdminLoginPassword'), ';')]"
+    },
+    "telemetryStorage": {
+      "type": "string",
+      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccount_name'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccount_name')), '2015-06-15').key1)]"
+    },
+    "ApplicationInsightsKey": {
+      "type": "string",
+      "value": "[reference(concat('Microsoft.Insights/components/', variables('webApp_name'))).InstrumentationKey]"
+    },
+    "searchServiceName": {
+      "type": "string",
+      "value": "[variables('azureSearch_name')]"
+    },
+    "eventHubConnectionString": {
+      "type": "string",
+      "value": "[listkeys(variables('authRuleResourceId'), variables('eventHub_version')).primaryConnectionString]"
+    },
+    "searchServiceKey": {
+      "type": "string",
+      "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', variables('azureSearch_name')), '2015-02-28').primaryKey]"
+    },
+    "dataMarketKey": {
+      "type": "string",
+      "value": "[parameters('dataMarketKey')]"
+    },
+    "dataMarketUser": {
+      "type": "string",
+      "value": "[parameters('dataMarketUser')]"
+    }
+  }
+}

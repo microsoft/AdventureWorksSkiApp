@@ -62,7 +62,7 @@ namespace AdventureWorks.SkiResort.Web
                 .AddEntityFrameworkStores<SkiResortContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddApplicationInsightsTelemetry(Configuration);
+            //services.AddApplicationInsightsTelemetry(Configuration);
 
             // Add framework services.
             services.AddMvc().AddJsonOptions(options =>
@@ -71,6 +71,8 @@ namespace AdventureWorks.SkiResort.Web
                     new CamelCasePropertyNamesContractResolver();
             });
 
+            // Initialize anomaly detection statics
+            //AnomalyDetector.Initialize(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,10 +81,10 @@ namespace AdventureWorks.SkiResort.Web
             ILoggerFactory loggerFactory,
             AuthorizationProvider authorizationProvider,
             IOptions<SecurityConfig> securityConfig,
-            SkiResortDataInitializer dataInitializer)
+            SkiResortDataInitializer dataInitializer, AzureSearchDataInitializer azureSearchDataInitializer)
         {
             // Add Application Insights monitoring to the request pipeline as a very first middleware.
-            app.UseApplicationInsightsRequestTelemetry();
+            //app.UseApplicationInsightsRequestTelemetry();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -98,7 +100,7 @@ namespace AdventureWorks.SkiResort.Web
             app.UseIISPlatformHandler();
 
             // Add Application Insights exceptions handling to the request pipeline.
-            app.UseApplicationInsightsExceptionTelemetry();
+            //app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
 
@@ -132,6 +134,7 @@ namespace AdventureWorks.SkiResort.Web
             app.UseMvc();
 
             await dataInitializer.InitializeDatabaseAsync(app.ApplicationServices);
+            await azureSearchDataInitializer.Initialize();
         }
 
         // Entry point for the application.

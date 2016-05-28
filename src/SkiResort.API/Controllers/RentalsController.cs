@@ -1,4 +1,5 @@
-﻿using AdventureWorks.SkiResort.Infrastructure.Model;
+﻿using AdventureWorks.SkiResort.Infrastructure.Helpers;
+using AdventureWorks.SkiResort.Infrastructure.Model;
 using AdventureWorks.SkiResort.Infrastructure.Repositories;
 using Microsoft.AspNet.Mvc;
 using System;
@@ -57,9 +58,15 @@ namespace AdventureWorks.SkiResort.API.Controllers
 
         [HttpGet]
         [Route("check_high_demand")]
-        public bool CheckHighDemand(DateTimeOffset date)
+        public async Task<bool> CheckHighDemandAsync(DateTimeOffset date)
         {
-            return false;
+            bool holiday = USHolidays.IsPublicHoliday(date.LocalDateTime);
+
+            int? estimatedRentals = await _rentalsRepository.EstimateRentalsAsync(date, false, holiday);
+
+            // We have enough employees in the rentals area to handle about 150 rentals without a line
+            // forming. If we estimate more than 150 rentals, let's assume it's going to be a busy day.
+            return estimatedRentals.HasValue ? estimatedRentals.Value > 150 : false;
         }
     }
 }

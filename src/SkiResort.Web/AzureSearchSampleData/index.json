@@ -1,0 +1,159 @@
+{
+  "name": "restaurant",
+  "fields": [
+    {
+      "name": "RestaurantId",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": true,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "Address",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "Description",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "FamilyFriendly",
+      "type": "Edm.Boolean",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "FoodType",
+      "type": "Edm.Int32",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "Latitude",
+      "type": "Edm.Double",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "LevelOfNoise",
+      "type": "Edm.Int32",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "Longitude",
+      "type": "Edm.Double",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "Name",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "Phone",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "PriceLevel",
+      "type": "Edm.Int32",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "Rating",
+      "type": "Edm.Double",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "TakeAway",
+      "type": "Edm.Boolean",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "RecommendedIds",
+      "type": "Collection(Edm.String)",
+      "searchable": false,
+      "filterable": true,
+      "sortable": false,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    }
+  ]
+}

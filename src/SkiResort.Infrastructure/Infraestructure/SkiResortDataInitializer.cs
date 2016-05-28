@@ -1,19 +1,21 @@
-﻿
-using AdventureWorks.SkiResort.Infrastructure.Context;
-using System;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+﻿using AdventureWorks.SkiResort.Infrastructure.Context;
 using AdventureWorks.SkiResort.Infrastructure.Model;
-using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
+using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
+using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
 {
     public class SkiResortDataInitializer
     {
-        private static readonly Random Randomize = new Random();
+        private static readonly Random Randomize = new Random(12345); // Stable seed for repeatable data generation
         private static string DefaultEmail = string.Empty;
 
         public async Task InitializeDatabaseAsync(IServiceProvider serviceProvider)
@@ -23,6 +25,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                 var databaseCreated = await db.Database.EnsureCreatedAsync();
                 if (databaseCreated)
                 {
+                    await CreateAnalyticsDatabaseObjects(db);
                     await InitializeDatabaseData(serviceProvider, db);
                 }
             }
@@ -45,7 +48,8 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(applicationEnvironment.ApplicationBasePath)
-                .AddJsonFile("appsettings.json");
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables();
 
             var configuration = builder.Build();
 
@@ -229,15 +233,15 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                         Name = $"{azureword} {type}",
                         Description = "Enjoy fine food and attentive service. We serve only the freshest ingredients cooked to perfection.",
                         Address = "15 Ski App Way, Redmond Heights Way, Washington, USA",
-                        FamilyFriendly = Randomize.Next(0, 1) == 0 ? false : true,
-                        FoodType = (Model.Enums.FoodType)Randomize.Next(1, 2),
+                        FamilyFriendly = Randomize.Next(0, 2) == 0 ? false : true,
+                        FoodType = (Model.Enums.FoodType)Randomize.Next(1, 3),
                         Latitude = 40.733847,
                         Longitude = -74.307326,
-                        LevelOfNoise = (Model.Enums.Noise)Randomize.Next(1, 3),
+                        LevelOfNoise = (Model.Enums.Noise)Randomize.Next(1, 4),
                         Photo = GetRestaurant(Randomize.Next(1, 6)),
                         Phone = "5555-5555",
-                        PriceLevel = (Model.Enums.PriceLevel)Randomize.Next(1, 3),
-                        Rating = Randomize.Next(3, 5),
+                        PriceLevel = (Model.Enums.PriceLevel)Randomize.Next(1, 4),
+                        Rating = Randomize.Next(3, 6),
                         TakeAway = false
                     };
 
@@ -277,7 +281,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                 },
                 new Lift()
                 {
-                    Name = "Overlake jump",
+                    Name = "Overlake Jump",
                     Latitude = 40.721847,
                     Longitude = -74.007326,
                     ClosedReason = string.Empty,
@@ -332,7 +336,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                 },
                 new Lift()
                 {
-                    Name = "Bear Creek",
+                    Name = "Bear Creek II",
                     Latitude = 40.721847,
                     Longitude = -74.007326,
                     ClosedReason = string.Empty,
@@ -359,7 +363,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     EndDate = defaultDate,
                     UserEmail = DefaultEmail,
                     Activity = Model.Enums.RentalActivity.Ski,
-                    Category = Model.Enums.RentalCategory.Advanced, 
+                    Category = Model.Enums.RentalCategory.Advanced,
                     Goal = Model.Enums.RentalGoal.Performance,
                     PickupHour = Randomize.Next(7, 10),
                     ShoeSize = Randomize.Next(7, 10),
@@ -404,6 +408,81 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
         private static byte[] GetRestaurant(int index)
         {
             return Convert.FromBase64String(RestaurantPhotos.Restaurants[index - 1]);
+        }
+
+        private static async Task<bool> IsAnalyticsEnabled(SkiResortContext context)
+        {
+            object r = await context.GetServerPropertyAsync("IsAdvancedAnalyticsInstalled");
+            return r != null && (int)r > 0;
+        }
+
+        async Task CreateAnalyticsDatabaseObjects(SkiResortContext context)
+        {
+            if (!await IsAnalyticsEnabled(context))
+            {
+                return;
+            }
+
+            // Column store for rentals table
+            await context.Database.ExecuteSqlCommandAsync(
+            @"CREATE NONCLUSTERED COLUMNSTORE INDEX RentalsCounts ON Rental (StartDate)");
+
+            // A place to store rental predictions trained model
+            await context.Database.ExecuteSqlCommandAsync(
+            @"CREATE TABLE Model (Serialized VARBINARY(MAX))");
+
+            // View for rentals daily summary with dimensions joined in
+            await context.Database.ExecuteSqlCommandAsync(
+            @"CREATE VIEW RentalFeatures AS
+            SELECT rr.Year, rr.Month, rr.Day, rr.RentalCount, DATEPART(WEEKDAY, DATEFROMPARTS(rr.Year, rr.Month, rr.Day)) WeekDay, CONVERT(BIT, IIF(h.Date IS NULL, 0, 1)) Holiday, w.Snow
+            FROM
+                (SELECT YEAR(r.StartDate) Year, MONTH(r.StartDate) Month, DAY(r.StartDate) Day, COUNT(*) RentalCount
+                 FROM Rental r
+                 GROUP BY YEAR(r.StartDate), MONTH(r.StartDate), DAY(r.StartDate)) rr
+            LEFT OUTER JOIN Holiday h ON rr.Year = YEAR(h.Date) AND rr.Month = MONTH(h.Date) AND rr.Day = DAY(h.Date)
+            LEFT OUTER JOIN WeatherHistory w ON rr.Year = YEAR(w.Date) AND rr.Month = MONTH(w.Date) AND rr.Day = DAY(w.Date)");
+
+            await context.Database.ExecuteSqlCommandAsync(
+            @"CREATE PROCEDURE TrainRentalModel AS
+            BEGIN
+	            DECLARE @q NVARCHAR(MAX) = N'SELECT * FROM RentalFeatures ORDER BY Year, Month, Day'
+	            DECLARE @s NVARCHAR(MAX) = N'
+            rentals = InputDataSet
+            rentals$FHoliday = factor(rentals$Holiday)
+            rentals$FSnow = factor(rentals$Snow)
+            rentals$FWeekDay = factor(rentals$WeekDay)
+            model = rpart(RentalCount ~ Month + Day + FWeekDay + FHoliday + FSnow, rentals)
+            serialized = data.frame(model = as.raw(serialize(model, NULL)))'
+
+	            BEGIN TRY
+		            BEGIN TRANSACTION
+		            DELETE FROM Model
+		            INSERT INTO Model
+		            EXEC sp_execute_external_script @language = N'R', @script = @s, @input_data_1 = @q, @output_data_1_name = N'serialized'
+		            COMMIT
+	            END TRY
+	            BEGIN CATCH
+		            PRINT 'Failed to recompute model, rolling back to previous trained model'
+		            ROLLBACK
+	            END CATCH
+            END");
+
+            await context.Database.ExecuteSqlCommandAsync(
+            @"CREATE PROCEDURE PredictRentals @q NVARCHAR(MAX) AS
+            BEGIN
+	            DECLARE @serialized VARBINARY(MAX) = (SELECT TOP 1 Serialized FROM Model)
+	            DECLARE @s NVARCHAR(MAX) = N'
+            rentals = InputDataSet
+            rentals$FHoliday = factor(rentals$Holiday)
+            rentals$FSnow = factor(rentals$Snow)
+            rentals$FWeekDay = factor(rentals$WeekDay)
+            model = unserialize(as.raw(m))
+            p = predict(model, rentals)
+            OutputDataSet = data.frame(p)'
+
+	            EXEC sp_execute_external_script @language = N'R', @script = @s, @input_data_1 = @q, @params = N'@m VARBINARY(MAX)', @m = @serialized
+		            WITH RESULT SETS ((Predicted FLOAT))
+            END");
         }
     }
 }

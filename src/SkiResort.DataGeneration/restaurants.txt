@@ -1,0 +1,112 @@
+﻿1,Azure Cafe,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=3,PriceLevel=1,Rating=4,TakeAway=True
+2,HDInsight Snack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=3,PriceLevel=2,Rating=4,TakeAway=True
+3,Cloud Bar,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=2,PriceLevel=1,Rating=3,TakeAway=False
+4,SQL Grill,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=3,PriceLevel=3,Rating=4,TakeAway=True
+5,Edge Snack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=1,Rating=3,TakeAway=True
+6,Visual Studio Bar,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=1,Rating=3,TakeAway=False
+7,ASP.NET 5 Bar,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=1,Rating=3,TakeAway=False
+8,SQL Server Bar,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=3,PriceLevel=1,Rating=4,TakeAway=False
+9,SQL Server Grill,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=2,Rating=4,TakeAway=False
+10,SQL Server Café,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=1,PriceLevel=2,Rating=5,TakeAway=False
+11,SQL Server Snack Shack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=3,Rating=5,TakeAway=False
+12,SQL Server BrewPub,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=2,PriceLevel=1,Rating=5,TakeAway=False
+13,SQL Server Restaurant,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=2,PriceLevel=1,Rating=3,TakeAway=False
+14,SQL Server Tavern,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=2,PriceLevel=1,Rating=3,TakeAway=False
+15,App Service Bar,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=1,PriceLevel=2,Rating=3,TakeAway=False
+16,App Service Grill,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=2,PriceLevel=1,Rating=5,TakeAway=False
+17,App Service Café,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=1,Rating=5,TakeAway=False
+18,App Service Snack Shack,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=1,PriceLevel=2,Rating=5,TakeAway=False
+19,App Service BrewPub,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=1,PriceLevel=2,Rating=5,TakeAway=False
+20,App Service Restaurant,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=1,PriceLevel=2,Rating=3,TakeAway=False
+21,App Service Tavern,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=1,Rating=4,TakeAway=False
+22,Azure Bar,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=2,PriceLevel=3,Rating=3,TakeAway=False
+23,Azure Grill,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=2,PriceLevel=3,Rating=3,TakeAway=False
+24,Azure Café,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=1,PriceLevel=2,Rating=5,TakeAway=False
+25,Azure Snack Shack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=3,Rating=4,TakeAway=False
+26,Azure BrewPub,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=3,Rating=5,TakeAway=False
+27,Azure Restaurant,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=1,Rating=5,TakeAway=False
+28,Azure Tavern,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=1,Rating=4,TakeAway=False
+29,Virtual Machine Bar,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=1,PriceLevel=2,Rating=4,TakeAway=False
+30,Virtual Machine Grill,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=3,PriceLevel=2,Rating=5,TakeAway=False
+31,Virtual Machine Café,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=1,Rating=5,TakeAway=False
+32,Virtual Machine Snack Shack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=1,Rating=3,TakeAway=False
+33,Virtual Machine BrewPub,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=1,Rating=3,TakeAway=False
+34,Virtual Machine Restaurant,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=2,PriceLevel=1,Rating=3,TakeAway=False
+35,Virtual Machine Tavern,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=1,Rating=3,TakeAway=False
+36,Logic App Bar,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=2,Rating=4,TakeAway=False
+37,Logic App Grill,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=2,Rating=5,TakeAway=False
+38,Logic App Café,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=2,PriceLevel=2,Rating=4,TakeAway=False
+39,Logic App Snack Shack,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=2,PriceLevel=3,Rating=5,TakeAway=False
+40,Logic App BrewPub,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=1,PriceLevel=2,Rating=3,TakeAway=False
+41,Logic App Restaurant,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=1,PriceLevel=2,Rating=3,TakeAway=False
+42,Logic App Tavern,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=2,Rating=5,TakeAway=False
+43,Mobile App Bar,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=1,Rating=3,TakeAway=False
+44,Mobile App Grill,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=3,Rating=4,TakeAway=False
+45,Mobile App Café,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=2,PriceLevel=2,Rating=3,TakeAway=False
+46,Mobile App Snack Shack,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=3,Rating=4,TakeAway=False
+47,Mobile App BrewPub,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=2,Rating=3,TakeAway=False
+48,Mobile App Restaurant,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=1,PriceLevel=2,Rating=4,TakeAway=False
+49,Mobile App Tavern,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=1,PriceLevel=3,Rating=3,TakeAway=False
+50,API App Bar,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=3,Rating=4,TakeAway=False
+51,API App Grill,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=1,Rating=3,TakeAway=False
+52,API App Café,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=2,PriceLevel=2,Rating=3,TakeAway=False
+53,API App Snack Shack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=1,Rating=3,TakeAway=False
+54,API App BrewPub,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=1,Rating=4,TakeAway=False
+55,API App Restaurant,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=1,Rating=5,TakeAway=False
+56,API App Tavern,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=3,Rating=3,TakeAway=False
+57,DocumentDB Bar,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=2,PriceLevel=2,Rating=5,TakeAway=False
+58,DocumentDB Grill,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=1,Rating=4,TakeAway=False
+59,DocumentDB Café,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=2,Rating=5,TakeAway=False
+60,DocumentDB Snack Shack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=3,PriceLevel=2,Rating=5,TakeAway=False
+61,DocumentDB BrewPub,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=2,Rating=4,TakeAway=False
+62,DocumentDB Restaurant,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=2,PriceLevel=3,Rating=4,TakeAway=False
+63,DocumentDB Tavern,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=1,Rating=5,TakeAway=False
+64,Redis Bar,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=3,Rating=3,TakeAway=False
+65,Redis Grill,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=2,Rating=5,TakeAway=False
+66,Redis Café,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=1,Rating=3,TakeAway=False
+67,Redis Snack Shack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=1,Rating=5,TakeAway=False
+68,Redis BrewPub,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=1,PriceLevel=1,Rating=3,TakeAway=False
+69,Redis Restaurant,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=1,Rating=5,TakeAway=False
+70,Redis Tavern,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=2,Rating=4,TakeAway=False
+71,Data Lake Bar,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=1,Rating=5,TakeAway=False
+72,Data Lake Grill,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=3,PriceLevel=1,Rating=3,TakeAway=False
+73,Data Lake Café,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=3,PriceLevel=2,Rating=4,TakeAway=False
+74,Data Lake Snack Shack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=3,PriceLevel=3,Rating=4,TakeAway=False
+75,Data Lake BrewPub,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=3,PriceLevel=2,Rating=5,TakeAway=False
+76,Data Lake Restaurant,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=2,Rating=4,TakeAway=False
+77,Data Lake Tavern,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=2,Rating=3,TakeAway=False
+78,ServiceBus Bar,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=1,Rating=5,TakeAway=False
+79,ServiceBus Grill,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=1,Rating=4,TakeAway=False
+80,ServiceBus Café,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=2,PriceLevel=3,Rating=4,TakeAway=False
+81,ServiceBus Snack Shack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=3,Rating=5,TakeAway=False
+82,ServiceBus BrewPub,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=2,Rating=5,TakeAway=False
+83,ServiceBus Restaurant,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=2,PriceLevel=1,Rating=5,TakeAway=False
+84,ServiceBus Tavern,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=3,PriceLevel=1,Rating=4,TakeAway=False
+85,Storage Bar,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=1,PriceLevel=3,Rating=4,TakeAway=False
+86,Storage Grill,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=2,PriceLevel=2,Rating=3,TakeAway=False
+87,Storage Café,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=3,Rating=5,TakeAway=False
+88,Storage Snack Shack,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=2,PriceLevel=1,Rating=5,TakeAway=False
+89,Storage BrewPub,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=2,Rating=3,TakeAway=False
+90,Storage Restaurant,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=1,PriceLevel=3,Rating=4,TakeAway=False
+91,Storage Tavern,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=2,PriceLevel=1,Rating=4,TakeAway=False
+92,Files Bar,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=3,Rating=3,TakeAway=False
+93,Files Grill,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=1,PriceLevel=3,Rating=3,TakeAway=False
+94,Files Café,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=1,PriceLevel=2,Rating=5,TakeAway=False
+95,Files Snack Shack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=3,Rating=5,TakeAway=False
+96,Files BrewPub,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=1,PriceLevel=2,Rating=5,TakeAway=False
+97,Files Restaurant,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=2,Rating=4,TakeAway=False
+98,Files Tavern,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=2,Rating=4,TakeAway=False
+99,Batch Bar,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=3,Rating=5,TakeAway=False
+100,Batch Grill,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=2,PriceLevel=1,Rating=5,TakeAway=False
+101,Batch Café,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=2,Rating=5,TakeAway=False
+102,Batch Snack Shack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=2,Rating=5,TakeAway=False
+103,Batch BrewPub,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=2,Rating=3,TakeAway=False
+104,Batch Restaurant,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=2,PriceLevel=1,Rating=5,TakeAway=False
+105,Batch Tavern,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=1,PriceLevel=2,Rating=3,TakeAway=False
+106,HPC Bar,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=3,Rating=3,TakeAway=False
+107,HPC Grill,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=3,PriceLevel=3,Rating=4,TakeAway=False
+108,HPC Café,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=2,PriceLevel=2,Rating=4,TakeAway=False
+109,HPC Snack Shack,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=2,PriceLevel=1,Rating=5,TakeAway=False
+110,HPC BrewPub,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=3,PriceLevel=3,Rating=4,TakeAway=False
+111,HPC Restaurant,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=3,PriceLevel=3,Rating=5,TakeAway=False
+112,HPC Tavern,,,FamilyFriendly=False,FoodType=1,LevelOfNoise=1,PriceLevel=3,Rating=5,TakeAway=False

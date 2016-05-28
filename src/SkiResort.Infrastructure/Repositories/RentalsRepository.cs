@@ -55,5 +55,10 @@ namespace AdventureWorks.SkiResort.Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public Task<int?> EstimateRentalsAsync(DateTimeOffset date, bool snowedDayBefore, bool holiday)
+        {
+            return _context.EstimateRentalsAsync(date, snowedDayBefore, holiday);
+        }
     }
 }

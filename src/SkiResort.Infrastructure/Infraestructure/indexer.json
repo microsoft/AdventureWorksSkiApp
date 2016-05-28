@@ -1,0 +1,159 @@
+{
+  "name": "restaurant",
+  "fields": [
+    {
+      "name": "RestaurantId",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": true,
+      "retrievable": true,
+      "analyzer": "Standard - Lucene"
+    },
+    {
+      "name": "Address",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": "Standard - Lucene"
+    },
+    {
+      "name": "Description",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": "Standard - Lucene"
+    },
+    {
+      "name": "FamilyFriendly",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "FoodType",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "Latitude",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "LevelOfNoise",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "Longitude",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "Name",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": "Standard - Lucene"
+    },
+    {
+      "name": "Phone",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "PriceLevel",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "Rating",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "TakeAway",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    },
+    {
+      "name": "RecommendedIds",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": true,
+      "sortable": true,
+      "facetable": false,
+      "key": false,
+      "retrievable": true,
+      "analyzer": ""
+    }
+  ]
+}

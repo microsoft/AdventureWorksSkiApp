@@ -14,7 +14,8 @@
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0-rc1-final",
     "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
     "Microsoft.Net.Http.Server": "1.0.0-rc1-final",
-    "SkiResort.Infrastructure": ""
+    "SkiResort.Infrastructure": "",
+    "WindowsAzure.Storage": "6.2.2-preview"
   },
 
   "frameworks": {

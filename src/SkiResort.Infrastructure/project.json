@@ -15,7 +15,9 @@
     "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
     "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-rc1-final",
     "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
-    "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final"
+    "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
+    "WindowsAzure.Storage": "6.2.2-preview",
+    "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0-rc1-final"
   },
 
   "frameworks": {

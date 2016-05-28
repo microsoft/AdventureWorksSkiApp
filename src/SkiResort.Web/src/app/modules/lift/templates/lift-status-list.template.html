@@ -35,7 +35,7 @@
                     {{ lift.name }}
                     <span ng-if="lift.stayAway" class="ski-icon-alert show-intelligence"></span>
                 </div>
-                <div class="ski-cell ski-lift-list-wait show-intelligence">5-10 minutes wait</div>
+                <div class="ski-cell ski-lift-list-wait show-intelligence"><span ng-if="lift.waitingTime >= 0">{{ lift.waitingTime }} minutes wait</span></div>
                 <div class="ski-cell ski-lift-list-icons"><span class="ski-icon-marker"></span></div>
             </div>
             <div class="ski-row ski-lift-list-header" ng-if="$ctrl.closedLifts.length > 0">
@@ -57,7 +57,7 @@
                     {{ lift.name }}
                     <span ng-if="lift.stayAway" class="ski-icon-alert show-intelligence"></span>                    
                 </div>
-                <div class="ski-cell ski-lift-list-wait show-intelligence">5-10 minutes wait</div>
+                <div class="ski-cell ski-lift-list-wait show-intelligence"></div>
                 <div class="ski-cell ski-lift-list-icons"><span class="ski-icon-marker"></span></div>
             </div>
         </div>

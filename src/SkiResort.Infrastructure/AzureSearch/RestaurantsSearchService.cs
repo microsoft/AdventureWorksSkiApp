@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace AdventureWorks.SkiResort.Infrastructure.AzureSearch
 {
@@ -42,8 +43,8 @@ namespace AdventureWorks.SkiResort.Infrastructure.AzureSearch
 
         public async Task<List<int>> GetRecommendationsAsync(string searchtext, int count)
         {
-            string uri = $"https://{_serviceName}.search.windows.net/indexes/{_indexer}/docs/suggest?api-version=2015-02-28&$top={count}&$orderby=RestaurantId" +
-                $"&search={searchtext}&suggesterName={_suggesterName}";
+            int id = int.Parse(searchtext); // roundtrip through int to ensure it's a number
+            string uri = $"https://{_serviceName}.search.windows.net/indexes/{_indexer}/docs/{id}?api-version=2015-02-28";
 
             using (var _httpClient = new HttpClient())
             {
@@ -52,8 +53,9 @@ namespace AdventureWorks.SkiResort.Infrastructure.AzureSearch
 
                 var response = await _httpClient.GetAsync(uri);
                 var jsonString = await response.Content.ReadAsStringAsync();
-                var suggestions = JsonConvert.DeserializeObject<SuggestionsRootObject>(jsonString);
-                return suggestions.value.Select(s => s.RestaurantId).ToList();
+                dynamic result = JsonConvert.DeserializeObject(jsonString);
+                var obj = result?.RecommendedIds;
+                return obj == null ? new List<int>() : ((JArray)obj).Select(t => int.Parse((string)t)).ToList();
             }
         }
 

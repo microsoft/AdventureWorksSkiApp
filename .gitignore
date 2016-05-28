@@ -12,3 +12,8 @@ src/SkiResort.Mobile/www/
 src/SkiResort.Web/src/ts/**/*.js
 /src/SkiResort.Web/.vscode
 /src/SkiResort.Mobile/plugins
+**/packages
+/wwwroot/js/app.js.map
+/wwwroot/js/app.js
+/src/SkiResort.Web/wwwroot/azureSearch/index.json
+/src/SkiResort.Web/wwwroot/azureSearch/data.json

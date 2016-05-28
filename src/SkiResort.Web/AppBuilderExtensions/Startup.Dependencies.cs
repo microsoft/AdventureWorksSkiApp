@@ -4,6 +4,7 @@ using AdventureWorks.SkiResort.Infrastructure.Repositories;
 using AdventureWorks.SkiResort.Web.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.WindowsAzure.Storage;
 
 namespace AdventureWorks.SkiResort.Web.AppBuilderExtensions
 {
@@ -20,7 +21,9 @@ namespace AdventureWorks.SkiResort.Web.AppBuilderExtensions
             services.AddScoped<RentalsRepository>();
             services.AddScoped<SummariesRepository>();
             services.AddScoped<SkiResortDataInitializer>();
+            services.AddScoped<AzureSearchDataInitializer>();
             services.AddScoped<UsersRepository>();
+            services.AddScoped(sp => new LiftLinesRepository(CloudStorageAccount.Parse(configuration["Data:TelemetryStorage:Connectionstring"])));
 
             return services;
         }

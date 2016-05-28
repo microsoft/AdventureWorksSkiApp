@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Education Hill",
+    "latitude": 46.934583,
+    "longitude": -121.475373
+  },
+  {
+    "name": "Bear Creek",
+    "latitude": 46.933293,
+    "longitude": -121.473613
+  },
+  {
+    "name": "Overlake Jump",
+    "latitude": 46.932098,
+    "longitude": -121.488774
+  },
+  {
+    "name": "Belltown Express",
+    "latitude": 46.931878,
+    "longitude": -121.486242
+  },
+  {
+    "name": "Grass Lawn Caf",
+    "latitude": 46.926325,
+    "longitude": -121.482487
+  },
+  {
+    "name": "Redmond Way",
+    "latitude": 46.929065,
+    "longitude": -121.481393
+  },
+  {
+    "name": "Borealis",
+    "latitude": 46.934281,
+    "longitude": -121.475664
+  },
+  {
+    "name": "Bear Creek II",
+    "latitude": 46.936523,
+    "longitude": -121.476737
+  }
+]

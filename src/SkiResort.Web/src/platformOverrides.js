@@ -1,0 +1,1 @@
+﻿// Cordova overrides, check /merges/<platform> on the source code.

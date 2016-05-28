@@ -48,7 +48,8 @@ module.exports = {
         typescript_tsconfig: tsRoot + '/tsconfig.json',
         sass_lint: 'scsslint.yml',
         css: cssRoot+ '/main.css',
-        images: srcRoot + '/images/**/*.*'
+        images: srcRoot + '/images/**/*.*',
+        azureSearch: './AzureSearchSampleData/*.json'
     },
     dest: {
         sass: cssRoot,
@@ -61,6 +62,7 @@ module.exports = {
         cordova: '../SkiResort.Mobile/www/',
         icomoon_style: cssRoot,
         icomoon_fonts: destRoot + '/fonts/',
-        images: destRoot + '/images/'
+        images: destRoot + '/images/',
+        azureSearch: destRoot + '/azureSearch/'
     }
 };
