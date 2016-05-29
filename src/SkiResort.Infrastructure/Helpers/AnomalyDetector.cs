@@ -72,8 +72,9 @@ namespace AdventureWorks.SkiResort.Infrastructure.Helpers
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                var message = ex.Message;
             }
 
             return result.ToArray();

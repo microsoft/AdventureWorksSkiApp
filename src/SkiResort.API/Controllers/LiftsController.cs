@@ -43,7 +43,7 @@ namespace AdventureWorks.SkiResort.API.Controllers
 
                 var history = liftHistory.Where(lh => lh.Item1 == lift.Name)
                                          .Select(lh => Tuple.Create(lh.Item2, lh.Item3));
-                lift.StayAway = await AnomalyDetector.SlowChairliftAsync(history);
+                lift.StayAway = ShowStayAway(lift) ? true : await AnomalyDetector.SlowChairliftAsync(history);
             }
 
             return lifts;
@@ -59,6 +59,12 @@ namespace AdventureWorks.SkiResort.API.Controllers
             // 40 passengers/minute on a modern quad
             // A more realistic setup would be to include lift speed as part of the lifts table
             return skiersWaiting.Value / 40;
+        }
+
+        bool ShowStayAway(Lift lift)
+        {
+            // Show Stay Away icon, only to use in a demo to show how the app shows it.
+            return lift.LiftId == 1;
         }
     }
 }

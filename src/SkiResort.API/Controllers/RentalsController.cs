@@ -68,5 +68,6 @@ namespace AdventureWorks.SkiResort.API.Controllers
             // forming. If we estimate more than 150 rentals, let's assume it's going to be a busy day.
             return estimatedRentals.HasValue ? estimatedRentals.Value > 150 : false;
         }
+
     }
 }

@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using System;
 
 namespace AdventureWorks.SkiResort.Infrastructure.AzureSearch
 {

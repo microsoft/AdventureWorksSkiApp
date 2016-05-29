@@ -33,13 +33,25 @@ namespace gen_restaurantssearch
                     var r = recos.GetRecommendation(modelId, new List<string> { id.ToString() }, 3);
                     recommendedIds.AddRange(r.Select(i => i.Id));
                 }
-                actions.Add(IndexAction.MergeOrUpload(new Document { { "RestaurantId", id.ToString() }, { "RecommendedIds", recommendedIds } }));
+                actions.Add(IndexAction.Merge(new Document { { "RestaurantId", id.ToString() }, { "RecommendedIds", recommendedIds } }));
             }
 
             // Assume < 1000 actions, otherwise we'd need to split it in 1000-actions batches
-            DocumentIndexResult indexResult = indexClient.Documents.Index(new IndexBatch(actions));
-            int succeeded = indexResult.Results.Where(r => r.Succeeded).Count();
-            Console.WriteLine($"Indexed completed. Items: {indexResult.Results.Count}, Succeeded: {succeeded}");
+            try
+            {
+                DocumentIndexResult indexResult = indexClient.Documents.Index(new IndexBatch(actions));
+                int succeeded = indexResult.Results.Where(r => r.Succeeded).Count();
+                Console.WriteLine($"Indexed completed. Items: {indexResult.Results.Count}, Succeeded: {succeeded}");
+            }
+            catch (IndexBatchException ex)
+            {
+                // Sometimes when your Search service is under load, indexing will fail for some of the documents in
+                // the batch. Depending on your application, you can take compensating actions like delaying and
+                // retrying. For this simple demo, we just log the failed document keys and continue.
+                Console.WriteLine(
+                    "Failed to index some of the documents: {0}",
+                    string.Join(", ", ex.IndexingResults.Where(r => !r.Succeeded).Select(r => r.Key)));
+            }
         }
 
         private static IEnumerable<int> GetCurrentRestaurantIds()
