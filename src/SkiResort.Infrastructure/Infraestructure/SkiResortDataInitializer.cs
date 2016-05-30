@@ -227,7 +227,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     var restaurant = new Restaurant()
                     {
                         Name = $"{azureword} {type}",
-                        Description = "Enjoy fine food and attentive service. We serve only the freshest ingredients cooked to perfection.",
+                        Description = "Enjoy fine food and attentive service. We only serve the freshest ingredients cooked to perfection.",
                         Address = "15 Ski App Way, Redmond Heights Way, Washington, USA",
                         FamilyFriendly = Randomize.Next(0, 1) == 0 ? false : true,
                         FoodType = (Model.Enums.FoodType)Randomize.Next(1, 2),
