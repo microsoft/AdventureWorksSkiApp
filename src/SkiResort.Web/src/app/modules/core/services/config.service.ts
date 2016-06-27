@@ -9,7 +9,7 @@ module SkiResort.App.Core.Services {
             $log.info('ConfigService initialized');
             if (ionic.Platform.isWebView()) {
                 $log.info(' - WebView detected');
-                this.API.URL = 'http://adventureworkskiresort.azurewebsites.net/';
+                this.API.URL = '';
             } else {
                 $log.info('- Browser detected');
             }
