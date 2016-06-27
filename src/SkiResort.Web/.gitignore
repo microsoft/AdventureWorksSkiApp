@@ -1,6 +1,5 @@
 project.lock.json
 node_modules/
-typings/
 src/app/**/*.js
 wwwroot/css/
 wwwroot/fonts/
