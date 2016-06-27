@@ -107,13 +107,13 @@
     "storageAccount_name": "[concat('storage', uniqueString(resourceGroup().id))]",
 
     "virtualMachine_imagePublisher": "MicrosoftSQLServer",
-    "virtualMachine_imageOffer": "SQL2016RC3-WS2012R2v2",
+    "virtualMachine_imageOffer": "SQL2016-WS2012R2",
     "virtualMachine_OSDiskName": "[concat('osdisk', uniqueString(resourceGroup().id))]",
     "virtualMachine_Name": "[concat('vm', uniqueString(resourceGroup().id))]",
     "virtualMachine_size": "Standard_A3",
     "virtualMachine_nicName": "[concat('nic', uniqueString(resourceGroup().id))]",
     "virtualMachine_storageContainerName": "vhds",
-    "virtualMachine_imageSku": "Evaluation",
+    "virtualMachine_imageSku": "SQLDEV",
 
     "sql_databaseName": "AdventureWorks.SkiResort",
 
