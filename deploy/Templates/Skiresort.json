@@ -78,6 +78,7 @@
       "type": "string",
       "allowedValues": [
         "free",
+        "basic",
         "standard"
       ],
       "defaultValue": "free"
