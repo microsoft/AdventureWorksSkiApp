@@ -10,11 +10,16 @@ module SkiResort.App.Home {
         constructor(
             private $scope,
             private authService: AuthService,
-            private authImageService: AuthImageService
+            private authImageService: AuthImageService,
+            private navigationService: Core.Services.NavigationService
         ) {}
 
         public getImage(id: string): any {
             return this.authImageService.get(id);
+        }
+
+        public goLogin() {
+            this.navigationService.openLogin();
         }
     }
 

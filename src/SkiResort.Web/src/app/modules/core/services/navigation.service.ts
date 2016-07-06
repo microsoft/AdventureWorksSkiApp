@@ -7,7 +7,17 @@ module SkiResort.App.Core.Services {
         constructor(
             private $state: ng.ui.IStateService,
             private $ionicHistory
-        ) {}
+        ) { }
+
+        public openLogin() {
+            var baseUrl = location.href.replace(location.hash, '');
+            location.replace(baseUrl + '#/login');
+        }
+
+        public closeLogin() {
+            var baseUrl = location.href.replace(location.hash, '');
+            location.replace(baseUrl + '#/home');
+        }
 
         public goHome() {
             this.$ionicHistory.nextViewOptions({disableBack: true, historyRoot: true});
@@ -15,10 +25,14 @@ module SkiResort.App.Core.Services {
         }
 
         public goBack() {
-            if (ionic.Platform['is']('browser')) {
-                window.history.back();
+            if (location.hash === "#/login") {
+                this.closeLogin();
             } else {
-                this.$ionicHistory.goBack();
+                if (ionic.Platform['is']('browser')) {
+                    window.history.back();
+                } else {
+                    this.$ionicHistory.goBack();
+                }
             }
         }
     }

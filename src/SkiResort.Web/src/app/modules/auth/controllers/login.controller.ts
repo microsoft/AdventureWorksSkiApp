@@ -12,7 +12,7 @@ module SkiResort.App.Auth.Controllers {
 
         constructor(
             private authService: Services.AuthService,
-            private $ionicHistory
+            private navigationService: Core.Services.NavigationService
         ) {}
 
         public login() {
@@ -21,7 +21,7 @@ module SkiResort.App.Auth.Controllers {
             if (this.loginForm.$valid) {
                 this.authService.login(this.loginData.username, this.loginData.password)
                     .then(() => {
-                        this.$ionicHistory.goBack();
+                        this.navigationService.closeLogin();
                     })
                     .catch(() => {
                         this.wrongPassword = true;

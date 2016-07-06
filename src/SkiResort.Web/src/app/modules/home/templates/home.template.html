@@ -11,7 +11,7 @@
              ng-class="{'ski-home_login--logged-in': currentUser}">
             <div class="ski-home_login-button" ng-if="!currentUser">
                 <button class="button button-full button-dark"
-                        ui-sref="app.login">
+                        ng-click="$ctrl.goLogin()">
                     Login
                 </button>
             </div>
