@@ -19,7 +19,7 @@ $publishProperties = @{'WebPublishMethod'='MSDeploy';
 						'Username'=$ppXml.publishData.FirstChild.userName;
 						'Password'=$ppXml.publishData.FirstChild.userPWD}
 
-$publishScript = "${env:ProgramFiles(x86)}\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\Web Tools\Publish\Scripts\default-publish.ps1"
+$publishScript = "$PSScriptRoot\default-publish.ps1"
 $webPackageFile = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $webPackage))
 $webPackagePath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, "temp"))
 

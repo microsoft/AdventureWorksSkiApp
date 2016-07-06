@@ -41,6 +41,7 @@
     <Content Include="Scripts\Replace-FileString.ps1" />
     <Content Include="Scripts\ConfigureStorage.ps1" />
     <Content Include="Scripts\PublishASPNET.ps1" />
+    <Content Include="Scripts\default-publish.ps1" />
     <None Include="WebApp\SkiResortAdvanced.zip" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
