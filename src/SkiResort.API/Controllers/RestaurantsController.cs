@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Linq;
+using AdventureWorks.SkiResort.Infrastructure.Helpers;
 
 namespace AdventureWorks.SkiResort.API.Controllers
 {
@@ -40,7 +42,11 @@ namespace AdventureWorks.SkiResort.API.Controllers
             if (!IsAzureSearchAvailable())
                 return await _restaurantsRepository.GetNearByAsync(latitude, longitude, _restaurantsCount);
             else
-                return await _restaurantsSearchService.GetNearByAsync(_restaurantsCount);
+            {
+                List<Restaurant> restaurants = await _restaurantsSearchService.GetNearByAsync(_restaurantsCount);
+                return restaurants
+                    .OrderBy(r => MathCoordinates.GetDistance(r.Latitude, r.Longitude, latitude, longitude, 'M'));
+            }
         }
 
         [HttpGet]
