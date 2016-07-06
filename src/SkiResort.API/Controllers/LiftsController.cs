@@ -38,8 +38,7 @@ namespace AdventureWorks.SkiResort.API.Controllers
 
             foreach (var lift in lifts)
             {
-                lift.WaitingTime = lift.Status != LiftStatus.Open ? -1 :
-                    ComputeWaitTime(liftCounts.FirstOrDefault(l => l.Item1 == lift.Name)?.Item2);
+                lift.WaitingTime = GetWaitingTime(liftCounts, lift);
 
                 var history = liftHistory.Where(lh => lh.Item1 == lift.Name)
                                          .Select(lh => Tuple.Create(lh.Item2, lh.Item3));
@@ -47,6 +46,15 @@ namespace AdventureWorks.SkiResort.API.Controllers
             }
 
             return lifts;
+        }
+
+        private int GetWaitingTime(IEnumerable<Tuple<string, int?>> liftCounts, Lift lift)
+        {
+            if (lift.Name == "Education Hill")
+                return 12; // for the demo porpouse this value is fixed.
+
+            return lift.Status != LiftStatus.Open ? -1 :
+                ComputeWaitTime(liftCounts.FirstOrDefault(l => l.Item1 == lift.Name)?.Item2);
         }
 
         private int ComputeWaitTime(int? skiersWaiting)

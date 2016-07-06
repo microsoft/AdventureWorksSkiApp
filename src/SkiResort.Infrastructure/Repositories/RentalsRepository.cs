@@ -58,6 +58,10 @@ namespace AdventureWorks.SkiResort.Infrastructure.Repositories
 
         public Task<int?> EstimateRentalsAsync(DateTimeOffset date, bool snowedDayBefore, bool holiday)
         {
+            // Only for demo porpouse this date is fixed
+            if (date.Date == new DateTime(2017, 1, 2))
+                return Task.FromResult<int?>(450);
+
             return _context.EstimateRentalsAsync(date, snowedDayBefore, holiday);
         }
     }

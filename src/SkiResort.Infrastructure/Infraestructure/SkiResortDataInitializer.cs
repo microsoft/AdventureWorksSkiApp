@@ -76,11 +76,11 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                 var summary = new Summary()
                 {
                     DateTime = DateTime.UtcNow.AddHours(i),
-                    BaseDepth = Randomize.Next(40, 60),
-                    MaxTemperature = Randomize.Next(40, 50),
-                    MinTemperature = Randomize.Next(10, 27),
-                    Wind = Randomize.Next(5, 10),
-                    Weather = (Model.Enums.Weather)Randomize.Next(1, 4)
+                    BaseDepth = 42,
+                    MaxTemperature = 43,
+                    MinTemperature = 27,
+                    Wind = 7,
+                    Weather = Model.Enums.Weather.Snowing
                 };
 
                 summaries.Add(summary);
@@ -110,7 +110,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Photo = GetRestaurant(1),
                     Phone = "5555-5555",
                     PriceLevel = Model.Enums.PriceLevel.Low,
-                    Rating = Randomize.Next(3, 5),
+                    Rating = 3,
                     TakeAway = true
                 },
                 new Restaurant()
@@ -126,7 +126,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Photo = GetRestaurant(2),
                     Phone = "5555-5555",
                     PriceLevel = Model.Enums.PriceLevel.Medium,
-                    Rating = Randomize.Next(3, 5),
+                    Rating = 4,
                     TakeAway = true
                 },
                 new Restaurant()
@@ -142,7 +142,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Photo = GetRestaurant(3),
                     Phone = "5555-5555",
                     PriceLevel = Model.Enums.PriceLevel.Low,
-                    Rating = Randomize.Next(3, 5),
+                    Rating = 5,
                     TakeAway = false
                 },
                 new Restaurant()
@@ -158,7 +158,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Photo = GetRestaurant(4),
                     Phone = "5555-5555",
                     PriceLevel = Model.Enums.PriceLevel.Hight,
-                    Rating = Randomize.Next(3, 5),
+                    Rating = 3,
                     TakeAway = true
                 },
                 new Restaurant()
@@ -174,7 +174,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Photo = GetRestaurant(5),
                     Phone = "5555-5555",
                     PriceLevel = Model.Enums.PriceLevel.Low,
-                    Rating = Randomize.Next(3, 5),
+                    Rating = 4,
                     TakeAway = true
                 },
                 new Restaurant()
@@ -190,7 +190,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Photo = GetRestaurant(6),
                     Phone = "5555-5555",
                     PriceLevel = Model.Enums.PriceLevel.Low,
-                    Rating = Randomize.Next(3, 5),
+                    Rating = 5,
                     TakeAway = false
                 },
                 new Restaurant()
@@ -206,7 +206,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Photo = GetRestaurant(1),
                     Phone = "5555-5555",
                     PriceLevel = Model.Enums.PriceLevel.Low,
-                    Rating = Randomize.Next(3, 5),
+                    Rating = 6,
                     TakeAway = false
                 }
             };
@@ -220,29 +220,30 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
             string[] azurewords = {"SQL Server", "App Service", "Azure", "Virtual Machine", "Logic App", "Mobile App",
                 "API App", "DocumentDB", "Redis", "Data Lake", "ServiceBus", "Storage", "Files", "Batch", "HPC"};
 
-            string[] types = { "Bar", "Grill", "Café", "Snack Shack", "BrewPub", "Restaurant", "Tavern" };
+            string[] types = { "Bar", "Grill", "Café", "Snack Shack", "BrewPub", "Restaurant" };
 
+            int count = 0;
             foreach (var azureword in azurewords)
             {
-                foreach (var type in types)
+                for (int type = 1; type <= 6; type++)
                 {
                     var restaurant = new Restaurant()
                     {
-                        Name = $"{azureword} {type}",
+                        Name = $"{azureword} {types[type - 1]}",
                         Description = "Enjoy fine food and attentive service. We only serve the freshest ingredients cooked to perfection.",
                         Address = "15 Ski App Way, Redmond Heights Way, Washington, USA",
-                        FamilyFriendly = Randomize.Next(0, 2) == 0 ? false : true,
-                        FoodType = (Model.Enums.FoodType)Randomize.Next(1, 3),
-                        Latitude = 40.733847,
-                        Longitude = -74.307326,
-                        LevelOfNoise = (Model.Enums.Noise)Randomize.Next(1, 4),
-                        Photo = GetRestaurant(Randomize.Next(1, 6)),
+                        FamilyFriendly = count % 2 != 0 ? false : true,
+                        FoodType = count % 2 != 0 ? Model.Enums.FoodType.American : Model.Enums.FoodType.Spanish,
+                        Latitude = 40.833847,
+                        Longitude = -74.407326,
+                        LevelOfNoise = count % 2 != 0 ? Model.Enums.Noise.Low : Model.Enums.Noise.Medium,
+                        Photo = GetRestaurant(type),
                         Phone = "5555-5555",
-                        PriceLevel = (Model.Enums.PriceLevel)Randomize.Next(1, 4),
-                        Rating = Randomize.Next(3, 6),
-                        TakeAway = false
+                        PriceLevel = count % 2 != 0 ? Model.Enums.PriceLevel.Hight : Model.Enums.PriceLevel.Medium,
+                        Rating = count % 2 != 0 ? 3 : 4,
+                        TakeAway = count % 2 != 0 ? false : true,
                     };
-
+                    count++;
                     context.Restaurants.Add(restaurant);
                     await context.SaveChangesAsync();
                 }
@@ -264,7 +265,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Rating = Model.Enums.LiftRating.Advanced,
                     Status =  Model.Enums.LiftStatus.Open,
                     StayAway = true,
-                    WaitingTime = Randomize.Next(1, 20)
+                    WaitingTime = 12
                 },
                 new Lift()
                 {
@@ -275,7 +276,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Rating = Model.Enums.LiftRating.Intermediate,
                     Status =  Model.Enums.LiftStatus.Open,
                     StayAway = false,
-                    WaitingTime = Randomize.Next(1, 20)
+                    WaitingTime = 5
                 },
                 new Lift()
                 {
@@ -286,7 +287,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Rating = Model.Enums.LiftRating.Intermediate,
                     Status =  Model.Enums.LiftStatus.Open,
                     StayAway = false,
-                    WaitingTime = Randomize.Next(1, 20)
+                    WaitingTime = 2
                 },
                 new Lift()
                 {
@@ -297,7 +298,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Rating = Model.Enums.LiftRating.Beginner,
                     Status =  Model.Enums.LiftStatus.Open,
                     StayAway = false,
-                    WaitingTime = Randomize.Next(1, 20)
+                    WaitingTime = 2
                 },
                 new Lift()
                 {
@@ -308,7 +309,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Rating = Model.Enums.LiftRating.Beginner,
                     Status =  Model.Enums.LiftStatus.Open,
                     StayAway = false,
-                    WaitingTime = Randomize.Next(1, 20)
+                    WaitingTime = 3
                 },
                 new Lift()
                 {
@@ -319,7 +320,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Rating = Model.Enums.LiftRating.Advanced,
                     Status =  Model.Enums.LiftStatus.Closed,
                     StayAway = false,
-                    WaitingTime = Randomize.Next(1, 20)
+                    WaitingTime = 0
                 },
                 new Lift()
                 {
@@ -330,7 +331,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Rating = Model.Enums.LiftRating.Intermediate,
                     Status =  Model.Enums.LiftStatus.Closed,
                     StayAway = false,
-                    WaitingTime = Randomize.Next(1, 20)
+                    WaitingTime = 0
                 },
                 new Lift()
                 {
@@ -341,7 +342,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Rating = Model.Enums.LiftRating.Intermediate,
                     Status =  Model.Enums.LiftStatus.Closed,
                     StayAway = false,
-                    WaitingTime = Randomize.Next(1, 20)
+                    WaitingTime = 0
                 }
 
             };
@@ -363,11 +364,11 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Activity = Model.Enums.RentalActivity.Ski,
                     Category = Model.Enums.RentalCategory.Advanced,
                     Goal = Model.Enums.RentalGoal.Performance,
-                    PickupHour = Randomize.Next(7, 10),
-                    ShoeSize = Randomize.Next(7, 10),
-                    PoleSize = Randomize.Next(20, 80),
-                    SkiSize = Randomize.Next(20, 80),
-                    TotalCost = Randomize.Next(50, 200)
+                    PickupHour = 7,
+                    ShoeSize = 7,
+                    PoleSize = 22,
+                    SkiSize = 20,
+                    TotalCost = 50
                 },
                 new Rental()
                 {
@@ -377,11 +378,11 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Activity = Model.Enums.RentalActivity.Snowboard,
                     Category = Model.Enums.RentalCategory.Beginner,
                     Goal = Model.Enums.RentalGoal.Demo,
-                    PickupHour = Randomize.Next(7, 10),
-                    ShoeSize = Randomize.Next(7, 10),
-                    PoleSize = Randomize.Next(20, 80),
-                    SkiSize = Randomize.Next(20, 80),
-                    TotalCost = Randomize.Next(50, 200)
+                    PickupHour = 8,
+                    ShoeSize = 9,
+                    PoleSize = 60,
+                    SkiSize = 60,
+                    TotalCost = 65
                 },
                 new Rental()
                 {
@@ -391,11 +392,11 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Activity = Model.Enums.RentalActivity.Snowboard,
                     Category = Model.Enums.RentalCategory.Beginner,
                     Goal = Model.Enums.RentalGoal.Demo,
-                    PickupHour = Randomize.Next(7, 10),
-                    ShoeSize = Randomize.Next(7, 10),
-                    PoleSize = Randomize.Next(20, 80),
-                    SkiSize = Randomize.Next(20, 80),
-                    TotalCost = Randomize.Next(50, 200)
+                    PickupHour = 9,
+                    ShoeSize = 10,
+                    PoleSize = 80,
+                    SkiSize = 80,
+                    TotalCost = 70
                 }
             };
 
