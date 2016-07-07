@@ -45,7 +45,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.AzureSearch
         public async Task<List<int>> GetRecommendationsAsync(string searchtext, int count)
         {
             int id = int.Parse(searchtext); // roundtrip through int to ensure it's a number
-            string uri = $"https://{_serviceName}.search.windows.net/indexes/{_indexer}/docs/{id}?api-version=2015-02-28";
+            string uri = $"https://{_serviceName}.search.windows.net/indexes/{_indexer}/docs/{id.ToString("00")}?api-version=2015-02-28";
 
             using (var _httpClient = new HttpClient())
             {
