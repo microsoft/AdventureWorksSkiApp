@@ -203,10 +203,58 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                     Latitude = 40.723847,
                     Longitude = -74.007326,
                     LevelOfNoise = Model.Enums.Noise.Loud,
-                    Photo = GetRestaurant(1),
+                    Photo = GetRestaurant(7),
                     Phone = "5555-5555",
                     PriceLevel = Model.Enums.PriceLevel.Low,
                     Rating = 6,
+                    TakeAway = false
+                },
+                new Restaurant()
+                {
+                    Name = "SQL Server Bar",
+                    Description = defaultDescription,
+                    Address = defaultAddress,
+                    FamilyFriendly = false,
+                    FoodType = Model.Enums.FoodType.American,
+                    Latitude = 40.833847,
+                    Longitude = -74.407326,
+                    LevelOfNoise = Model.Enums.Noise.Medium,
+                    Photo = GetRestaurant(8),
+                    Phone = "5555-5555",
+                    PriceLevel = Model.Enums.PriceLevel.Medium,
+                    Rating = 4,
+                    TakeAway = false
+                },
+                new Restaurant()
+                {
+                    Name = "SQL Server Grill",
+                    Description = defaultDescription,
+                    Address = defaultAddress,
+                    FamilyFriendly = false,
+                    FoodType = Model.Enums.FoodType.American,
+                    Latitude = 40.833847,
+                    Longitude = -74.407326,
+                    LevelOfNoise = Model.Enums.Noise.Medium,
+                    Photo = GetRestaurant(9),
+                    Phone = "5555-5555",
+                    PriceLevel = Model.Enums.PriceLevel.Medium,
+                    Rating = 4,
+                    TakeAway = false
+                },
+                new Restaurant()
+                {
+                    Name = "SQL Server Café",
+                    Description = defaultDescription,
+                    Address = defaultAddress,
+                    FamilyFriendly = false,
+                    FoodType = Model.Enums.FoodType.American,
+                    Latitude = 40.723847,
+                    Longitude = -74.007326,
+                    LevelOfNoise = Model.Enums.Noise.Low,
+                    Photo = GetRestaurant(10),
+                    Phone = "5555-5555",
+                    PriceLevel = Model.Enums.PriceLevel.Medium,
+                    Rating = 4,
                     TakeAway = false
                 }
             };

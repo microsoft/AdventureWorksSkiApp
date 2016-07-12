@@ -17,3 +17,4 @@ src/SkiResort.Web/src/ts/**/*.js
 /wwwroot/js/app.js
 /src/SkiResort.Web/wwwroot/azureSearch/index.json
 /src/SkiResort.Web/wwwroot/azureSearch/data.json
+/src/**/*.lock.json
