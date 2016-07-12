@@ -11,4 +11,8 @@ src/SkiResort.Mobile/platforms/
 src/SkiResort.Mobile/www/
 src/SkiResort.Web/src/ts/**/*.js
 /src/SkiResort.Web/.vscode
+/src/**/*.lock.json
 /src/SkiResort.Mobile/plugins
+/wwwroot/js/*.js
+/src/SkiResort.Web/wwwroot/**/*.json
+/wwwroot/js/app.js.map

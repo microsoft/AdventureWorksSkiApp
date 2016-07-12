@@ -28,7 +28,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Repositories
         public async Task<IEnumerable<Restaurant>> GetNearByAsync(double latitude, double longitude, int count)
         {
             return await _context.Restaurants
-                .OrderBy(r => MathCoordinates.GetDistance(r.Latitude, r.Longitude, latitude, longitude, 'M'))
+                .OrderBy(r => r.RestaurantId)
                 .Select(r => new Restaurant()
                 {
                     RestaurantId = r.RestaurantId,
