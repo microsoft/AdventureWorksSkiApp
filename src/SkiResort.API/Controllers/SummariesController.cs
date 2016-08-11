@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using AdventureWorks.SkiResort.Infrastructure.Model;
+﻿using AdventureWorks.SkiResort.Infrastructure.Model;
 using AdventureWorks.SkiResort.Infrastructure.Repositories;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using AdventureWorks.SkiResort.Infrastructure.Model.Enums;
-using Newtonsoft.Json;
 
 namespace AdventureWorks.SkiResort.API.Controllers
 {

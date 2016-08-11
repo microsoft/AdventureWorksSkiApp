@@ -23,7 +23,7 @@ namespace AdventureWorks.SkiResort.Web.AppBuilderExtensions
             services.AddScoped<SkiResortDataInitializer>();
             services.AddScoped<AzureSearchDataInitializer>();
             services.AddScoped<UsersRepository>();
-            services.AddScoped(sp => new LiftLinesRepository(CloudStorageAccount.Parse(configuration["Data:TelemetryStorage:Connectionstring"])));
+            services.AddScoped(sp => new LiftLinesRepository(CloudStorageAccount.Parse(configuration.GetConnectionString("TelemetryStorage"))));
 
             return services;
         }

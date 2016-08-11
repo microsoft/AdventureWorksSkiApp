@@ -1,9 +1,11 @@
 ﻿using AdventureWorks.SkiResort.Infrastructure.Model;
 using AdventureWorks.SkiResort.Infrastructure.Repositories;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Configuration;
 
 namespace AdventureWorks.SkiResort.API.Controllers
 {
@@ -11,17 +13,19 @@ namespace AdventureWorks.SkiResort.API.Controllers
     public class UsersController : Controller
     {
         private readonly UsersRepository _usersRepository;
+        private readonly IConfigurationRoot _configuration;
 
-        public UsersController(UsersRepository usersRepository)
+        public UsersController(UsersRepository usersRepository, IConfigurationRoot configuration)
         {
             _usersRepository = usersRepository;
+            _configuration = configuration;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("user")]
         public async Task<ApplicationUser> GetUserAsync()
         {
-            return await _usersRepository.GetUserAsync(User.Identity.Name);
+            return await _usersRepository.GetUserAsync(GetUser());
         }
 
         [HttpGet]
@@ -32,9 +36,18 @@ namespace AdventureWorks.SkiResort.API.Controllers
             var photo = await _usersRepository.GetPhotoAsync(userId);
             if (photo == null)
             {
-                return HttpBadRequest();
+                return BadRequest();
             }
             return new FileStreamResult(new MemoryStream(photo), "image/jpeg");
+        }
+
+        string GetUser()
+        {
+            if (User.Identity.IsAuthenticated)
+                return User.Identity.Name;
+            else
+                // Used in demos to allow not authenticated scenarios.
+                return _configuration["DefaultUsername"];
         }
     }
 }

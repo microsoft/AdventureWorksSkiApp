@@ -6,7 +6,7 @@ using AdventureWorks.SkiResort.Infrastructure.Helpers;
 using AdventureWorks.SkiResort.Infrastructure.Model;
 using AdventureWorks.SkiResort.Infrastructure.Model.Enums;
 using AdventureWorks.SkiResort.Infrastructure.Repositories;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdventureWorks.SkiResort.API.Controllers
 {

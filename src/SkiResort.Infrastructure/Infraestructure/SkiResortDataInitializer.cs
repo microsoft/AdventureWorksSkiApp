@@ -1,13 +1,13 @@
-﻿using AdventureWorks.SkiResort.Infrastructure.Context;
-using AdventureWorks.SkiResort.Infrastructure.Model;
-using Microsoft.AspNet.Identity;
-using Microsoft.Data.Entity;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.PlatformAbstractions;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using AdventureWorks.SkiResort.Infrastructure.Context;
+using AdventureWorks.SkiResort.Infrastructure.Model;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
 
 namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
 {
@@ -42,10 +42,10 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
         private static async Task CreateDefaultUser(IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
-            var applicationEnvironment = serviceProvider.GetService<IApplicationEnvironment>();
+            var env = serviceProvider.GetService<IHostingEnvironment>();
 
             var builder = new ConfigurationBuilder()
-                .SetBasePath(applicationEnvironment.ApplicationBasePath)
+                .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables();
 
@@ -472,7 +472,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
 
             // Column store for rentals table
             await context.Database.ExecuteSqlCommandAsync(
-            @"CREATE NONCLUSTERED COLUMNSTORE INDEX RentalsCounts ON Rental (StartDate)");
+            @"CREATE NONCLUSTERED COLUMNSTORE INDEX RentalsCounts ON Rentals (StartDate)");
 
             // A place to store rental predictions trained model
             await context.Database.ExecuteSqlCommandAsync(
@@ -484,9 +484,9 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
             SELECT rr.Year, rr.Month, rr.Day, rr.RentalCount, DATEPART(WEEKDAY, DATEFROMPARTS(rr.Year, rr.Month, rr.Day)) WeekDay, CONVERT(BIT, IIF(h.Date IS NULL, 0, 1)) Holiday, w.Snow
             FROM
                 (SELECT YEAR(r.StartDate) Year, MONTH(r.StartDate) Month, DAY(r.StartDate) Day, COUNT(*) RentalCount
-                 FROM Rental r
+                 FROM Rentals r
                  GROUP BY YEAR(r.StartDate), MONTH(r.StartDate), DAY(r.StartDate)) rr
-            LEFT OUTER JOIN Holiday h ON rr.Year = YEAR(h.Date) AND rr.Month = MONTH(h.Date) AND rr.Day = DAY(h.Date)
+            LEFT OUTER JOIN Holidays h ON rr.Year = YEAR(h.Date) AND rr.Month = MONTH(h.Date) AND rr.Day = DAY(h.Date)
             LEFT OUTER JOIN WeatherHistory w ON rr.Year = YEAR(w.Date) AND rr.Month = MONTH(w.Date) AND rr.Day = DAY(w.Date)");
 
             await context.Database.ExecuteSqlCommandAsync(
@@ -503,8 +503,8 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
 
 	            BEGIN TRY
 		            BEGIN TRANSACTION
-		            DELETE FROM Model
-		            INSERT INTO Model
+		            DELETE FROM Models
+		            INSERT INTO Models
 		            EXEC sp_execute_external_script @language = N'R', @script = @s, @input_data_1 = @q, @output_data_1_name = N'serialized'
 		            COMMIT
 	            END TRY
@@ -517,7 +517,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
             await context.Database.ExecuteSqlCommandAsync(
             @"CREATE PROCEDURE PredictRentals @q NVARCHAR(MAX) AS
             BEGIN
-	            DECLARE @serialized VARBINARY(MAX) = (SELECT TOP 1 Serialized FROM Model)
+	            DECLARE @serialized VARBINARY(MAX) = (SELECT TOP 1 Serialized FROM Models)
 	            DECLARE @s NVARCHAR(MAX) = N'
             rentals = InputDataSet
             rentals$FHoliday = factor(rentals$Holiday)

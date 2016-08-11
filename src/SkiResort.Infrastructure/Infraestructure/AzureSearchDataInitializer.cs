@@ -1,7 +1,4 @@
-﻿
-
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -18,9 +15,9 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
 
         public AzureSearchDataInitializer(IConfigurationRoot configuration)
         {
-            _serviceName = configuration.Get<string>("SearchConfig:ServiceName");
-            _apiKey = configuration.Get<string>("SearchConfig:ApiKey");
-            _indexer = configuration.Get<string>("SearchConfig:Indexer");
+            _serviceName = configuration["SearchConfig:ServiceName"];
+            _apiKey = configuration["SearchConfig:ApiKey"];
+            _indexer = configuration["SearchConfig:Indexer"];
         }
 
         public async Task Initialize()

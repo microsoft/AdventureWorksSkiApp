@@ -18,7 +18,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Helpers
 
         public static void Initialize(IConfiguration configuration)
         {
-            string key = configuration["Data:AnomalyDetection:Key"];
+            string key = configuration["AnomalyDetection:Key"];
             string auth = Convert.ToBase64String(Encoding.ASCII.GetBytes($"any:{key}"));
             _client = new HttpClient();
             _client.DefaultRequestHeaders.Add("Authorization", $"Basic {auth}");

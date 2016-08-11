@@ -2,32 +2,24 @@
   "version": "1.0.0-*",
   "description": "Adventure Works Ski Resort",
   "authors": [ "Microsoft" ],
-  "compilationOptions": {
-    "warningsAsErrors": true 
-  },
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
 
   "dependencies": {
-    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
-    "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0-rc1-final",
-    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
-    "Microsoft.Net.Http.Server": "1.0.0-rc1-final",
-    "SkiResort.Infrastructure": "",
-    "WindowsAzure.Storage": "6.2.2-preview"
+    "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.0.0",
+    "Microsoft.AspNetCore.Routing": "1.0.0",
+    "NETStandard.Library": "1.6.0",
+    "SkiResort.Infrastructure": "1.0.0-*"
   },
 
   "frameworks": {
-    "net451": { },
-    "dotnet5.4": {
-      "dependencies": {
-        "Microsoft.CSharp": "4.0.1-beta-23516",
-        "System.Collections": "4.0.11-beta-23516",
-        "System.Linq": "4.0.1-beta-23516",
-        "System.Runtime": "4.0.21-beta-23516",
-        "System.Threading": "4.0.11-beta-23516"
-      }
+    "netstandard1.6": {
+      "imports": [
+        "dnxcore50",
+        "portable-net451+win8"
+      ]
     }
+  },
+
+  "buildOptions": {
+    "warningsAsErrors": true
   }
 }
