@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using AdventureWorks.SkiResort.Infrastructure.Helpers;
 using AdventureWorks.SkiResort.Infrastructure.Model;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdventureWorks.SkiResort.Infrastructure.Repositories
 {

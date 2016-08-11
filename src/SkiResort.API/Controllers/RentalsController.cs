@@ -1,6 +1,6 @@
 ﻿using AdventureWorks.SkiResort.Infrastructure.Model;
 using AdventureWorks.SkiResort.Infrastructure.Repositories;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -39,7 +39,7 @@ namespace AdventureWorks.SkiResort.API.Controllers
             }
             else
             {
-                return HttpBadRequest(ModelState);
+                return BadRequest(ModelState);
             }
         }
 

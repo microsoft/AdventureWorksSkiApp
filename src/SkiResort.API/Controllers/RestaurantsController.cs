@@ -1,7 +1,7 @@
 ﻿using AdventureWorks.SkiResort.Infrastructure.AzureSearch;
 using AdventureWorks.SkiResort.Infrastructure.Model;
 using AdventureWorks.SkiResort.Infrastructure.Repositories;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +14,7 @@ namespace AdventureWorks.SkiResort.API.Controllers
     {
         private readonly RestaurantsRepository _restaurantsRepository = null;
         private readonly RestaurantsSearchService _restaurantsSearchService = null;
-        private readonly IConfigurationRoot _configuration = null;
+        private readonly IConfiguration _configuration = null;
         private const int _restaurantsCount = 10;
         private const int _recommendationsCount = 3;
 
@@ -61,14 +61,16 @@ namespace AdventureWorks.SkiResort.API.Controllers
             var image = await _restaurantsRepository.GetPhotoAsync(id);
             if (image == null)
             {
-                return HttpBadRequest();
+                return BadRequest();
             }
             return new FileStreamResult(new MemoryStream(image), "image/jpeg");
         }
 
         private bool IsAzureSearchAvailable()
         {
-            return _configuration.Get<bool>("SearchConfig:UseAzureSearch");
+            bool available = false;
+            bool.TryParse(_configuration["SearchConfig:UseAzureSearch"], out available);
+            return available;
         }
     }
 }

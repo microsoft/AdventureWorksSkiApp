@@ -1,11 +1,11 @@
 ﻿using AdventureWorks.SkiResort.Infrastructure.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace AdventureWorks.SkiResort.Infrastructure.AzureSearch
 {
@@ -19,10 +19,10 @@ namespace AdventureWorks.SkiResort.Infrastructure.AzureSearch
 
         public RestaurantsSearchService(IConfigurationRoot configuration)
         {
-            _serviceName = configuration.Get<string>("SearchConfig:ServiceName");
-            _apiKey = configuration.Get<string>("SearchConfig:ApiKey");
-            _indexer = configuration.Get<string>("SearchConfig:Indexer");
-            _suggesterName = configuration.Get<string>("SearchConfig:Suggester");
+            _serviceName = configuration["SearchConfig:ServiceName"];
+            _apiKey = configuration["SearchConfig:ApiKey"];
+            _indexer = configuration["SearchConfig:Indexer"];
+            _suggesterName = configuration["SearchConfig:Suggester"];
         }
 
         public async Task<List<Restaurant>> GetNearByAsync(int count)

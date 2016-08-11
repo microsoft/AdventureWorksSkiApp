@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using AdventureWorks.SkiResort.Infrastructure.Model;
 using System.Collections.Generic;
-using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.AspNetCore.Hosting;
 
 namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
 {
@@ -41,10 +41,10 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
         private static async Task CreateDefaultUser(IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetService<UserManager<ApplicationUser>>();
-            var applicationEnvironment = serviceProvider.GetService<IApplicationEnvironment>();
+            var env = serviceProvider.GetService<IHostingEnvironment>();
 
             var builder = new ConfigurationBuilder()
-                .SetBasePath(applicationEnvironment.ApplicationBasePath)
+                .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables();
 

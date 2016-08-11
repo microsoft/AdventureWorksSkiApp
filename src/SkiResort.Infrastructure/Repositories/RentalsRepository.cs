@@ -1,7 +1,7 @@
 ﻿
 using AdventureWorks.SkiResort.Infrastructure.Context;
 using AdventureWorks.SkiResort.Infrastructure.Model;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;

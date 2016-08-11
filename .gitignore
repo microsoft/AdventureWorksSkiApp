@@ -16,3 +16,5 @@ src/SkiResort.Web/src/ts/**/*.js
 /wwwroot/js/*.js
 /src/SkiResort.Web/wwwroot/**/*.json
 /wwwroot/js/app.js.map
+**/packages/
+

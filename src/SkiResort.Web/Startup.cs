@@ -3,14 +3,15 @@ using AdventureWorks.SkiResort.Infrastructure.Infraestructure;
 using AdventureWorks.SkiResort.Infrastructure.Model;
 using AdventureWorks.SkiResort.Web.AppBuilderExtensions;
 using AdventureWorks.SkiResort.Web.Infrastructure;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.OptionsModel;
-using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens;
@@ -20,42 +21,33 @@ namespace AdventureWorks.SkiResort.Web
 {
     public class Startup
     {
-        private readonly Platform _Platform;
-        private readonly IApplicationEnvironment _environment;
+        public IConfigurationRoot Configuration { get; set; }
 
-        public Startup(IHostingEnvironment env, IRuntimeEnvironment runtimeEnvironment, IApplicationEnvironment appEnv)
+        public Startup(IHostingEnvironment env)
         {
-            // Set up configuration sources.
             var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
             if (env.IsDevelopment())
             {
                 builder.AddApplicationInsightsSettings(developerMode: true);
             }
 
+            builder.AddEnvironmentVariables();
             Configuration = builder.Build();
-            _environment = appEnv;
-            _Platform = new Platform(runtimeEnvironment);
         }
 
-        public IConfigurationRoot Configuration { get; set; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var useInMemoryStore = !_Platform.IsRunningOnWindows || _Platform.IsRunningOnMono || _Platform.IsRunningOnNanoServer;
-
-            services.ConfigureDataContext(Configuration, useInMemoryStore);
+            var connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<SkiResortContext>(options => options.UseSqlServer(connection));
 
             // Register dependencies
             services.ConfigureDependencies(Configuration);
 
-            services.AddCaching();
-
-            services.Configure<SecurityConfig>(Configuration.GetSection("Security"));
+            services.AddMemoryCache();
 
             // Add Identity services to the services container.
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -71,60 +63,70 @@ namespace AdventureWorks.SkiResort.Web
                     new CamelCasePropertyNamesContractResolver();
             });
 
+            services.AddSession();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public async void Configure(
             IApplicationBuilder app,
+            IHostingEnvironment env,
             ILoggerFactory loggerFactory,
             AuthorizationProvider authorizationProvider,
-            IOptions<SecurityConfig> securityConfig,
             SkiResortDataInitializer dataInitializer)
         {
             // Add Application Insights monitoring to the request pipeline as a very first middleware.
             app.UseApplicationInsightsRequestTelemetry();
 
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            loggerFactory.AddConsole();
 
-            // Default is index 
             app.UseDefaultFiles(
-                new Microsoft.AspNet.StaticFiles.DefaultFilesOptions()
+                new DefaultFilesOptions()
                 {
                     DefaultFileNames = new[] { "index.html" }
                 }
             );
 
-            app.UseIISPlatformHandler();
+            // Add the following to the request pipeline only in development environment.
+            if (env.IsDevelopment())
+            {
+                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
 
             // Add Application Insights exceptions handling to the request pipeline.
             app.UseApplicationInsightsExceptionTelemetry();
 
+            // Add static files to the request pipeline.
             app.UseStaticFiles();
 
-            // Basic openId.connect server
+            app.UseSession();
+
+            //Basic openId.connect server
             app.UseOpenIdConnectServer(options =>
             {
                 options.Provider = authorizationProvider;
                 options.AllowInsecureHttp = true;
+                options.ApplicationCanDisplayErrors = true;
             });
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap = new Dictionary<string, string>();
 
             // Jwt bearer token validation middleware
-            app.UseJwtBearerAuthentication(options =>
+            app.UseJwtBearerAuthentication(new JwtBearerOptions()
             {
-                options.Authority = securityConfig.Value.Authority;
-                options.Audience = securityConfig.Value.Audience;
-
-                options.RequireHttpsMetadata = false;
-
-                options.TokenValidationParameters = new TokenValidationParameters
+                Authority = Configuration["Security:Authority"],
+                Audience = Configuration["Security:Audience"],
+                RequireHttpsMetadata = false,
+                TokenValidationParameters = new TokenValidationParameters
                 {
                     NameClaimType = "sub"
-                };
-
-                options.AutomaticAuthenticate = true;
+                },
+                AutomaticAuthenticate = true
             });
 
             app.UseMiddleware<RequiredScopesMiddleware>(new List<string> { "api" });
@@ -134,7 +136,5 @@ namespace AdventureWorks.SkiResort.Web
             await dataInitializer.InitializeDatabaseAsync(app.ApplicationServices);
         }
 
-        // Entry point for the application.
-        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }
