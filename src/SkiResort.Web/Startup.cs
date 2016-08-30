@@ -11,12 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
-using AdventureWorks.SkiResort.Infrastructure.AzureSearch;
+using AspNet.Security.OAuth.Validation;
 
 namespace SkiResort.Web
 {
@@ -49,6 +46,8 @@ namespace SkiResort.Web
             services.ConfigureDependencies(Configuration);
 
             services.AddMemoryCache();
+
+            services.AddAuthentication();
 
             // Add Identity services to the services container.
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -117,19 +116,10 @@ namespace SkiResort.Web
                 options.ApplicationCanDisplayErrors = true;
             });
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap = new Dictionary<string, string>();
-
-            // Jwt bearer token validation middleware
-            app.UseJwtBearerAuthentication(new JwtBearerOptions()
+            app.UseOAuthValidation(new OAuthValidationOptions
             {
-                Authority = Configuration["Security:Authority"],
-                Audience = Configuration["Security:Audience"],
-                RequireHttpsMetadata = false,
-                TokenValidationParameters = new TokenValidationParameters
-                {
-                    NameClaimType = "sub"
-                },
-                AutomaticAuthenticate = true
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
             });
 
             app.UseMiddleware<RequiredScopesMiddleware>(new List<string> { "api" });

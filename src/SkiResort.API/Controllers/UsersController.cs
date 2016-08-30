@@ -21,7 +21,7 @@ namespace AdventureWorks.SkiResort.API.Controllers
             _configuration = configuration;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("user")]
         public async Task<ApplicationUser> GetUserAsync()
         {
@@ -44,7 +44,7 @@ namespace AdventureWorks.SkiResort.API.Controllers
         string GetUser()
         {
             if (User.Identity.IsAuthenticated)
-                return User.Identity.Name;
+                return User.FindFirst("username").Value;
             else
                 // Used in demos to allow not authenticated scenarios.
                 return _configuration["DefaultUsername"];
