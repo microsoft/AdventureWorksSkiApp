@@ -53,7 +53,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 _httpClient.DefaultRequestHeaders.Add("api-key", _apiKey);
 
-                string file = File.ReadAllText("azureSearch/index.json");
+                string file = File.ReadAllText("wwwroot/azureSearch/index.json");
                 await _httpClient.PostAsync(uri, new StringContent(file, Encoding.UTF8, "application/json"));
             }
         }
@@ -67,7 +67,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 _httpClient.DefaultRequestHeaders.Add("api-key", _apiKey);
 
-                string file = File.ReadAllText("azureSearch/data.json");
+                string file = File.ReadAllText("wwwroot/azureSearch/data.json");
                 await _httpClient.PostAsync(uri, new StringContent(file, Encoding.UTF8, "application/json"));
             }
         }
