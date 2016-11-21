@@ -11,11 +11,11 @@ Prerequisites
 
 -   [.NET Core SDK Visual Studio Tools](https://go.microsoft.com/fwlink/?LinkId=798481)
 
-> > **gulp and bower installed as global.**
+-   **gulp and bower installed as global**
 
--   npm install bower -g
+    -   npm install bower -g
 
--   npm install gulp -g
+    -   npm install gulp -g
 
 Intelligent Applications
 ========================
