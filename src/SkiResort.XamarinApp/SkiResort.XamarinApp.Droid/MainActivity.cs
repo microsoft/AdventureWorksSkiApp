@@ -6,10 +6,16 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace SkiResort.XamarinApp.Droid
 {
-    [Activity(Label = "SkiResort.XamarinApp", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(
+        Label = "SkiResort.XamarinApp",
+        Icon = "@drawable/icon",
+        Theme = "@style/MainTheme",
+        MainLauncher = true,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -18,6 +24,9 @@ namespace SkiResort.XamarinApp.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
+
+            SupportToolbar toolbar = FindViewById<SupportToolbar>(ToolbarResource);
+            SetSupportActionBar(toolbar);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());

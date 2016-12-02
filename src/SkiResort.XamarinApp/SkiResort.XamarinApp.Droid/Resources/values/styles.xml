@@ -2,6 +2,7 @@
 <resources>
 
   <style name="MainTheme" parent="MainTheme.Base">
+    <item name="colorPrimaryDark">#000000</item>
   </style>
   <!-- Base theme applied no matter what API -->
   <style name="MainTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">

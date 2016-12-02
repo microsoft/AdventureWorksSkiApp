@@ -1008,6 +1008,7 @@ Global
 		{B94526D9-D888-4AC3-B0B1-42BEFCFFB3D0}.Debug|iPhone.Build.0 = Debug|iPhone
 		{B94526D9-D888-4AC3-B0B1-42BEFCFFB3D0}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{B94526D9-D888-4AC3-B0B1-42BEFCFFB3D0}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{B94526D9-D888-4AC3-B0B1-42BEFCFFB3D0}.Debug|iPhoneSimulator.Deploy.0 = Debug|iPhoneSimulator
 		{B94526D9-D888-4AC3-B0B1-42BEFCFFB3D0}.Debug|Windows Phone (Universal).ActiveCfg = Debug|iPhone
 		{B94526D9-D888-4AC3-B0B1-42BEFCFFB3D0}.Debug|Windows Phone 8.ActiveCfg = Debug|iPhone
 		{B94526D9-D888-4AC3-B0B1-42BEFCFFB3D0}.Debug|Windows-AnyCPU.ActiveCfg = Debug|iPhone

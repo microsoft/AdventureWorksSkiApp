@@ -2,10 +2,56 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SkiResort.XamarinApp"
-             x:Class="SkiResort.XamarinApp.MainPage">
+             xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
+             x:Class="SkiResort.XamarinApp.MainPage"
+             Title="Adventure Works Ski Resort">
 
-  <Label Text="Adventure Works Ski Resort"
-           VerticalOptions="Center"
-           HorizontalOptions="Center" />
+  <ContentPage.Content>
+    <StackLayout Spacing="0" Padding="0">
+      <Label Text="{Binding Message}" />
+      <Label Text="{Binding TapCount}" />
+      <Label
+        Text="Centrado y ocupando lo posible verticalmente"
+        HorizontalOptions="Center"
+        VerticalOptions="CenterAndExpand">
+        <Label.GestureRecognizers>
+          <TapGestureRecognizer
+            Tapped="OnTapGestureRecognizerTapped"
+            NumberOfTapsRequired="1" />
+        </Label.GestureRecognizers>
+      </Label>
+      <views:CustomButton
+        Image="icon"
+        Text="Lift Status"
+        TextColor="#FFFFFF"
+        BackgroundColor="#1990ca"
+        BorderRadius="0"
+        HorizontalOptions="Fill" />
+      <views:CustomButton
+        Text="Rental Reservation"
+        TextColor="#FFFFFF"
+        BackgroundColor="#1680b2"
+        BorderRadius="0"
+        HorizontalOptions="Fill" />
+      <views:CustomButton
+        Text="Dining"
+        TextColor="#FFFFFF"
+        BackgroundColor="#14719d"
+        BorderRadius="0"
+        HorizontalOptions="Fill" />
+      <views:CustomButton
+        Text="Live Webcams"
+        TextColor="#FFFFFF"
+        BackgroundColor="#115f85"
+        BorderRadius="0"
+        HorizontalOptions="Fill" />
+      <views:CustomButton
+        Text="Lift Tickers"
+        TextColor="#FFFFFF"
+        BackgroundColor="#0e4f6f"
+        BorderRadius="0"
+        HorizontalOptions="Fill" />
+    </StackLayout>
+  </ContentPage.Content>
 
 </ContentPage>
