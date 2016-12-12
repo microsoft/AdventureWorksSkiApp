@@ -12,7 +12,7 @@ namespace SkiResort.XamarinApp
         public App()
         {
             InitializeComponent();
-            MainPage = new MainNavigationPage();
+            MainPage = new MainMasterDetailPage();
         }
 
         protected override void OnStart()

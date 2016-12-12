@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SkiResort.XamarinApp.Views"
+             x:Class="SkiResort.XamarinApp.Views.WeatherWidget">
+  <ContentView.Content>
+    
+    <StackLayout Orientation="Horizontal">
+      <local:WeatherWidgetItem Icon="icon.png" Title="Weather Now" Value="Nice" />
+      <StackLayout Orientation="Horizontal">
+        <Image Source="icon.png" />
+        <StackLayout>
+          <Label Text="Temperature"></Label>
+          <Label Text="8/10º F"></Label>
+        </StackLayout>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <Image Source="icon.png" />
+        <StackLayout>
+          <Label Text="Wind"></Label>
+          <Label Text="50 mph"></Label>
+        </StackLayout>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <Image Source="icon.png" />
+        <StackLayout>
+          <Label Text="Bse Depth"></Label>
+          <Label Text="5 inches"></Label>
+        </StackLayout>
+      </StackLayout>
+    </StackLayout>
+    
+  </ContentView.Content>
+</ContentView>
