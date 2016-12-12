@@ -3,10 +3,10 @@
   <ContentView.Content>
 
     <StackLayout Orientation="Horizontal">
-      <Image Source="{Binding Icon}" />
+      <Image Source="{Binding Icon}" HeightRequest="25" WidthRequest="25" />
       <StackLayout>
-        <Label Text="{Binding Title}"></Label>
-        <Label Text="{Binding Value}"></Label>
+        <Label Text="{Binding Title}" TextColor="#FFFFFF" LineBreakMode="NoWrap" FontSize="10" />
+        <Label Text="{Binding Value}" TextColor="#FFFFFF" LineBreakMode="NoWrap" FontSize="13" FontAttributes="Bold" />
       </StackLayout>
     </StackLayout>
 

@@ -4,31 +4,19 @@
              xmlns:local="clr-namespace:SkiResort.XamarinApp.Views"
              x:Class="SkiResort.XamarinApp.Views.WeatherWidget">
   <ContentView.Content>
-    
-    <StackLayout Orientation="Horizontal">
-      <local:WeatherWidgetItem Icon="icon.png" Title="Weather Now" Value="Nice" />
-      <StackLayout Orientation="Horizontal">
-        <Image Source="icon.png" />
-        <StackLayout>
-          <Label Text="Temperature"></Label>
-          <Label Text="8/10º F"></Label>
-        </StackLayout>
-      </StackLayout>
-      <StackLayout Orientation="Horizontal">
-        <Image Source="icon.png" />
-        <StackLayout>
-          <Label Text="Wind"></Label>
-          <Label Text="50 mph"></Label>
-        </StackLayout>
-      </StackLayout>
-      <StackLayout Orientation="Horizontal">
-        <Image Source="icon.png" />
-        <StackLayout>
-          <Label Text="Bse Depth"></Label>
-          <Label Text="5 inches"></Label>
-        </StackLayout>
-      </StackLayout>
-    </StackLayout>
+
+    <Grid Padding="7">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <local:WeatherWidgetItem Icon="snow.png" Title="Weather Now" Value="Snowing" Grid.Column="0" />
+      <local:WeatherWidgetItem Icon="temp.png" Title="Temperature" Value="8/10º F" Grid.Column="1" />
+      <local:WeatherWidgetItem Icon="wind.png" Title="Wind" Value="50 mph" Grid.Column="2" />
+      <local:WeatherWidgetItem Icon="base.png" Title="Base Depth" Value="30 inches" Grid.Column="3" />
+    </Grid>
     
   </ContentView.Content>
 </ContentView>
