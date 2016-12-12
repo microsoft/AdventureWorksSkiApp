@@ -136,6 +136,18 @@
   <ItemGroup>
     <BundleResource Include="Resources\home_background.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\weatherWidget_base.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\weatherWidget_snow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\weatherWidget_temp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\weatherWidget_wind.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

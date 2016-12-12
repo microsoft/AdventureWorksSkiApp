@@ -93,19 +93,17 @@
     <AndroidResource Include="Resources\drawable\home_background.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\snow.png" />
+    <AndroidResource Include="Resources\drawable\weatherWidget_snow.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\weatherWidget_wind.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\drawable\weather_widget\" />
+    <AndroidResource Include="Resources\drawable\weatherWidget_base.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\wind.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\base.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\temp.png" />
+    <AndroidResource Include="Resources\drawable\weatherWidget_temp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
