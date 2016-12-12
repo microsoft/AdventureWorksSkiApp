@@ -2,31 +2,56 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SkiResort.XamarinApp.Views.WeatherWidgetItem">
+  
+  <ContentView.Resources>
+    <ResourceDictionary>
+      
+      <Style x:Key="iconImageStyle" TargetType="Image">
+        <Setter Property="HeightRequest" Value="25" />
+        <Setter Property="WidthRequest">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="x:Double"
+                        iOS="18"
+                        Android="25" />
+          </Setter.Value>
+        </Setter>
+      </Style>
+      
+      <Style x:Key="labelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="#FFFFFF" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+      </Style>
+
+      <Style x:Key="titleLabelStyle" TargetType="Label" BasedOn="{StaticResource labelStyle}">
+        <Setter Property="FontSize">
+            <Setter.Value>
+              <OnPlatform x:TypeArguments="x:Double"
+                          iOS="8"
+                          Android="10" />
+            </Setter.Value>
+          </Setter>
+      </Style>
+      
+      <Style x:Key="valueLabelStyle" TargetType="Label" BasedOn="{StaticResource labelStyle}">
+        <Setter Property="FontSize">
+            <Setter.Value>
+              <OnPlatform x:TypeArguments="x:Double"
+                          iOS="9"
+                          Android="13" />
+            </Setter.Value>
+          </Setter>
+      </Style>
+    
+    </ResourceDictionary>
+  </ContentView.Resources>
+    
   <ContentView.Content>
 
     <StackLayout Orientation="Horizontal">
-      <Image Source="{Binding Icon}" HeightRequest="25" WidthRequest="25">
-        <Image.WidthRequest>
-          <OnPlatform x:TypeArguments="x:Double"
-                      iOS="18"
-                      Android="25" />
-        </Image.WidthRequest>
-      </Image>
+      <Image Source="{Binding Icon}" Style="{StaticResource iconImageStyle}" />
       <StackLayout>
-        <Label Text="{Binding Title}" TextColor="#FFFFFF" LineBreakMode="TailTruncation">
-          <Label.FontSize>
-            <OnPlatform x:TypeArguments="x:Double"
-                        iOS="8"
-                        Android="10" />
-          </Label.FontSize>
-        </Label>
-        <Label Text="{Binding Value}" TextColor="#FFFFFF" LineBreakMode="TailTruncation" FontAttributes="Bold">
-          <Label.FontSize>
-            <OnPlatform x:TypeArguments="x:Double"
-                        iOS="9"
-                        Android="13" />
-          </Label.FontSize>
-        </Label>
+        <Label Text="{Binding Title}" Style="{StaticResource titleLabelStyle}" />
+        <Label Text="{Binding Value}" Style="{StaticResource valueLabelStyle}" />
       </StackLayout>
     </StackLayout>
 
