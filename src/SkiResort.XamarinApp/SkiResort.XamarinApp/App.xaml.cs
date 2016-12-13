@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Xamarin.Forms;
+using SkiResort.XamarinApp.Pages;
 
 namespace SkiResort.XamarinApp
 {

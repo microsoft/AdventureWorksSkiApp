@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 
-namespace SkiResort.XamarinApp
+namespace SkiResort.XamarinApp.Pages
 {
     public partial class MainMenu : ContentPage
     {
@@ -15,7 +15,6 @@ namespace SkiResort.XamarinApp
         public MainMenu()
         {
             InitializeComponent();
-            BackgroundColor = Color.FromHex("#141414");
 
             var masterPageItems = new List<MainMenuItem>();
             masterPageItems.Add(new MainMenuItem

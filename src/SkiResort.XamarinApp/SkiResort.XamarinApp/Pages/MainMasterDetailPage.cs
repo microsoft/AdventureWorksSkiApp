@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace SkiResort.XamarinApp
+namespace SkiResort.XamarinApp.Pages
 {
     public class MainMasterDetailPage : MasterDetailPage
     {

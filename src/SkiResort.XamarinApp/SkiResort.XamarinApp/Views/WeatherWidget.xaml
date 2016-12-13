@@ -3,9 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SkiResort.XamarinApp.Views"
              x:Class="SkiResort.XamarinApp.Views.WeatherWidget">
+  <ContentView.Resources>
+    <ResourceDictionary>
+
+      <Style x:Key="gridStyle" TargetType="Grid">
+        <Setter Property="BackgroundColor" Value="#CC000000" />
+      </Style>
+      
+    </ResourceDictionary>
+  </ContentView.Resources>
   <ContentView.Content>
 
-    <Grid Padding="7">
+    <Grid Padding="7" Style="{StaticResource gridStyle}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="*" />

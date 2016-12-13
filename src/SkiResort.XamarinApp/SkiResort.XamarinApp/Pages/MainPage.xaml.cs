@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 
-namespace SkiResort.XamarinApp.Views
+namespace SkiResort.XamarinApp.Pages
 {
-    public partial class WeatherWidget : ContentView
+    public partial class MainPage : ContentPage
     {
-        public WeatherWidget()
+        public MainPage()
         {
             InitializeComponent();
         }
