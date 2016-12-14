@@ -95,7 +95,6 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\weatherWidget_snow.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\weatherWidget_wind.png" />
   </ItemGroup>
