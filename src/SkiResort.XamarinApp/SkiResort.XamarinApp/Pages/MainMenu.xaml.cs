@@ -19,7 +19,13 @@ namespace SkiResort.XamarinApp.Pages
             var masterPageItems = new List<MainMenuItem>();
             masterPageItems.Add(new MainMenuItem
             {
+                Title = "Home",
+                TargetType = typeof(HomePage)
+            });
+            masterPageItems.Add(new MainMenuItem
+            {
                 Title = "Lift Status",
+                TargetType = typeof(LiftStatusPage)
             });
             masterPageItems.Add(new MainMenuItem
             {
@@ -46,5 +52,6 @@ namespace SkiResort.XamarinApp.Pages
     {
         public string Title { get; set; }
         public string IconSource { get; set; }
+        public Type TargetType { get; set; }
     }
 }

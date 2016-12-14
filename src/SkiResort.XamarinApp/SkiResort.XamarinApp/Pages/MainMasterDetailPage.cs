@@ -16,11 +16,34 @@ namespace SkiResort.XamarinApp.Pages
         {
             mainMenu = new MainMenu();
             Master = mainMenu;
-            Detail = new NavigationPage(new MainPage())
+            Detail = CreateDetail(typeof(HomePage));
+
+            mainMenu.ListView.ItemSelected += OnItemSelected;
+        }
+
+        Page CreateDetail(Type pageType)
+        {
+            var style = pageType == typeof(HomePage) ?
+                CustomNavigationPageStyle.Black :
+                CustomNavigationPageStyle.Blue;
+
+            return new CustomNavigationPage((Page)Activator.CreateInstance(pageType), style);
+        }
+
+        void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var item = e.SelectedItem as MainMenuItem;
+            if (item != null && item.TargetType != null)
             {
-                BarBackgroundColor = Color.FromHex("#141414"),
-                BarTextColor = Color.FromHex("#FFFFFF")
-            };
+                Detail = CreateDetail(item.TargetType);
+            }
+            CloseMenu();
+        }
+
+        void CloseMenu()
+        {
+            ((MainMenu)Master).ListView.SelectedItem = null;
+            IsPresented = false;
         }
     }
 }

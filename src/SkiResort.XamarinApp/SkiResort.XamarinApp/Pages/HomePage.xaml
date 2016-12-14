@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SkiResort.XamarinApp.Pages"
              xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
-             x:Class="SkiResort.XamarinApp.Pages.MainPage"
+             x:Class="SkiResort.XamarinApp.Pages.HomePage"
              Title="Adventure Works Ski Resort">
 
   <ContentPage.Resources>
