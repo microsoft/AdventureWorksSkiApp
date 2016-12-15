@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiResort.XamarinApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace SkiResort.XamarinApp.Views
     {
         public WeatherWidget()
         {
+            BindingContext = new WeatherWidgetViewModel();
             InitializeComponent();
         }
     }
