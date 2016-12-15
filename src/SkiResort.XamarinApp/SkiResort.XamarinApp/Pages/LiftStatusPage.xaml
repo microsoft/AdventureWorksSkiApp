@@ -27,7 +27,12 @@
                 IsGroupingEnabled="true">
         <ListView.ItemTemplate>
           <DataTemplate>
-            <ImageCell Text="{Binding Name}" ImageSource="{Binding IconSource}" />
+            <ViewCell>
+              <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                <Image Source="{Binding IconSource}" WidthRequest="10" HeightRequest="10" Margin="18,0,0,0" />
+                <Label Text="{Binding Name}" />
+              </StackLayout>
+            </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>

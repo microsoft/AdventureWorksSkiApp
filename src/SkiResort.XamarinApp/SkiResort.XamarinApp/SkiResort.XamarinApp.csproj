@@ -39,6 +39,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IBarTint.cs" />
     <Compile Include="Pages\CustomNavigationPage.cs" />
     <Compile Include="Pages\LiftStatusPage.xaml.cs">
       <DependentUpon>LiftStatusPage.xaml</DependentUpon>
@@ -95,5 +96,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

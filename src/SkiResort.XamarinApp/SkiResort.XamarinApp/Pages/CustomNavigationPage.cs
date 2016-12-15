@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiResort.XamarinApp.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
@@ -10,24 +11,17 @@ namespace SkiResort.XamarinApp.Pages
 {
     public class CustomNavigationPage : NavigationPage
     {
-        public CustomNavigationPage(Page root, CustomNavigationPageStyle style) : base(root)
+        public CustomNavigationPage(Page root) : base(root)
         {
-            BarBackgroundColor = GetStyleBarColor(style);
+            BarBackgroundColor = Color.FromHex("#141414");
             BarTextColor = Color.FromHex("#FFFFFF");
+            if (root is IBarTint)
+            {
+                var barTint = (IBarTint)root;
+                BarBackgroundColor = barTint.GetBarBackgroundColor();
+                BarTextColor = barTint.GetBarTextColor();
+            }
+            
         }
-
-        Color GetStyleBarColor(CustomNavigationPageStyle style)
-        {
-            if (style == CustomNavigationPageStyle.Black)
-                return Color.FromHex("#141414");
-
-            return Color.FromHex("#15719E");
-        }
-    }
-
-    public enum CustomNavigationPageStyle
-    {
-        Black,
-        Blue
     }
 }

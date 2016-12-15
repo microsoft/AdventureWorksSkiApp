@@ -12,22 +12,30 @@ namespace SkiResort.XamarinApp.Pages
     {
         private MainMenu mainMenu;
 
+        private Dictionary<Type, Page> detailCache = new Dictionary<Type, Page>();
+
         public MainMasterDetailPage()
         {
             mainMenu = new MainMenu();
             Master = mainMenu;
-            Detail = CreateDetail(typeof(HomePage));
+            Detail = GetOrCreateDetail(typeof(HomePage));
 
             mainMenu.ListView.ItemSelected += OnItemSelected;
         }
 
-        Page CreateDetail(Type pageType)
+        Page GetOrCreateDetail(Type pageType)
         {
-            var style = pageType == typeof(HomePage) ?
-                CustomNavigationPageStyle.Black :
-                CustomNavigationPageStyle.Blue;
+            Page page;
 
-            return new CustomNavigationPage((Page)Activator.CreateInstance(pageType), style);
+            var pageExists = detailCache.TryGetValue(pageType, out page);
+
+            if (!pageExists)
+            {
+                page = new CustomNavigationPage((Page)Activator.CreateInstance(pageType));
+                detailCache.Add(pageType, page);
+            }
+
+            return page;
         }
 
         void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -35,7 +43,7 @@ namespace SkiResort.XamarinApp.Pages
             var item = e.SelectedItem as MainMenuItem;
             if (item != null && item.TargetType != null)
             {
-                Detail = CreateDetail(item.TargetType);
+                Detail = GetOrCreateDetail(item.TargetType);
             }
             CloseMenu();
         }

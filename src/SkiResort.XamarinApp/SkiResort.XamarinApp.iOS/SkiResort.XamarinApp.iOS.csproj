@@ -160,6 +160,15 @@
   <ItemGroup>
     <BundleResource Include="Resources\weatherWidget_wind.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\liftStatus_circle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\liftStatus_square.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\liftStatus_diamond.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
