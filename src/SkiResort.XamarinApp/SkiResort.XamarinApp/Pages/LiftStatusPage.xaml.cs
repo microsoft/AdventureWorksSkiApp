@@ -14,11 +14,22 @@ namespace SkiResort.XamarinApp.Pages
         {
             InitializeComponent();
 
-            var liftItems = new List<LiftItem>()
+            var liftItems = new List<LiftGroup>()
             {
-                new LiftItem {Name = "Ye" },
-                new LiftItem {Name = "Ya" },
-                new LiftItem {Name = "Yo" },
+                new LiftGroup("Open Lifts", "O")
+                {
+                    new LiftItem {Name = "Bear Creek" },
+                    new LiftItem {Name = "Overlake jump" },
+                    new LiftItem {Name = "Grass Lawn Caf" },
+                    new LiftItem {Name = "Education Hill" },
+                    new LiftItem {Name = "Belltown Express" },
+                },
+                new LiftGroup("Closed Lifts", "B")
+                {
+                    new LiftItem {Name = "Redmond Way" },
+                    new LiftItem {Name = "Borealis" },
+                    new LiftItem {Name = "Bear Creek" },
+                }
             };
 
             listView.ItemsSource = liftItems;
@@ -28,5 +39,18 @@ namespace SkiResort.XamarinApp.Pages
     public class LiftItem
     {
         public string Name { get; set; }
+    }
+
+    public class LiftGroup : List<LiftItem>
+    {
+        public string Title { get; set; }
+        public string ShortName { get; set; }
+        public LiftGroup(string title, string shortName)
+        {
+            Title = title;
+            ShortName = shortName;
+        }
+
+        public static IList<LiftGroup> All { private set; get; }
     }
 }

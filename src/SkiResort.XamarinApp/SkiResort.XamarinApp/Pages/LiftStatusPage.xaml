@@ -21,7 +21,10 @@
   <ContentPage.Content>
 
     <StackLayout Style="{StaticResource mainStackLayoutStyle}">
-      <ListView x:Name="listView" Style="{StaticResource listViewStyle}">
+      <ListView x:Name="listView"
+                Style="{StaticResource listViewStyle}"
+                GroupDisplayBinding="{Binding Title}"
+                IsGroupingEnabled="true">
         <ListView.ItemTemplate>
           <DataTemplate>
             <ImageCell Text="{Binding Name}" ImageSource="{Binding IconSource}" />
