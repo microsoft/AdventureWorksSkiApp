@@ -12,7 +12,7 @@ using FFImageLoading.Forms.Droid;
 namespace SkiResort.XamarinApp.Droid
 {
     [Activity(
-        Label = "SkiResort.XamarinApp",
+        Label = "Ski Resort",
         Icon = "@drawable/icon",
         Theme = "@style/MainTheme",
         MainLauncher = true,
