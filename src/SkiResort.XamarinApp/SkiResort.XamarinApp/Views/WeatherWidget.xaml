@@ -21,7 +21,6 @@
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
-      <Label Text="{Binding Temperature}" />
       <local:WeatherWidgetItem Icon="weatherWidget_snow.png" Title="Weather Now" Value="{Binding Weather}" Grid.Column="0" Opacity="{Binding ItemsOpacity}" />
       <local:WeatherWidgetItem Icon="weatherWidget_temp.png" Title="Temperature" Value="{Binding Temperature}" Grid.Column="1" Opacity="{Binding ItemsOpacity}" />
       <local:WeatherWidgetItem Icon="weatherWidget_wind.png" Title="Wind" Value="{Binding Wind}" Grid.Column="2" Opacity="{Binding ItemsOpacity}" />

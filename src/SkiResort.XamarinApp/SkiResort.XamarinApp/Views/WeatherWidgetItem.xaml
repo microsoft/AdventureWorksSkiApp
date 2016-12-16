@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SkiResort.XamarinApp.Views.WeatherWidgetItem">
+             x:Class="SkiResort.XamarinApp.Views.WeatherWidgetItem"
+             x:Name="control">
   
   <ContentView.Resources>
     <ResourceDictionary>
@@ -47,11 +48,11 @@
     
   <ContentView.Content>
 
-    <StackLayout Orientation="Horizontal">
-      <Image Source="{Binding Icon}" Style="{StaticResource iconImageStyle}" />
+    <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+      <Image Source="{Binding Icon, Source={x:Reference control}}" Style="{StaticResource iconImageStyle}" />
       <StackLayout>
-        <Label Text="{Binding Title}" Style="{StaticResource titleLabelStyle}" />
-        <Label Text="{Binding Value}" Style="{StaticResource valueLabelStyle}" />
+        <Label Text="{Binding Title, Source={x:Reference control}}" Style="{StaticResource titleLabelStyle}" />
+        <Label Text="{Binding Value, Source={x:Reference control}}" Style="{StaticResource valueLabelStyle}" />
       </StackLayout>
     </StackLayout>
 

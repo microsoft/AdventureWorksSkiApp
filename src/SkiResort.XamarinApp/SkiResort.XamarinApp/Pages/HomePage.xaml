@@ -3,16 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SkiResort.XamarinApp.Pages"
              xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
+             xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="SkiResort.XamarinApp.Pages.HomePage"
              Title="Adventure Works Ski Resort">
 
   <ContentPage.Resources>
     <ResourceDictionary>
 
-      <Style x:Key="backgroundImageStyle" TargetType="Image">
+      <Style x:Key="backgroundImageStyle" TargetType="ffil:CachedImage">
         <Setter Property="Source" Value="home_background.jpg" />
-        <Setter Property="VerticalOptions" Value="FillAndExpand" />
         <Setter Property="Aspect" Value="AspectFill" />
+        <Setter Property="DownsampleToViewSize" Value="true" />
       </Style>
 
       <Style x:Key="mainStackLayoutStyle" TargetType="StackLayout">
@@ -38,7 +39,7 @@
   </ContentPage.Resources>
   <ContentPage.Content>
     <Grid>
-      <Image Style="{StaticResource backgroundImageStyle}" />
+      <ffil:CachedImage Style="{StaticResource backgroundImageStyle}" />
       <StackLayout Style="{StaticResource mainStackLayoutStyle}">
         <Label Style="{StaticResource placeholderLabelStyle}" />
         <StackLayout Style="{StaticResource stackLayoutButtonContainerStyle}">

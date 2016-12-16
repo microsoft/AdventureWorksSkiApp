@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using SupportToolbar = Android.Support.V7.Widget.Toolbar;
+using FFImageLoading.Forms.Droid;
 
 namespace SkiResort.XamarinApp.Droid
 {
@@ -20,6 +21,8 @@ namespace SkiResort.XamarinApp.Droid
     {
         protected override void OnCreate(Bundle bundle)
         {
+            CachedImageRenderer.Init();
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 

@@ -4,6 +4,7 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using FFImageLoading.Forms.Touch;
 
 namespace SkiResort.XamarinApp.iOS
 {
@@ -22,6 +23,8 @@ namespace SkiResort.XamarinApp.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            CachedImageRenderer.Init();
+
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
