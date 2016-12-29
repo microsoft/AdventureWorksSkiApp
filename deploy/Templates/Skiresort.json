@@ -147,9 +147,24 @@
     "hostingPlanName": "[concat('hostingplan', uniqueString(resourceGroup().id))]",
     "sqlserverName": "[concat('sql', uniqueString(resourceGroup().id))]",
     "dscLocation": "https://adventureworksartifacts.blob.core.windows.net/artifacts/ConfigureSQL.zip",
-    "PowershellExtensionConfigurationFunction": "ConfigureSQL.ps1\\ConfigureSQL"
+    "PowershellExtensionConfigurationFunction": "ConfigureSQL.ps1\\ConfigureSQL",
+    "documentDBAccount_name": "[concat('db', uniqueString(resourceGroup().id))]",
+    "documentDBOfferType": "Standard"
   },
   "resources": [
+    {
+      "apiVersion": "2015-04-08",
+      "type": "Microsoft.DocumentDB/databaseAccounts",
+      "name": "[variables('documentDBAccount_name')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "DocumentDB"
+      },
+      "properties": {
+        "name": "[variables('documentDBAccount_name')]",
+        "databaseAccountOfferType": "[variables('documentDBOfferType')]"
+      }
+    },
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageAccount_name')]",
@@ -230,7 +245,7 @@
           }
         ],
         "dnsSettings": {
-          "dnsServers": [ ]
+          "dnsServers": []
         },
         "enableIPForwarding": false
       }
@@ -285,7 +300,8 @@
         "[resourceId('Microsoft.Storage/storageAccounts',variables('storageAccount_name'))]",
         "[concat('Microsoft.Web/sites/', variables('webApp_name'))]",
         "[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachine_Name'))]",
-        "[concat('Microsoft.EventHub/namespaces/', variables('eventHub_serviceBusNamespace'))]"
+        "[concat('Microsoft.EventHub/namespaces/', variables('eventHub_serviceBusNamespace'))]",
+        "[concat('Microsoft.DocumentDB/databaseAccounts/', variables('documentDBAccount_name'))]"
       ],
       "tags": {
         "displayName": "Stream Analytics"
@@ -294,9 +310,6 @@
         "sku": {
           "name": "[parameters('skuCapacityStreamAnalytics')]"
         },
-        "outputStartMode": "JobStartTime",
-        "eventsOutOfOrderPolicy": "Adjust",
-        "eventsOutOfOrderMaxDelayInSeconds": 0,
         "inputs": [
           {
             "name": "locationevents",
@@ -407,13 +420,12 @@
             "type": "Microsoft.StreamAnalytics/streamingjobs/outputs",
             "properties": {
               "datasource": {
-                "type": "Microsoft.Storage/Table",
+                "type": "Microsoft.Storage/DocumentDB",
                 "properties": {
-                  "table": "liftlines",
-                  "partitionKey": "Name",
-                  "rowKey": "Name",
-                  "AccountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_name')), '2015-06-15').key1]",
-                  "AccountName": "[variables('storageAccount_name')]"
+                  "accountId": "[variables('documentDBAccount_name')]",
+                  "accountKey": "[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', variables('documentDBAccount_name')), '2015-04-08').primaryMasterKey]",
+                  "database": "skiresortliftlines",
+                  "collectionNamePattern": "liftlines"
                 }
               }
             }
@@ -423,13 +435,12 @@
             "type": "Microsoft.StreamAnalytics/streamingjobs/outputs",
             "properties": {
               "datasource": {
-                "type": "Microsoft.Storage/Table",
+                "type": "Microsoft.Storage/DocumentDB",
                 "properties": {
-                  "table": "liftlinesarchive",
-                  "partitionKey": "pkey",
-                  "rowKey": "rkey",
-                  "AccountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_name')), '2015-06-15').key1]",
-                  "AccountName": "[variables('storageAccount_name')]"
+                  "accountId": "[variables('documentDBAccount_name')]",
+                  "accountKey": "[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', variables('documentDBAccount_name')), '2015-04-08').primaryMasterKey]",
+                  "database": "skiresortliftlinesarchive",
+                  "collectionNamePattern": "liftlinesarchive"
                 }
               }
             }
@@ -457,7 +468,7 @@
       "apiVersion": "2014-04-01",
       "name": "[variables('webApp_name')]",
       "type": "Microsoft.Insights/components",
-      "location": "Central US",
+      "location": "East US",
       "dependsOn": [
         "[concat('Microsoft.Web/sites/', variables('webApp_name'))]"
       ],
@@ -676,7 +687,7 @@
 
               }
             },
-            "protectedSettings": { }
+            "protectedSettings": {}
           }
         }
       ]
@@ -686,7 +697,7 @@
       "type": "Microsoft.Sql/servers",
       "location": "[resourceGroup().location]",
       "apiVersion": "2014-04-01-preview",
-      "dependsOn": [ ],
+      "dependsOn": [],
       "tags": {
         "displayName": "sqlserver"
       },
@@ -787,6 +798,14 @@
     "dataMarketUser": {
       "type": "string",
       "value": "[parameters('dataMarketUser')]"
+    },
+    "documentDBAccount": {
+      "type": "string",
+      "value": "[variables('documentDBAccount_name')]"
+    },
+    "documentDBKey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', variables('documentDBAccount_name')), '2015-04-08').primaryMasterKey]"
     }
   }
 }

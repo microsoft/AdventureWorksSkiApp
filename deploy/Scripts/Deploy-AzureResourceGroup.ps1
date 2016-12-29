@@ -60,8 +60,13 @@ if ($results) {
 	$publisScript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'PublishASPNET.ps1'))
 	& $publisScript $ResourceGroupName $webAppName "..\WebApp\SkiResortAdvanced.zip"
 
-	Write-Host 'Restart Stream Analytics Job'
+	Write-Host 'Create documentDB collections'
+	$documentdbscript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'DocumentDB.ps1'))
+	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlines" "liftlines"
 
+	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlinesarchive" "liftlinesarchive"
+
+	Write-Host 'Restart Stream Analytics Job'
 	$restartscript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'RestartStreamJob.ps1'))
 	& $restartscript $ResourceGroupName
 
@@ -71,7 +76,7 @@ if ($results) {
 
 	Write-Host 'Configure Basic WebApp'
 
-	$configRelativePath = "..\..\src\SkiResort.Web\appsettings.json"
+	$configRelativePath = "..\..\..\..\..\..\src\SkiResort.Web\appsettings.json"
 	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
 	$replacescript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'Replace-FileString.ps1'))
 
@@ -89,16 +94,16 @@ if ($results) {
 
 	Write-Host 'Configure Data Generation apps'
 
-	$configRelativePath = "..\..\src\SkiResort.DataGeneration\gen-skirentals\App.config"
+	$configRelativePath = "..\..\..\..\..\..\src\SkiResort.DataGeneration\gen-skirentals\App.config"
 	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
 	& $replacescript -Pattern '__SQLCONNECTIONSTRING__' -Replacement $results.Outputs.defaultConnection.value -Overwrite -Path $configPath
 
-	$configRelativePath = "..\..\src\SkiResort.DataGeneration\gen-skilocations\App.config"
+	$configRelativePath = "..\..\..\..\..\..\src\SkiResort.DataGeneration\gen-skilocations\App.config"
 	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
 	& $replacescript -Pattern '__EVENTHUBCONNECTIONSTRING__' -Replacement $results.Outputs.eventHubConnectionString.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__EVENTHUBCONNECTIONPATH__' -Replacement $results.Outputs.evenHubName.value -Overwrite -Path $configPath
 
-	$configRelativePath = "..\..\src\SkiResort.DataGeneration\gen-restaurantssearch\App.config"
+	$configRelativePath = "..\..\..\..\..\..\src\SkiResort.DataGeneration\gen-restaurantssearch\App.config"
 	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
 	& $replacescript -Pattern '__SQLCONNECTIONSTRING__' -Replacement $results.Outputs.defaultConnection.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__SEARCHSERVICENAME__' -Replacement $results.Outputs.searchServiceName.value  -Overwrite -Path $configPath
@@ -106,13 +111,13 @@ if ($results) {
 	& $replacescript -Pattern '__RECOUSER__' -Replacement $results.Outputs.dataMarketUser.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__RECOKEY__' -Replacement $results.Outputs.dataMarketKey.value -Overwrite -Path $configPath
 
-	$configRelativePath = "..\..\src\SkiResort.DataGeneration\gen-recomodel\App.config"
+	$configRelativePath = "..\..\..\..\..\..\src\SkiResort.DataGeneration\gen-recomodel\App.config"
 	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
 	& $replacescript -Pattern '__SQLCONNECTIONSTRING__' -Replacement $results.Outputs.defaultConnection.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__RECOUSER__' -Replacement $results.Outputs.dataMarketUser.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__RECOKEY__' -Replacement $results.Outputs.dataMarketKey.value -Overwrite -Path $configPath
 	
-	$configRelativePath = "..\..\demo\RentalDemandExperiments.r"
+	$configRelativePath = "..\..\..\..\..\..\demo\RentalDemandExperiments.r"
 	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
     & $replacescript -Pattern '__RSQLCONNECTIONSTRING__' -Replacement $results.Outputs.rConnection.value -Overwrite -Path $configPath
 

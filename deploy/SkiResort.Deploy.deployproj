@@ -42,7 +42,8 @@
     <Content Include="Scripts\ConfigureStorage.ps1" />
     <Content Include="Scripts\PublishASPNET.ps1" />
     <Content Include="Scripts\default-publish.ps1" />
-    <None Include="WebApp\SkiResortAdvanced.zip" />
+    <Content Include="WebApp\SkiResortAdvanced.zip" />
+    <Content Include="Scripts\DocumentDB.ps1" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>
