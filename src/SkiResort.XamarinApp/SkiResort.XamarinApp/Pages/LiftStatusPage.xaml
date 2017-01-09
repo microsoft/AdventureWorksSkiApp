@@ -2,13 +2,17 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SkiResort.XamarinApp.Pages.LiftStatusPage"
+             xmlns:converters="clr-namespace:SkiResort.XamarinApp.Converters;assembly=SkiResort.XamarinApp"
              Title="Lift Status">
 
   <ContentPage.Resources>
     <ResourceDictionary>
 
-      <Style x:Key="mainStackLayoutStyle" TargetType="StackLayout">
-        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+      <converters:LiftRatingToImageSourceConverter x:Key="liftRatingToImageSourceConverter"></converters:LiftRatingToImageSourceConverter>
+
+      <Style x:Key="loadingStackLayoutStyle" TargetType="StackLayout">
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
       </Style>
 
       <Style x:Key="listViewStyle" TargetType="ListView">
@@ -20,8 +24,14 @@
   
   <ContentPage.Content>
 
-    <StackLayout Style="{StaticResource mainStackLayoutStyle}">
-      <ListView x:Name="listView"
+    <Grid>
+
+      <StackLayout Style="{StaticResource loadingStackLayoutStyle}">
+        <ActivityIndicator Color="Black" IsRunning="{Binding Loading}" />
+      </StackLayout>
+
+      <ListView x:Name="LiftList"
+                ItemsSource="{Binding LiftGroups}"
                 Style="{StaticResource listViewStyle}"
                 GroupDisplayBinding="{Binding Title}"
                 IsGroupingEnabled="true">
@@ -29,14 +39,14 @@
           <DataTemplate>
             <ViewCell>
               <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                <Image Source="{Binding IconSource}" WidthRequest="10" HeightRequest="10" Margin="18,0,0,0" />
+                <Image Source="{Binding Rating, Converter={StaticResource liftRatingToImageSourceConverter}}" WidthRequest="10" HeightRequest="10" Margin="18,0,0,0" />
                 <Label Text="{Binding Name}" />
               </StackLayout>
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-    </StackLayout>
-    
+    </Grid>
+
   </ContentPage.Content>
 </ContentPage>

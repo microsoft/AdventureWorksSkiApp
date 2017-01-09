@@ -39,6 +39,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\LiftRatingToIconSourceConverter.cs" />
+    <Compile Include="Entities\LiftGroup.cs" />
+    <Compile Include="Entities\Lift.cs" />
+    <Compile Include="Entities\WeatherSummary.cs" />
     <Compile Include="Interfaces\IBarTint.cs" />
     <Compile Include="Pages\CustomNavigationPage.cs" />
     <Compile Include="Pages\LiftStatusPage.xaml.cs">
@@ -53,8 +57,10 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\HTTPService.cs" />
+    <Compile Include="Services\LiftService.cs" />
     <Compile Include="Services\WeatherService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\LiftStatusViewModel.cs" />
     <Compile Include="ViewModels\WeatherWidgetViewModel.cs" />
     <Compile Include="Views\WeatherWidget.xaml.cs">
       <DependentUpon>WeatherWidget.xaml</DependentUpon>

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,14 +9,14 @@ using SkiResort.XamarinApp.Entities;
 
 namespace SkiResort.XamarinApp.Services
 {
-    class WeatherService
+    class LiftService
     {
-        public async Task<WeatherSummary> GetSummary()
+        public async Task<List<Lift>> GetLifts()
         {
             var httpService = new HTTPService("http://adventureworkskiresort.azurewebsites.net/api");
-            var summaryData = await httpService.Get("/summaries");
-            var summary = JsonConvert.DeserializeObject<WeatherSummary>(summaryData);
-            return summary;
+            var liftsData = await httpService.Get("/lifts/nearby?latitude=0&longitude=0");
+            var lifts = JsonConvert.DeserializeObject<List<Lift>>(liftsData);
+            return lifts;
         }
     }
 }
