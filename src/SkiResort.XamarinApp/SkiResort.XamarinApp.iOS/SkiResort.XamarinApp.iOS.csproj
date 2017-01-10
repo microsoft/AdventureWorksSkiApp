@@ -213,6 +213,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\logo-splash.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\reservation_list_bg.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

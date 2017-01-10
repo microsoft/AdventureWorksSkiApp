@@ -2,17 +2,33 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SkiResort.XamarinApp.Pages.LiftStatusPage"
+             xmlns:converters="clr-namespace:SkiResort.XamarinApp.Converters;assembly=SkiResort.XamarinApp"
              Title="Lift Status">
 
   <ContentPage.Resources>
     <ResourceDictionary>
 
-      <Style x:Key="mainStackLayoutStyle" TargetType="StackLayout">
-        <Setter Property="VerticalOptions" Value="FillAndExpand" />
-      </Style>
+      <converters:LiftRatingToImageSourceConverter x:Key="liftRatingToImageSourceConverter"></converters:LiftRatingToImageSourceConverter>
 
       <Style x:Key="listViewStyle" TargetType="ListView">
         <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="IsGroupingEnabled" Value="True" />
+      </Style>
+
+      <Style x:Key="listItemContainerStyle" TargetType="StackLayout">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="VerticalOptions" Value="Center" />
+      </Style>
+
+      <Style x:Key="listItemImageStyle" TargetType="Image">
+        <Setter Property="WidthRequest" Value="10" />
+        <Setter Property="HeightRequest" Value="10" />
+        <Setter Property="Margin" Value="18,0,0,0" />
+      </Style>
+
+      <Style x:Key="loadingStackLayoutStyle" TargetType="StackLayout">
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
       </Style>
 
     </ResourceDictionary>
@@ -20,23 +36,33 @@
   
   <ContentPage.Content>
 
-    <StackLayout Style="{StaticResource mainStackLayoutStyle}">
-      <ListView x:Name="listView"
-                Style="{StaticResource listViewStyle}"
+    <Grid>
+
+      <ListView ItemsSource="{Binding LiftGroups}"
                 GroupDisplayBinding="{Binding Title}"
-                IsGroupingEnabled="true">
+                Style="{StaticResource listViewStyle}">
+        
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell>
-              <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                <Image Source="{Binding IconSource}" WidthRequest="10" HeightRequest="10" Margin="18,0,0,0" />
+              
+              <StackLayout Style="{StaticResource listItemContainerStyle}">
+                <Image Style="{StaticResource listItemImageStyle}"
+                       Source="{Binding Rating, Converter={StaticResource liftRatingToImageSourceConverter}}" />
                 <Label Text="{Binding Name}" />
               </StackLayout>
+              
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
+        
       </ListView>
-    </StackLayout>
-    
+
+      <StackLayout Style="{StaticResource loadingStackLayoutStyle}">
+        <ActivityIndicator Color="Black" IsRunning="{Binding Loading}" IsVisible="{Binding Loading}" />
+      </StackLayout>
+
+    </Grid>
+
   </ContentPage.Content>
 </ContentPage>

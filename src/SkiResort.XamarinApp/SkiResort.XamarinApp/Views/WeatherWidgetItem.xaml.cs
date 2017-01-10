@@ -30,7 +30,6 @@ namespace SkiResort.XamarinApp.Views
         }
         public WeatherWidgetItem()
         {
-            //BindingContext = this;
             InitializeComponent();
         }
     }

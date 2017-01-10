@@ -30,6 +30,7 @@ namespace SkiResort.XamarinApp.Pages
             masterPageItems.Add(new MainMenuItem
             {
                 Title = "Rental Reservation",
+                TargetType = typeof(RentalPage)
             });
             masterPageItems.Add(new MainMenuItem
             {
