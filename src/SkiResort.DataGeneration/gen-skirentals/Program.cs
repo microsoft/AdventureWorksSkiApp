@@ -46,7 +46,7 @@ namespace Ski.Rentals.Generator
             {
                 con.Open();
 
-                if (TableRowCount(con, "Rental") > 100)
+                if (TableRowCount(con, "Rentals") > 100)
                 {
                     return;
                 }
@@ -104,7 +104,7 @@ namespace Ski.Rentals.Generator
         private static void BulkCopyRentals(SqlConnection con, SqlTransaction tx, DataTable table)
         {
             SqlBulkCopy copy = new SqlBulkCopy(con, SqlBulkCopyOptions.Default, tx);
-            copy.DestinationTableName = "Rental";
+            copy.DestinationTableName = "Rentals";
             copy.BulkCopyTimeout = 60 * 5;
             copy.ColumnMappings.Add("Activity", "Activity");
             copy.ColumnMappings.Add("Category", "Category");
@@ -126,13 +126,13 @@ namespace Ski.Rentals.Generator
             {
                 con.Open();
 
-                if (TableRowCount(con, "Holiday") > 0)
+                if (TableRowCount(con, "Holidays") > 0)
                 {
                     return;
                 }
 
                 SqlTransaction tx = con.BeginTransaction();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Holiday (Date) VALUES (@date)", con, tx);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Holidays (Date) VALUES (@date)", con, tx);
                 SqlParameter date = cmd.Parameters.Add("@date", SqlDbType.DateTimeOffset);
 
                 foreach (int year in SeasonYears)

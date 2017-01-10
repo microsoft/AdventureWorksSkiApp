@@ -60,7 +60,7 @@ namespace gen_restaurantssearch
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT TOP 20 RestaurantId FROM Restaurant", con);
+                SqlCommand cmd = new SqlCommand("SELECT TOP 20 RestaurantId FROM Restaurants", con);
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
