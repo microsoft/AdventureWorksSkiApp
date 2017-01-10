@@ -10,13 +10,25 @@
 
       <converters:LiftRatingToImageSourceConverter x:Key="liftRatingToImageSourceConverter"></converters:LiftRatingToImageSourceConverter>
 
+      <Style x:Key="listViewStyle" TargetType="ListView">
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="IsGroupingEnabled" Value="True" />
+      </Style>
+
+      <Style x:Key="listItemContainerStyle" TargetType="StackLayout">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="VerticalOptions" Value="Center" />
+      </Style>
+
+      <Style x:Key="listItemImageStyle" TargetType="Image">
+        <Setter Property="WidthRequest" Value="10" />
+        <Setter Property="HeightRequest" Value="10" />
+        <Setter Property="Margin" Value="18,0,0,0" />
+      </Style>
+
       <Style x:Key="loadingStackLayoutStyle" TargetType="StackLayout">
         <Setter Property="VerticalOptions" Value="CenterAndExpand" />
         <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
-      </Style>
-
-      <Style x:Key="listViewStyle" TargetType="ListView">
-        <Setter Property="VerticalOptions" Value="FillAndExpand" />
       </Style>
 
     </ResourceDictionary>
@@ -26,21 +38,24 @@
 
     <Grid>
 
-      <ListView x:Name="LiftList"
-                ItemsSource="{Binding LiftGroups}"
-                Style="{StaticResource listViewStyle}"
+      <ListView ItemsSource="{Binding LiftGroups}"
                 GroupDisplayBinding="{Binding Title}"
-                IsGroupingEnabled="true">
+                Style="{StaticResource listViewStyle}">
+        
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell>
-              <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                <Image Source="{Binding Rating, Converter={StaticResource liftRatingToImageSourceConverter}}" WidthRequest="10" HeightRequest="10" Margin="18,0,0,0" />
+              
+              <StackLayout Style="{StaticResource listItemContainerStyle}">
+                <Image Style="{StaticResource listItemImageStyle}"
+                       Source="{Binding Rating, Converter={StaticResource liftRatingToImageSourceConverter}}" />
                 <Label Text="{Binding Name}" />
               </StackLayout>
+              
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
+        
       </ListView>
 
       <StackLayout Style="{StaticResource loadingStackLayoutStyle}">

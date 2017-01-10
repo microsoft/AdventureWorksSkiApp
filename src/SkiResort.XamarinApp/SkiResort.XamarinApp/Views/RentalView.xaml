@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SkiResort.XamarinApp.Views.RentalView"
+             Padding="15,15,15,0"
+             x:Name="control">
+
+  <ContentView.Resources>
+    <ResourceDictionary>
+
+      <Style x:Key="mainContainerStyle" TargetType="StackLayout">
+        <Setter Property="BackgroundColor" Value="White" />
+      </Style>
+
+      <Style x:Key="titleRowStyle" TargetType="StackLayout">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="Padding" Value="15,15,15,0" />
+      </Style>
+
+      <Style x:Key="titleIdStyle" TargetType="Label">
+        <Setter Property="VerticalOptions" Value="Center" />
+      </Style>
+
+      <Style x:Key="titlePriceStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="23" />
+        <Setter Property="TextColor" Value="#1780B3" />
+      </Style>
+
+      <Style x:Key="detailsRowStyle" TargetType="Grid">
+        <Setter Property="Padding" Value="15,15,15,0" />
+      </Style>
+
+      <Style x:Key="detailTitleStyle" TargetType="Label">
+        <Setter Property="FontAttributes" Value="Bold" />
+      </Style>
+
+      <Style x:Key="sizesRowStyle" TargetType="Grid">
+        <Setter Property="Padding" Value="15" />
+      </Style>
+
+    </ResourceDictionary>
+  </ContentView.Resources>
+
+  <ContentView.Content>
+    <StackLayout Style="{StaticResource mainContainerStyle}">
+      
+      <StackLayout Style="{StaticResource titleRowStyle}">
+        <Label Style="{StaticResource titleIdStyle}"
+               Text="{Binding Rental.RentalId, Source={x:Reference control}}"  />
+        <Label Style="{StaticResource titlePriceStyle}"
+               Text="$40 USD"  />
+      </StackLayout>
+      
+      <Grid Style="{StaticResource detailsRowStyle}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackLayout Grid.Column="0">
+          <Label Text="Dates" Style="{StaticResource detailTitleStyle}" />
+          <Label Text="5/10/18 - 5/15/18" />
+        </StackLayout>
+        <StackLayout Grid.Column="1">
+          <Label Text="Pick up at" Style="{StaticResource detailTitleStyle}" />
+          <Label Text="05:30 AM" />
+        </StackLayout>
+        <StackLayout Grid.Column="2">
+          <Label Text="Type / Level" Style="{StaticResource detailTitleStyle}" />
+          <Label Text="Snowboard Beginner" />
+        </StackLayout>
+      </Grid>
+      
+      <Grid Style="{StaticResource sizesRowStyle}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackLayout Grid.Column="0">
+          <Label Text="Shoe Size" Style="{StaticResource detailTitleStyle}" />
+          <Label Text="9" />
+        </StackLayout>
+        <StackLayout Grid.Column="1">
+          <Label Text="Ski Size" Style="{StaticResource detailTitleStyle}" />
+          <Label Text="120 in" />
+        </StackLayout>
+        <StackLayout Grid.Column="2">
+          <Label Text="Poles" Style="{StaticResource detailTitleStyle}" />
+          <Label Text="42 in" />
+        </StackLayout>
+      </Grid>
+    </StackLayout>
+  </ContentView.Content>
+</ContentView>

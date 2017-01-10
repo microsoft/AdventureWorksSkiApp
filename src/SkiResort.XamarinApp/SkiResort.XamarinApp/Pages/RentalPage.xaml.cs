@@ -1,4 +1,5 @@
-﻿using SkiResort.XamarinApp.Interfaces;
+﻿using SkiResort.XamarinApp.Entities;
+using SkiResort.XamarinApp.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +8,18 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 
-using SkiResort.XamarinApp.Entities;
-using SkiResort.XamarinApp.ViewModels;
-using System.Collections.ObjectModel;
-
 namespace SkiResort.XamarinApp.Pages
 {
-    public partial class LiftStatusPage : ContentPage, IBarTint
+    public partial class RentalPage : ContentPage, IBarTint
     {
-        public LiftStatusPage()
+        public RentalPage()
         {
-            BindingContext = new LiftStatusViewModel();
             InitializeComponent();
+            listView.ItemsSource = new List<Rental>()
+            {
+                new Rental() {RentalId = 3 },
+                new Rental() {RentalId = 4 }
+            };
         }
 
         public Color GetBarBackgroundColor() => Color.FromHex("#15719E");

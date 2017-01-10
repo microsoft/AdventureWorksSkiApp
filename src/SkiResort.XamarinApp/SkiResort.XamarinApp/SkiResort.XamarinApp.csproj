@@ -42,6 +42,7 @@
     <Compile Include="Converters\LiftRatingToIconSourceConverter.cs" />
     <Compile Include="Entities\LiftGroup.cs" />
     <Compile Include="Entities\Lift.cs" />
+    <Compile Include="Entities\Rental.cs" />
     <Compile Include="Entities\WeatherSummary.cs" />
     <Compile Include="Interfaces\IBarTint.cs" />
     <Compile Include="Pages\CustomNavigationPage.cs" />
@@ -55,13 +56,20 @@
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\RentalPage.xaml.cs">
+      <DependentUpon>RentalPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\HTTPService.cs" />
     <Compile Include="Services\LiftService.cs" />
+    <Compile Include="Services\RentalService.cs" />
     <Compile Include="Services\WeatherService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\LiftStatusViewModel.cs" />
     <Compile Include="ViewModels\WeatherWidgetViewModel.cs" />
+    <Compile Include="Views\RentalView.xaml.cs">
+      <DependentUpon>RentalView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WeatherWidget.xaml.cs">
       <DependentUpon>WeatherWidget.xaml</DependentUpon>
     </Compile>
@@ -102,6 +110,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\LiftStatusPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\RentalPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\RentalView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
