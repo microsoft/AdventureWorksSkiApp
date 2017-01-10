@@ -26,10 +26,6 @@
 
     <Grid>
 
-      <StackLayout Style="{StaticResource loadingStackLayoutStyle}">
-        <ActivityIndicator Color="Black" IsRunning="{Binding Loading}" />
-      </StackLayout>
-
       <ListView x:Name="LiftList"
                 ItemsSource="{Binding LiftGroups}"
                 Style="{StaticResource listViewStyle}"
@@ -46,6 +42,11 @@
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
+
+      <StackLayout Style="{StaticResource loadingStackLayoutStyle}">
+        <ActivityIndicator Color="Black" IsRunning="{Binding Loading}" IsVisible="{Binding Loading}" />
+      </StackLayout>
+
     </Grid>
 
   </ContentPage.Content>

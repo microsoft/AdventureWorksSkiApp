@@ -43,7 +43,6 @@ namespace SkiResort.XamarinApp.ViewModels
         {
             LiftGroups = new ObservableCollection<LiftGroup>();
             FetchLiftStatus();
-            
         }
 
         private async void FetchLiftStatus()
