@@ -216,6 +216,15 @@
   <ItemGroup>
     <BundleResource Include="Resources\reservation_list_bg.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\shoe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\skies.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\poles.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

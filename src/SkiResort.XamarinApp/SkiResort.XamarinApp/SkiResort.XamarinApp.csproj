@@ -39,7 +39,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DateTimeToHourConverter.cs" />
+    <Compile Include="Converters\IntToInchesConverter.cs" />
+    <Compile Include="Converters\IntToRentalIdConverter.cs" />
     <Compile Include="Converters\LiftRatingToIconSourceConverter.cs" />
+    <Compile Include="Converters\DoubleToCurrencyConverter.cs" />
+    <Compile Include="Converters\RentalToDateRangeConverter.cs" />
+    <Compile Include="Converters\RentalToTypeAndLevelConverter.cs" />
     <Compile Include="Entities\LiftGroup.cs" />
     <Compile Include="Entities\Lift.cs" />
     <Compile Include="Entities\Rental.cs" />
@@ -66,6 +72,7 @@
     <Compile Include="Services\WeatherService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\LiftStatusViewModel.cs" />
+    <Compile Include="ViewModels\RentalViewModel.cs" />
     <Compile Include="ViewModels\WeatherWidgetViewModel.cs" />
     <Compile Include="Views\RentalView.xaml.cs">
       <DependentUpon>RentalView.xaml</DependentUpon>

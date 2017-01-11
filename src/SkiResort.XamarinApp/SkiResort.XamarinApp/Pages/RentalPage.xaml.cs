@@ -1,5 +1,6 @@
 ﻿using SkiResort.XamarinApp.Entities;
 using SkiResort.XamarinApp.Interfaces;
+using SkiResort.XamarinApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,8 @@ namespace SkiResort.XamarinApp.Pages
     {
         public RentalPage()
         {
+            BindingContext = new RentalViewModel();
             InitializeComponent();
-            listView.ItemsSource = new List<Rental>()
-            {
-                new Rental() {RentalId = 3 },
-                new Rental() {RentalId = 4 }
-            };
         }
 
         public Color GetBarBackgroundColor() => Color.FromHex("#15719E");

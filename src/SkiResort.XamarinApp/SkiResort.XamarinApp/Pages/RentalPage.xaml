@@ -19,8 +19,29 @@
       <Style x:Key="listViewStyle" TargetType="ListView">
         <Setter Property="VerticalOptions" Value="FillAndExpand" />
         <Setter Property="HasUnevenRows" Value="True" />
-        <Setter Property="SeparatorVisibility" Value="None" />
+        <Setter Property="SeparatorVisibility">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="SeparatorVisibility"
+                        iOS="Default"
+                        Android="None" />
+          </Setter.Value>
+        </Setter>
         <Setter Property="BackgroundColor" Value="#00000000" />
+      </Style>
+
+      <Style x:Key="loadingStackLayoutStyle" TargetType="StackLayout">
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+      </Style>
+
+      <Style x:Key="rentalItemStyle" TargetType="ContentView">
+        <Setter Property="Padding">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="Thickness"
+                        iOS="0"
+                        Android="15,15,15,0" />
+          </Setter.Value>
+        </Setter>
       </Style>
 
     </ResourceDictionary>
@@ -29,16 +50,21 @@
   <ContentPage.Content>
     <Grid>
       <ffil:CachedImage Style="{StaticResource backgroundImageStyle}" />
-      <ListView x:Name="listView"
+      
+      <ListView ItemsSource="{Binding Rentals}"
                 Style="{StaticResource listViewStyle}">
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell>
-              <views:RentalView Rental="{Binding}" />
+              <views:RentalView Style="{StaticResource rentalItemStyle}" Rental="{Binding}" />
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
+      
+      <StackLayout Style="{StaticResource loadingStackLayoutStyle}" IsVisible="{Binding Loading}">
+        <ActivityIndicator Color="White" IsRunning="{Binding Loading}" />
+      </StackLayout>
     </Grid>
   </ContentPage.Content>
 
