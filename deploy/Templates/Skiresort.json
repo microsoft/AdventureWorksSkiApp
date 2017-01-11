@@ -799,9 +799,9 @@
       "type": "string",
       "value": "[parameters('dataMarketUser')]"
     },
-    "documentDBAccount": {
+    "documentDBEndpoint": {
       "type": "string",
-      "value": "[variables('documentDBAccount_name')]"
+      "value": "[reference(concat('Microsoft.DocumentDb/databaseAccounts/', variables('documentDBAccount_name'))).documentEndpoint]",
     },
     "documentDBKey": {
       "type": "string",

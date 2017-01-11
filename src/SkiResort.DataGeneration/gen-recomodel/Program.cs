@@ -84,7 +84,7 @@ namespace gen_recomodel
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT RestaurantId,Name,FamilyFriendly,FoodType,LevelOfNoise,PriceLevel,Rating,TakeAway FROM Restaurant", con);
+                SqlCommand cmd = new SqlCommand("SELECT RestaurantId,Name,FamilyFriendly,FoodType,LevelOfNoise,PriceLevel,Rating,TakeAway FROM Restaurants", con);
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())

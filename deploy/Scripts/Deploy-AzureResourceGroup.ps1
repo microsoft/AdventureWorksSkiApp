@@ -91,6 +91,8 @@ if ($results) {
 	& $replacescript -Pattern '__SEARCHSERVICENAME__' -Replacement $results.Outputs.searchServiceName.value  -Overwrite -Path $configPath
 	& $replacescript -Pattern '__SEARCHKEY__' -Replacement $results.Outputs.searchServiceKey.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__ANOMALYDETECTIONKEY__' -Replacement $results.Outputs.dataMarketKey.value -Overwrite -Path $configPath
+	& $replacescript -Pattern '__DOCUMENTDBENDPOINT__' -Replacement $results.Outputs.documentDBEndpoint.value -Overwrite -Path $configPath
+	& $replacescript -Pattern '__DOCUMENTDBKEY__' -Replacement $results.Outputs.documentDBKey.value -Overwrite -Path $configPath
 
 	Write-Host 'Configure Data Generation apps'
 
