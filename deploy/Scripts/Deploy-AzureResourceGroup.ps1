@@ -22,6 +22,7 @@ try {
 
 Set-StrictMode -Version 3
 
+
 $OptionalParameters = New-Object -TypeName Hashtable
 $TemplateFile = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $TemplateFile))
 $TemplateParametersFile = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $TemplateParametersFile))
@@ -63,7 +64,6 @@ if ($results) {
 	Write-Host 'Create documentDB collections'
 	$documentdbscript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'DocumentDB.ps1'))
 	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlines" "liftlines"
-
 	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlinesarchive" "liftlinesarchive"
 
 	Write-Host 'Restart Stream Analytics Job'
