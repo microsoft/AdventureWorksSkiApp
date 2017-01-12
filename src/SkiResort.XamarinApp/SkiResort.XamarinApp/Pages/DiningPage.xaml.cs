@@ -1,4 +1,5 @@
 ﻿using SkiResort.XamarinApp.Interfaces;
+using SkiResort.XamarinApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace SkiResort.XamarinApp.Pages
     {
         public DiningPage()
         {
+            BindingContext = new DiningViewModel();
             InitializeComponent();
         }
 

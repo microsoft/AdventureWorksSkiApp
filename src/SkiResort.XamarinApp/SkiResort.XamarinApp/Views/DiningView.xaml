@@ -2,22 +2,40 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             x:Class="SkiResort.XamarinApp.Views.DiningView">
+             xmlns:converters="clr-namespace:SkiResort.XamarinApp.Converters;assembly=SkiResort.XamarinApp"
+             x:Class="SkiResort.XamarinApp.Views.DiningView"
+             x:Name="control">
+
+  <ContentView.Resources>
+    <ResourceDictionary>
+
+      <converters:RestaurantToImageSourceConverter x:Key="restaurantToImageSource"></converters:RestaurantToImageSourceConverter>
+      <converters:BoolToStringConverter x:Key="boolToString"></converters:BoolToStringConverter>
+      <converters:DistanceToRestaurantConverter x:Key="distanceToRestaurant"></converters:DistanceToRestaurantConverter>
+
+    </ResourceDictionary>
+  </ContentView.Resources>
+  
   <ContentView.Content>
 
     <StackLayout Orientation="Horizontal" HeightRequest="90" VerticalOptions="Start">
-      <ffil:CachedImage Source="" WidthRequest="120" HeightRequest="90" DownsampleToViewSize="true" BackgroundColor="#bada55" />
-      <StackLayout>
+      <ffil:CachedImage Source="{Binding Restaurant, Source={x:Reference control}, Converter={StaticResource restaurantToImageSource}}"
+                        WidthRequest="120"
+                        HeightRequest="90"
+                        DownsampleToViewSize="true"
+                        BackgroundColor="#CECECE"
+                        Aspect="AspectFill" />
+      <StackLayout Padding="10" HorizontalOptions="FillAndExpand">
         <StackLayout Orientation="Horizontal">
-          <Label Text="Azure Cafe" />
-          <Label Text="0.17 miles away" />
+          <Label Text="{Binding Restaurant.Name, Source={x:Reference control}}" TextColor="#1A90C9" FontSize="17" HorizontalOptions="StartAndExpand" />
+          <Label Text="{Binding Restaurant, Converter={StaticResource distanceToRestaurant}, Source={x:Reference control}, StringFormat='{0:0.#} miles'}" VerticalOptions="Center" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand">
-          <Label Text="$ 4/5 | Money 1/3" />
+          <Label Text="{Binding Restaurant.Rating, StringFormat='R {0}/5 | Money 1/3', Source={x:Reference control}}" />
         </StackLayout>
         <StackLayout Orientation="Horizontal">
-          <Label Text="Family friendly: Yes" />
-          <Label Text="Level noise: Loud" />
+          <Label Text="{Binding Restaurant.FamilyFriendly, Converter={StaticResource boolToString}, StringFormat='Family friendly: {0}', Source={x:Reference control}}" HorizontalOptions="FillAndExpand" />
+          <Label Text="{Binding Restaurant.LevelOfNoise, StringFormat='Level noise: {0}', Source={x:Reference control}}" />
         </StackLayout>
       </StackLayout>
     </StackLayout>

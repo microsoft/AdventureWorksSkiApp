@@ -38,10 +38,41 @@ namespace SkiResort.XamarinApp.ViewModels
                 }
             }
         }
+
+        private Geolocation userPosition { set; get; }
+        public Geolocation UserPosition
+        {
+            get { return userPosition; }
+            set
+            {
+                if (userPosition != value)
+                {
+                    userPosition = value;
+                    OnPropertyChanged("UserPosition");
+                }
+            }
+        }
+
         public DiningViewModel()
         {
             Restaurants = new ObservableCollection<Restaurant>();
+            UserPosition = new Geolocation { Latitude = 0, Longitude = 0 };
+            FetchUserPosition();
             FetchRestaurants();
+        }
+
+        private async void FetchUserPosition() {
+            //var locator = CrossGeolocator.Current;
+            //locator.DesiredAccuracy = 100;
+            //var position = await locator.GetPositionAsync(timeoutMilliseconds: 10000);
+            //if (position != null)
+            //{
+            //    UserPosition = new Geolocation
+            //    {
+            //        Latitude = position.Latitude,
+            //        Longitude = position.Longitude
+            //    };
+            //}
         }
 
         private async void FetchRestaurants()
