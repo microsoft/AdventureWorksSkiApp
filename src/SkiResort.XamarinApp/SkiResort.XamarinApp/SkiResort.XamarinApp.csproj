@@ -49,9 +49,13 @@
     <Compile Include="Entities\LiftGroup.cs" />
     <Compile Include="Entities\Lift.cs" />
     <Compile Include="Entities\Rental.cs" />
+    <Compile Include="Entities\Restaurant.cs" />
     <Compile Include="Entities\WeatherSummary.cs" />
     <Compile Include="Interfaces\IBarTint.cs" />
     <Compile Include="Pages\CustomNavigationPage.cs" />
+    <Compile Include="Pages\DiningPage.xaml.cs">
+      <DependentUpon>DiningPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LiftStatusPage.xaml.cs">
       <DependentUpon>LiftStatusPage.xaml</DependentUpon>
     </Compile>
@@ -69,11 +73,16 @@
     <Compile Include="Services\HTTPService.cs" />
     <Compile Include="Services\LiftService.cs" />
     <Compile Include="Services\RentalService.cs" />
+    <Compile Include="Services\RestaurantsService.cs" />
     <Compile Include="Services\WeatherService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\LiftStatusViewModel.cs" />
+    <Compile Include="ViewModels\DiningViewModel.cs" />
     <Compile Include="ViewModels\RentalViewModel.cs" />
     <Compile Include="ViewModels\WeatherWidgetViewModel.cs" />
+    <Compile Include="Views\DiningView.xaml.cs">
+      <DependentUpon>DiningView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RentalView.xaml.cs">
       <DependentUpon>RentalView.xaml</DependentUpon>
     </Compile>
@@ -129,6 +138,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\RentalView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\DiningPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\DiningView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

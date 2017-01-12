@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="SkiResort.XamarinApp.Views.DiningView">
+  <ContentView.Content>
+
+    <StackLayout Orientation="Horizontal" HeightRequest="90" VerticalOptions="Start">
+      <ffil:CachedImage Source="" WidthRequest="120" HeightRequest="90" DownsampleToViewSize="true" BackgroundColor="#bada55" />
+      <StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Azure Cafe" />
+          <Label Text="0.17 miles away" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand">
+          <Label Text="$ 4/5 | Money 1/3" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Family friendly: Yes" />
+          <Label Text="Level noise: Loud" />
+        </StackLayout>
+      </StackLayout>
+    </StackLayout>
+    
+  </ContentView.Content>
+</ContentView>

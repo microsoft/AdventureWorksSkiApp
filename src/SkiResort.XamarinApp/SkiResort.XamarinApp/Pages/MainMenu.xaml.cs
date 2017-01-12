@@ -35,6 +35,7 @@ namespace SkiResort.XamarinApp.Pages
             masterPageItems.Add(new MainMenuItem
             {
                 Title = "Dining",
+                TargetType = typeof(DiningPage)
             });
             masterPageItems.Add(new MainMenuItem
             {
