@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:converters="clr-namespace:SkiResort.XamarinApp.Converters;assembly=SkiResort.XamarinApp"
+             xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
              x:Class="SkiResort.XamarinApp.Views.DiningView"
              x:Name="control">
 
@@ -12,31 +13,80 @@
       <converters:RestaurantToImageSourceConverter x:Key="restaurantToImageSource"></converters:RestaurantToImageSourceConverter>
       <converters:BoolToStringConverter x:Key="boolToString"></converters:BoolToStringConverter>
       <converters:DistanceToRestaurantConverter x:Key="distanceToRestaurant"></converters:DistanceToRestaurantConverter>
-
+      
+      <Style x:Key="mainLayoutStyle" TargetType="StackLayout">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HeightRequest" Value="90" />
+        <Setter Property="VerticalOptions" Value="Start" />
+      </Style>
+      
+      <Style x:Key="restaurantImageStyle" TargetType="ffil:CachedImage">
+        <Setter Property="WidthRequest" Value="120" />
+        <Setter Property="HeightRequest" Value="90" />
+        <Setter Property="DownsampleToViewSize" Value="True" />
+        <Setter Property="BackgroundColor" Value="#CECECE" />
+        <Setter Property="Aspect" Value="AspectFill" />
+      </Style>
+      
+      <Style x:Key="descriptionLayoutStyle" TargetType="StackLayout">
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+      </Style>
+      
+      <Style x:Key="descriptionRowStyle" TargetType="StackLayout">
+        <Setter Property="Orientation" Value="Horizontal" />
+      </Style>
+      
+      <Style x:Key="titleStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="TextColor" Value="#1A90C9" />
+        <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+      </Style>
+      
+      <Style x:Key="labelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+      </Style>
+      
     </ResourceDictionary>
   </ContentView.Resources>
   
   <ContentView.Content>
 
-    <StackLayout Orientation="Horizontal" HeightRequest="90" VerticalOptions="Start">
-      <ffil:CachedImage Source="{Binding Restaurant, Source={x:Reference control}, Converter={StaticResource restaurantToImageSource}}"
-                        WidthRequest="120"
-                        HeightRequest="90"
-                        DownsampleToViewSize="true"
-                        BackgroundColor="#CECECE"
-                        Aspect="AspectFill" />
-      <StackLayout Padding="10" HorizontalOptions="FillAndExpand">
-        <StackLayout Orientation="Horizontal">
-          <Label Text="{Binding Restaurant.Name, Source={x:Reference control}}" TextColor="#1A90C9" FontSize="17" HorizontalOptions="StartAndExpand" />
-          <Label Text="{Binding Restaurant, Converter={StaticResource distanceToRestaurant}, Source={x:Reference control}, StringFormat='{0:0.#} miles'}" VerticalOptions="Center" />
+    <StackLayout Style="{StaticResource mainLayoutStyle}">
+      
+      <ffil:CachedImage
+        Style="{StaticResource restaurantImageStyle}"
+        Source="{Binding Restaurant, Source={x:Reference control}, Converter={StaticResource restaurantToImageSource}}" />
+                          
+      <StackLayout Style="{StaticResource descriptionLayoutStyle}">
+        
+        <StackLayout Style="{StaticResource descriptionRowStyle}">
+          <Label
+            Style="{StaticResource titleStyle}"
+            Text="{Binding Restaurant.Name, Source={x:Reference control}}" />
+          
+          <Label
+            Style="{StaticResource labelStyle}"
+            Text="{Binding Restaurant, Converter={StaticResource distanceToRestaurant}, Source={x:Reference control}, StringFormat='{0:0.#} miles'}"
+            VerticalOptions="Center" />
         </StackLayout>
-        <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand">
-          <Label Text="{Binding Restaurant.Rating, StringFormat='R {0}/5 | Money 1/3', Source={x:Reference control}}" />
+        
+        <StackLayout Style="{StaticResource descriptionRowStyle}" VerticalOptions="StartAndExpand">
+          <views:RatingView Max="5" Value="{Binding Restaurant.Rating, Source={x:Reference control}}" />
+          <Label Text=" | " Style="{StaticResource labelStyle}" />
+          <views:PriceLevelView Value="{Binding Restaurant.PriceLevel, Source={x:Reference control}}" />
         </StackLayout>
-        <StackLayout Orientation="Horizontal">
-          <Label Text="{Binding Restaurant.FamilyFriendly, Converter={StaticResource boolToString}, StringFormat='Family friendly: {0}', Source={x:Reference control}}" HorizontalOptions="FillAndExpand" />
-          <Label Text="{Binding Restaurant.LevelOfNoise, StringFormat='Level noise: {0}', Source={x:Reference control}}" />
+          
+        <StackLayout Style="{StaticResource descriptionRowStyle}">
+          <Label
+            Style="{StaticResource labelStyle}"
+            Text="{Binding Restaurant.FamilyFriendly, Converter={StaticResource boolToString}, StringFormat='Family friendly: {0}', Source={x:Reference control}}"
+            HorizontalOptions="FillAndExpand" />
+          <Label
+            Style="{StaticResource labelStyle}"
+            Text="{Binding Restaurant.LevelOfNoise, StringFormat='Level noise: {0}', Source={x:Reference control}}" />
         </StackLayout>
+    
       </StackLayout>
     </StackLayout>
     

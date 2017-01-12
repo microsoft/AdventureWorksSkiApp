@@ -87,6 +87,8 @@
     <Compile Include="Views\DiningView.xaml.cs">
       <DependentUpon>DiningView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PriceLevelView.cs" />
+    <Compile Include="Views\RatingView.cs" />
     <Compile Include="Views\RentalView.xaml.cs">
       <DependentUpon>RentalView.xaml</DependentUpon>
     </Compile>
