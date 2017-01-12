@@ -24,7 +24,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.DocumentDB.Repositories
             string collection = "liftlines";
 
             string query =
-                $"SELECT TOP 10 * FROM liftlines ORDER BY time DESC";
+                $"SELECT TOP 10 * FROM c order by c._ts desc";
 
             var parameters = new List<DBParameter>();
 
@@ -38,13 +38,13 @@ namespace AdventureWorks.SkiResort.Infrastructure.DocumentDB.Repositories
             string databaseId = "skiresortliftlinesarchive";
             string collection = "liftlinesarchive";
 
+            TimeSpan t = DateTimeOffset.UtcNow.Add(-timeBack) - new DateTime(1970, 1, 1);
+            int secondsSinceEpoch = (int)t.TotalSeconds;
+
             string query =
-                $" SELECT TOP 10 * FROM liftlinesarchive WHERE time >= @timeBack ORDER BY time DESC";
+                $"SELECT TOP 10 * FROM c WHERE c._ts >= {secondsSinceEpoch} order by c._ts desc";
 
             var parameters = new List<DBParameter>();
-            DateTimeOffset time = DateTimeOffset.UtcNow.Add(-timeBack);
-            parameters.Add(new DBParameter() { name = "@timeBack", value = $"'{time:o}'" });
-
             string response = await ExecuteQuery(databaseId, collection, query, parameters);
             List<LiftLinesArchive> docs = JsonConvert.DeserializeObject<LiftLinesArchiveResponse>(response).Documents;
 

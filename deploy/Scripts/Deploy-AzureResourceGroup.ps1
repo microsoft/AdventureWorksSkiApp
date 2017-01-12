@@ -62,9 +62,8 @@ if ($results) {
 
 	Write-Host 'Create documentDB collections'
 	$documentdbscript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'DocumentDB.ps1'))
-	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlines" "liftlines"
-
-	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlinesarchive" "liftlinesarchive"
+	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBEndpoint.value "skiresortliftlines" "liftlines"
+	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBEndpoint.value "skiresortliftlinesarchive" "liftlinesarchive"
 
 	Write-Host 'Restart Stream Analytics Job'
 	$restartscript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'RestartStreamJob.ps1'))
