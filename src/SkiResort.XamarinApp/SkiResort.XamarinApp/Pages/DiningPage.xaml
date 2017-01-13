@@ -9,6 +9,25 @@
   <ContentPage.Resources>
     <ResourceDictionary>
       
+      <Style x:Key="mainContainerStyle" TargetType="StackLayout">
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="Spacing" Value="0" />
+      </Style>
+
+      <Style x:Key="titleStyle" TargetType="StackLayout">
+        <Setter Property="BackgroundColor" Value="#1A90C9" />
+        <Setter Property="HeightRequest" Value="60" />
+        <Setter Property="Orientation" Value="Horizontal" />
+      </Style>
+
+      <Style x:Key="titleLabelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+      </Style>
+
       <Style x:Key="listViewStyle" TargetType="ListView">
         <Setter Property="VerticalOptions" Value="FillAndExpand" />
         <Setter Property="RowHeight" Value="90" />
@@ -27,20 +46,27 @@
 
     <Grid>
 
-      <ListView ItemsSource="{Binding Restaurants}"
+      <StackLayout Style="{StaticResource mainContainerStyle}">
+        <StackLayout Style="{StaticResource titleStyle}">
+          <Label 
+            Style="{StaticResource titleLabelStyle}"
+            Text="Nearby Restaurants" />
+        </StackLayout>
+        <ListView ItemsSource="{Binding Restaurants}"
                 Style="{StaticResource listViewStyle}">
 
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell>
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
 
-              <views:DiningView Restaurant="{Binding}" UserPosition="{Binding UserPosition, Source={x:Reference page}}" />
+                <views:DiningView Restaurant="{Binding}" UserPosition="{Binding UserPosition, Source={x:Reference page}}" />
 
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
 
-      </ListView>
+        </ListView>
+      </StackLayout>
 
       <StackLayout Style="{StaticResource loadingStackLayoutStyle}" IsVisible="{Binding Loading}">
         <ActivityIndicator Color="Black" IsRunning="{Binding Loading}" />

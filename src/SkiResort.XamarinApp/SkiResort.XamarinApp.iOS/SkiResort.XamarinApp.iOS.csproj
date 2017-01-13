@@ -231,6 +231,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\star_filled.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\marker.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

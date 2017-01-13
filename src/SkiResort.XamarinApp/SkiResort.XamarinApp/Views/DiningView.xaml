@@ -27,6 +27,12 @@
         <Setter Property="BackgroundColor" Value="#CECECE" />
         <Setter Property="Aspect" Value="AspectFill" />
       </Style>
+
+      <Style x:Key="markerIconStyle" TargetType="ffil:CachedImage">
+        <Setter Property="WidthRequest" Value="10" />
+        <Setter Property="HeightRequest" Value="10" />
+        <Setter Property="DownsampleToViewSize" Value="True" />
+      </Style>
       
       <Style x:Key="descriptionLayoutStyle" TargetType="StackLayout">
         <Setter Property="Padding" Value="10" />
@@ -64,10 +70,13 @@
           <Label
             Style="{StaticResource titleStyle}"
             Text="{Binding Restaurant.Name, Source={x:Reference control}}" />
-          
+
+          <ffil:CachedImage
+            Style="{StaticResource markerIconStyle}"
+            Source="marker.png" />
           <Label
             Style="{StaticResource labelStyle}"
-            Text="{Binding Restaurant, Converter={StaticResource distanceToRestaurant}, Source={x:Reference control}, StringFormat='{0:0.#} miles'}"
+            Text="{Binding Restaurant, Converter={StaticResource distanceToRestaurant}, Source={x:Reference control}, StringFormat='{0:0.#} miles away'}"
             VerticalOptions="Center" />
         </StackLayout>
         

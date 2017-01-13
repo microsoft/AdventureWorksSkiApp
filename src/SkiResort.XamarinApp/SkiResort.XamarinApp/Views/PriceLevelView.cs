@@ -41,7 +41,8 @@ namespace SkiResort.XamarinApp.Views
         {
             layout = new StackLayout
             {
-                Orientation = StackOrientation.Horizontal
+                Orientation = StackOrientation.Horizontal,
+                Spacing = 1
             };
             Content = layout;
 
