@@ -13,8 +13,11 @@ namespace SkiResort.XamarinApp.Services
     {
         public async Task<List<Lift>> GetLifts()
         {
-            var httpService = new HTTPService("http://adventureworkskiresort.azurewebsites.net/api");
-            var liftsData = await httpService.Get("/lifts/nearby?latitude=0&longitude=0");
+            var httpService = new HTTPService(Config.API_URL);
+            var liftsData = await httpService.Get(
+                string.Format("/lifts/nearby?latitude={0}&longitude={1}",
+                    Config.USER_DEFAULT_POSITION_LATITUDE,
+                    Config.USER_DEFAULT_POSITION_LONGITUDE));
             var lifts = JsonConvert.DeserializeObject<List<Lift>>(liftsData);
             return lifts;
         }

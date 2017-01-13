@@ -12,8 +12,11 @@ namespace SkiResort.XamarinApp.Services
     {
         public async Task<List<Restaurant>> GetRestaurants()
         {
-            var httpService = new HTTPService("http://adventureworkskiresort.azurewebsites.net/api");
-            var restaurantsData = await httpService.Get("/restaurants/nearby?latitude=0&longitude=0");
+            var httpService = new HTTPService(Config.API_URL);
+            var restaurantsData = await httpService.Get(
+                string.Format("/restaurants/nearby?latitude={0}&longitude={1}",
+                    Config.USER_DEFAULT_POSITION_LATITUDE,
+                    Config.USER_DEFAULT_POSITION_LONGITUDE));
             var restaurants = JsonConvert.DeserializeObject<List<Restaurant>>(restaurantsData);
             return restaurants;
         }

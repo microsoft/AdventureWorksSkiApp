@@ -16,9 +16,16 @@ namespace SkiResort.XamarinApp.Converters
             var restaurant = (Restaurant)value;
             if (restaurant != null)
             {
-                return distanceBetween(
-                    new Geolocation { Latitude = restaurant.Latitude, Longitude = restaurant.Longitude },
-                    new Geolocation { Latitude = 0, Longitude = 0 });
+                var aCoord = new Geolocation {
+                    Latitude = restaurant.Latitude,
+                    Longitude = restaurant.Longitude
+                };
+                var bCoord = new Geolocation {
+                    Latitude = Config.USER_DEFAULT_POSITION_LATITUDE,
+                    Longitude = Config.USER_DEFAULT_POSITION_LONGITUDE
+                };
+                var distance = distanceBetween(aCoord, bCoord);
+                return distance;
             }
             return 0;
         }

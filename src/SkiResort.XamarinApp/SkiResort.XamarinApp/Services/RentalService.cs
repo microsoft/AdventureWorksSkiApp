@@ -13,7 +13,7 @@ namespace SkiResort.XamarinApp.Services
     {
         public async Task<List<Rental>> GetRentals()
         {
-            var httpService = new HTTPService("http://adventureworkskiresort.azurewebsites.net/api");
+            var httpService = new HTTPService(Config.API_URL);
             var rentalsData = await httpService.Get("/rentals");
             var rentals = JsonConvert.DeserializeObject<List<Rental>>(rentalsData);
             return rentals;

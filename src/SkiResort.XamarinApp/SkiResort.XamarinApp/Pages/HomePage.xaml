@@ -14,6 +14,7 @@
         <Setter Property="Source" Value="home_background.jpg" />
         <Setter Property="Aspect" Value="AspectFill" />
         <Setter Property="DownsampleToViewSize" Value="true" />
+        <Setter Property="BackgroundColor" Value="#5f9ec1" />
       </Style>
 
       <Style x:Key="mainStackLayoutStyle" TargetType="StackLayout">

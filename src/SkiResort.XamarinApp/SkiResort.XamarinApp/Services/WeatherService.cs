@@ -14,7 +14,7 @@ namespace SkiResort.XamarinApp.Services
     {
         public async Task<WeatherSummary> GetSummary()
         {
-            var httpService = new HTTPService("http://adventureworkskiresort.azurewebsites.net/api");
+            var httpService = new HTTPService(Config.API_URL);
             var summaryData = await httpService.Get("/summaries");
             var summary = JsonConvert.DeserializeObject<WeatherSummary>(summaryData);
             return summary;
