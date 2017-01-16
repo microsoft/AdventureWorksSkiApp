@@ -47,19 +47,21 @@
     <Grid>
 
       <StackLayout Style="{StaticResource mainContainerStyle}">
-        <StackLayout Style="{StaticResource titleStyle}">
+        <!--<StackLayout Style="{StaticResource titleStyle}">
           <Label 
             Style="{StaticResource titleLabelStyle}"
             Text="Nearby Restaurants" />
-        </StackLayout>
-        <ListView ItemsSource="{Binding Restaurants}"
-                Style="{StaticResource listViewStyle}">
+        </StackLayout>-->
+        <ListView
+          ItemsSource="{Binding Restaurants}"
+          CachingStrategy="RecycleElement"
+          Style="{StaticResource listViewStyle}">
 
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>
 
-                <views:DiningView Restaurant="{Binding}" UserPosition="{Binding UserPosition, Source={x:Reference page}}" />
+                <views:DiningView Restaurant="{Binding}" />
 
               </ViewCell>
             </DataTemplate>

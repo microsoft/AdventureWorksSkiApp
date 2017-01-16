@@ -26,6 +26,7 @@
         <Setter Property="DownsampleToViewSize" Value="True" />
         <Setter Property="BackgroundColor" Value="#CECECE" />
         <Setter Property="Aspect" Value="AspectFill" />
+        <Setter Property="CacheDuration" Value="0" />
       </Style>
 
       <Style x:Key="markerIconStyle" TargetType="ffil:CachedImage">
@@ -81,7 +82,12 @@
         </StackLayout>
         
         <StackLayout Style="{StaticResource descriptionRowStyle}" VerticalOptions="StartAndExpand">
-          <views:RatingView Max="5" Value="{Binding Restaurant.Rating, Source={x:Reference control}}" />
+          <ffil:CachedImage
+            WidthRequest="54"
+            HeightRequest="10"
+            Aspect="AspectFit"
+            DownsampleToViewSize="True"
+            Source="{Binding Restaurant.Rating, Source={x:Reference control}, StringFormat='star_{0}.png'}" />
           <Label Text=" | " Style="{StaticResource labelStyle}" />
           <views:PriceLevelView Value="{Binding Restaurant.PriceLevel, Source={x:Reference control}}" />
         </StackLayout>

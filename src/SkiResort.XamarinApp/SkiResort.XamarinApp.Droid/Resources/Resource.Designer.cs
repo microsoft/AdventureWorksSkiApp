@@ -2218,8 +2218,8 @@ namespace SkiResort.XamarinApp.Droid
 			// aapt resource value: 0x7f0200a6
 			public const int mr_ic_play_light = 2130837670;
 			
-			// aapt resource value: 0x7f0200b1
-			public const int notification_template_icon_bg = 2130837681;
+			// aapt resource value: 0x7f0200b5
+			public const int notification_template_icon_bg = 2130837685;
 			
 			// aapt resource value: 0x7f0200a7
 			public const int poles = 2130837671;
@@ -2234,22 +2234,34 @@ namespace SkiResort.XamarinApp.Droid
 			public const int skies = 2130837674;
 			
 			// aapt resource value: 0x7f0200ab
-			public const int star = 2130837675;
+			public const int star_0 = 2130837675;
 			
 			// aapt resource value: 0x7f0200ac
-			public const int star_filled = 2130837676;
+			public const int star_1 = 2130837676;
 			
 			// aapt resource value: 0x7f0200ad
-			public const int weatherWidget_base = 2130837677;
+			public const int star_2 = 2130837677;
 			
 			// aapt resource value: 0x7f0200ae
-			public const int weatherWidget_snow = 2130837678;
+			public const int star_3 = 2130837678;
 			
 			// aapt resource value: 0x7f0200af
-			public const int weatherWidget_temp = 2130837679;
+			public const int star_4 = 2130837679;
 			
 			// aapt resource value: 0x7f0200b0
-			public const int weatherWidget_wind = 2130837680;
+			public const int star_5 = 2130837680;
+			
+			// aapt resource value: 0x7f0200b1
+			public const int weatherWidget_base = 2130837681;
+			
+			// aapt resource value: 0x7f0200b2
+			public const int weatherWidget_snow = 2130837682;
+			
+			// aapt resource value: 0x7f0200b3
+			public const int weatherWidget_temp = 2130837683;
+			
+			// aapt resource value: 0x7f0200b4
+			public const int weatherWidget_wind = 2130837684;
 			
 			static Drawable()
 			{
