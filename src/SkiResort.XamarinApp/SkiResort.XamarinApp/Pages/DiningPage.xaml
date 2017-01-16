@@ -47,11 +47,6 @@
     <Grid>
 
       <StackLayout Style="{StaticResource mainContainerStyle}">
-        <!--<StackLayout Style="{StaticResource titleStyle}">
-          <Label 
-            Style="{StaticResource titleLabelStyle}"
-            Text="Nearby Restaurants" />
-        </StackLayout>-->
         <ListView
           ItemsSource="{Binding Restaurants}"
           CachingStrategy="RecycleElement"

@@ -21,7 +21,6 @@ namespace SkiResort.XamarinApp.Pages
                 BarBackgroundColor = barTint.GetBarBackgroundColor();
                 BarTextColor = barTint.GetBarTextColor();
             }
-            
         }
     }
 }

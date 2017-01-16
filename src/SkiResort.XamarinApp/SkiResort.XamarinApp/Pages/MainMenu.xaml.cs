@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiResort.XamarinApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,22 +21,22 @@ namespace SkiResort.XamarinApp.Pages
             masterPageItems.Add(new MainMenuItem
             {
                 Title = "Home",
-                TargetType = typeof(HomePage)
+                TargetType = typeof(HomeViewModel)
             });
             masterPageItems.Add(new MainMenuItem
             {
                 Title = "Lift Status",
-                TargetType = typeof(LiftStatusPage)
+                TargetType = typeof(LiftStatusViewModel)
             });
             masterPageItems.Add(new MainMenuItem
             {
                 Title = "Rental Reservation",
-                TargetType = typeof(RentalPage)
+                TargetType = typeof(RentalViewModel)
             });
             masterPageItems.Add(new MainMenuItem
             {
                 Title = "Dining",
-                TargetType = typeof(DiningPage)
+                TargetType = typeof(DiningViewModel)
             });
             masterPageItems.Add(new MainMenuItem
             {

@@ -17,7 +17,6 @@ namespace SkiResort.XamarinApp.Pages
     {
         public LiftStatusPage()
         {
-            BindingContext = new LiftStatusViewModel();
             InitializeComponent();
         }
 

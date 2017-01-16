@@ -38,9 +38,12 @@
 
     <Grid>
 
-      <ListView ItemsSource="{Binding LiftGroups}"
-                GroupDisplayBinding="{Binding Title}"
-                Style="{StaticResource listViewStyle}">
+      <ListView
+        x:Name="listView"
+        ItemsSource="{Binding LiftGroups}"
+        SelectedItem="{Binding SelectedLift}"
+        GroupDisplayBinding="{Binding Title}"
+        Style="{StaticResource listViewStyle}">
         
         <ListView.ItemTemplate>
           <DataTemplate>
