@@ -14,7 +14,6 @@ namespace SkiResort.XamarinApp.Pages
     {
         public DiningPage()
         {
-            BindingContext = new DiningViewModel();
             InitializeComponent();
         }
 

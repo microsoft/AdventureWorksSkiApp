@@ -41,7 +41,7 @@
       <ListView
         x:Name="listView"
         ItemsSource="{Binding LiftGroups}"
-        SelectedItem="{Binding SelectedLift}"
+        SelectedItem="{Binding SelectedLift, Mode=TwoWay}"
         GroupDisplayBinding="{Binding Title}"
         Style="{StaticResource listViewStyle}">
         

@@ -39,16 +39,20 @@ namespace SkiResort.XamarinApp.ViewModels
             }
         }
 
-        private Geolocation userPosition { set; get; }
-        public Geolocation UserPosition
+        private Restaurant selectedRestaurant { get; set; }
+        public Restaurant SelectedRestaurant
         {
-            get { return userPosition; }
+            get
+            {
+                return selectedRestaurant;
+            }
             set
             {
-                if (userPosition != value)
+                if (value != selectedRestaurant)
                 {
-                    userPosition = value;
-                    OnPropertyChanged("UserPosition");
+                    NavigationService.Instance.NavigateTo(typeof(DiningDetailViewModel), value);
+                    selectedRestaurant = null;
+                    OnPropertyChanged("SelectedRestaurant");
                 }
             }
         }
@@ -56,23 +60,7 @@ namespace SkiResort.XamarinApp.ViewModels
         public DiningViewModel()
         {
             Restaurants = new ObservableCollection<Restaurant>();
-            UserPosition = new Geolocation { Latitude = 0, Longitude = 0 };
-            FetchUserPosition();
             FetchRestaurants();
-        }
-
-        private async void FetchUserPosition() {
-            //var locator = CrossGeolocator.Current;
-            //locator.DesiredAccuracy = 100;
-            //var position = await locator.GetPositionAsync(timeoutMilliseconds: 10000);
-            //if (position != null)
-            //{
-            //    UserPosition = new Geolocation
-            //    {
-            //        Latitude = position.Latitude,
-            //        Longitude = position.Longitude
-            //    };
-            //}
         }
 
         private async void FetchRestaurants()

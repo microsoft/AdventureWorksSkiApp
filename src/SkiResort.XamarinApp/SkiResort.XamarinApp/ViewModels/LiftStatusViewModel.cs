@@ -38,8 +38,8 @@ namespace SkiResort.XamarinApp.ViewModels
             {
                 if (value != selectedLift)
                 {
-                    //navigation.PushAsync(new LiftDetailPage());
-                    NavigationService.Instance.NavigateTo(typeof(LiftDetailViewModel));
+                    NavigationService.Instance.NavigateTo(typeof(LiftDetailViewModel), value);
+                    selectedLift = null;
                     OnPropertyChanged("SelectedLift");
                 }
             }

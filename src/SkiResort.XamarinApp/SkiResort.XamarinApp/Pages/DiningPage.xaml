@@ -48,8 +48,10 @@
 
       <StackLayout Style="{StaticResource mainContainerStyle}">
         <ListView
+          x:Name="listView"
           ItemsSource="{Binding Restaurants}"
-          CachingStrategy="RecycleElement"
+          SelectedItem="{Binding SelectedRestaurant, Mode=TwoWay}"
+          
           Style="{StaticResource listViewStyle}">
 
           <ListView.ItemTemplate>
