@@ -51,7 +51,7 @@
           x:Name="listView"
           ItemsSource="{Binding Restaurants}"
           SelectedItem="{Binding SelectedRestaurant, Mode=TwoWay}"
-          
+          CachingStrategy="RecycleElement"
           Style="{StaticResource listViewStyle}">
 
           <ListView.ItemTemplate>
