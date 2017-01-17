@@ -24,7 +24,6 @@ namespace SkiResort.XamarinApp.Services
         #endregion
 
         public MasterDetailPage MasterDetailPage;
-        public Page MainPage;
 
         private Dictionary<Type, Type> viewModelPageMapping;
         private Type homeViewModel;
