@@ -2,13 +2,19 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
+             xmlns:converters="clr-namespace:SkiResort.XamarinApp.Converters"
              xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="SkiResort.XamarinApp.Pages.LiftDetailPage"
              Title="{Binding Lift.Name}">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:LiftToDistanceFormattedText x:Key="liftToDistanceFormattedText"></converters:LiftToDistanceFormattedText>
+    </ResourceDictionary>
+  </ContentPage.Resources>
   <ContentPage.Content>
     <StackLayout Spacing="0">
       <StackLayout Orientation="Horizontal" BackgroundColor="#105D82" Padding="15">
-        <Label Text="{Binding Lift.Name, StringFormat='You are too many miles away from {0}'}" VerticalOptions="Center" TextColor="White" FontSize="18" />
+        <Label FormattedText="{Binding Lift, Converter={StaticResource liftToDistanceFormattedText}}" VerticalOptions="Center" TextColor="White" />
       </StackLayout>
       <views:WeatherWidget />
       <ffil:CachedImage Source="map.jpg" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="AspectFill" />

@@ -47,6 +47,7 @@
     <Compile Include="Converters\IntToRentalIdConverter.cs" />
     <Compile Include="Converters\LiftRatingToIconSourceConverter.cs" />
     <Compile Include="Converters\DoubleToCurrencyConverter.cs" />
+    <Compile Include="Converters\LiftToDistanceFormattedText.cs" />
     <Compile Include="Converters\RentalToDateRangeConverter.cs" />
     <Compile Include="Converters\RentalToTypeAndLevelConverter.cs" />
     <Compile Include="Converters\RestaurantToImageSourceConverter.cs" />

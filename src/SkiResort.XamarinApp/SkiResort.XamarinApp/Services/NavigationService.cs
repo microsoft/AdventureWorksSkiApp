@@ -40,10 +40,10 @@ namespace SkiResort.XamarinApp.Services
             mainMenu.ListView.ItemSelected += OnMenuItemSelected;
         }
 
-        public void NavigateTo(Type viewModelType, object parameter = null)
+        public void NavigateTo(Type viewModelType, params object[] parameters)
         {
             var navigationPage = MasterDetailPage.Detail as CustomNavigationPage;
-            navigationPage.PushAsync(createPage(viewModelType, parameter));
+            navigationPage.PushAsync(createPage(viewModelType, parameters));
         }
 
         private void registerViewModels()
@@ -61,7 +61,7 @@ namespace SkiResort.XamarinApp.Services
             viewModelPageMapping.Add(typeof(DiningDetailViewModel), typeof(DiningDetailPage));
         }
 
-        Page createPage(Type viewModelType, object parameter = null)
+        Page createPage(Type viewModelType, params object[] parameters)
         {
             Page page;
             Type pageType;
@@ -73,15 +73,7 @@ namespace SkiResort.XamarinApp.Services
             }
 
             page = (Page)Activator.CreateInstance(pageType);
-            if (parameter != null)
-            {
-                page.BindingContext = Activator.CreateInstance(viewModelType, parameter);
-            }
-            else
-            {
-                page.BindingContext = Activator.CreateInstance(viewModelType);
-            }
-            
+            page.BindingContext = Activator.CreateInstance(viewModelType, parameters);
 
             return page;
         }
