@@ -11,11 +11,11 @@ using Xamarin.Forms;
 
 namespace SkiResort.XamarinApp.Pages
 {
-    public partial class RentalPage : ContentPage, IBarTint
+    public partial class RentalListPage : ContentPage, IBarTint
     {
-        public RentalPage()
+        public RentalListPage()
         {
-            BindingContext = new RentalViewModel();
+            BindingContext = new RentalListViewModel();
             InitializeComponent();
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SkiResort.XamarinApp.ViewModels
 {
-    class RentalViewModel : BaseViewModel
+    class RentalFormViewModel : BaseViewModel
     {
     }
 }

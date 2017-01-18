@@ -79,9 +79,14 @@
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\RentalPage.xaml.cs">
-      <DependentUpon>RentalPage.xaml</DependentUpon>
+    <Compile Include="Pages\Page1.cs" />
+    <Compile Include="Pages\RentalFormPage.xaml.cs">
+      <DependentUpon>RentalFormPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\RentalListPage.xaml.cs">
+      <DependentUpon>RentalListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RentalPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\HTTPService.cs" />
     <Compile Include="Services\LiftService.cs" />
@@ -95,6 +100,8 @@
     <Compile Include="ViewModels\LiftDetailViewModel.cs" />
     <Compile Include="ViewModels\LiftStatusViewModel.cs" />
     <Compile Include="ViewModels\DiningViewModel.cs" />
+    <Compile Include="ViewModels\RentalFormViewModel.cs" />
+    <Compile Include="ViewModels\RentalListViewModel.cs" />
     <Compile Include="ViewModels\RentalViewModel.cs" />
     <Compile Include="ViewModels\WeatherWidgetViewModel.cs" />
     <Compile Include="Views\DiningView.xaml.cs">
@@ -149,7 +156,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\RentalPage.xaml">
+    <EmbeddedResource Include="Pages\RentalListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -180,6 +187,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\DiningDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\RentalFormPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

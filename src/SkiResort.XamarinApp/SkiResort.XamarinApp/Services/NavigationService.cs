@@ -35,7 +35,7 @@ namespace SkiResort.XamarinApp.Services
             mainMenu = new MainMenu();
             MasterDetailPage = new MasterDetailPage();
             MasterDetailPage.Master = mainMenu;
-            MasterDetailPage.Detail = new CustomNavigationPage(createPage(homeViewModel));
+            MasterDetailPage.Detail = new CustomNavigationPage(CreatePage(homeViewModel));
 
             mainMenu.ListView.ItemSelected += OnMenuItemSelected;
         }
@@ -43,7 +43,7 @@ namespace SkiResort.XamarinApp.Services
         public void NavigateTo(Type viewModelType, params object[] parameters)
         {
             var navigationPage = MasterDetailPage.Detail as CustomNavigationPage;
-            navigationPage.PushAsync(createPage(viewModelType, parameters));
+            navigationPage.PushAsync(CreatePage(viewModelType, parameters));
         }
 
         private void registerViewModels()
@@ -55,13 +55,15 @@ namespace SkiResort.XamarinApp.Services
             viewModelPageMapping.Add(typeof(HomeViewModel), typeof(HomePage));
             viewModelPageMapping.Add(typeof(LiftStatusViewModel), typeof(LiftStatusPage));
             viewModelPageMapping.Add(typeof(RentalViewModel), typeof(RentalPage));
+            viewModelPageMapping.Add(typeof(RentalListViewModel), typeof(RentalListPage));
+            viewModelPageMapping.Add(typeof(RentalFormViewModel), typeof(RentalFormPage));
             viewModelPageMapping.Add(typeof(DiningViewModel), typeof(DiningPage));
 
             viewModelPageMapping.Add(typeof(LiftDetailViewModel), typeof(LiftDetailPage));
             viewModelPageMapping.Add(typeof(DiningDetailViewModel), typeof(DiningDetailPage));
         }
 
-        Page createPage(Type viewModelType, params object[] parameters)
+        public Page CreatePage(Type viewModelType, params object[] parameters)
         {
             Page page;
             Type pageType;
@@ -83,7 +85,7 @@ namespace SkiResort.XamarinApp.Services
             var item = e.SelectedItem as MainMenuItem;
             if (item != null && item.TargetType != null)
             {
-                MasterDetailPage.Detail = new CustomNavigationPage(createPage(item.TargetType));
+                MasterDetailPage.Detail = new CustomNavigationPage(CreatePage(item.TargetType));
             }
             CloseMenu();
         }
