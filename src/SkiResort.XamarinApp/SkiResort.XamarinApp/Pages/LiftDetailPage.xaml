@@ -9,6 +9,7 @@
   <ContentPage.Resources>
     <ResourceDictionary>
       <converters:LiftToDistanceFormattedText x:Key="liftToDistanceFormattedText"></converters:LiftToDistanceFormattedText>
+      <converters:LiftToAltitudeFormattedText x:Key="liftToAltitudeFormattedText"></converters:LiftToAltitudeFormattedText>
     </ResourceDictionary>
   </ContentPage.Resources>
   <ContentPage.Content>
@@ -17,7 +18,19 @@
         <Label FormattedText="{Binding Lift, Converter={StaticResource liftToDistanceFormattedText}}" VerticalOptions="Center" TextColor="White" />
       </StackLayout>
       <views:WeatherWidget />
-      <ffil:CachedImage Source="map.jpg" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Aspect="AspectFill" />
+      <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <ffil:CachedImage Source="map.jpg" Aspect="AspectFill" />
+        <AbsoluteLayout>
+          <StackLayout AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional" Spacing="0">
+            <StackLayout BackgroundColor="#333333" Padding="0,15,0,15" Spacing="0">
+              <Label FormattedText="{Binding Lift, Converter={StaticResource liftToAltitudeFormattedText}}" TextColor="White" HorizontalTextAlignment="Center" />
+              <Label Text="You are here!" TextColor="White" HorizontalTextAlignment="Center" FontSize="20" />
+            </StackLayout>
+            <ffil:CachedImage Source="lift_map_marker.png" VerticalOptions="Center" WidthRequest="170" />
+          </StackLayout>
+          
+        </AbsoluteLayout>
+      </Grid>
     </StackLayout>
   </ContentPage.Content>
   
