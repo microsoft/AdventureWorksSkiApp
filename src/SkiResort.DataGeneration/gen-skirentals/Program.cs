@@ -129,13 +129,13 @@ namespace Ski.Rentals.Generator
             {
                 con.Open();
 
-                if (TableRowCount(con, "Holiday") > 0)
+                if (TableRowCount(con, "Holidays") > 0)
                 {
                     return;
                 }
 
                 SqlTransaction tx = con.BeginTransaction();
-                SqlCommand cmd = new SqlCommand("INSERT INTO Holiday (Date) VALUES (@date)", con, tx);
+                SqlCommand cmd = new SqlCommand("INSERT INTO Holidays (Date) VALUES (@date)", con, tx);
                 SqlParameter date = cmd.Parameters.Add("@date", SqlDbType.DateTimeOffset);
 
                 foreach (int year in SeasonYears)

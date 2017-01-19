@@ -5,7 +5,11 @@ using System.Text;
 
 using Xamarin.Forms;
 using SkiResort.XamarinApp.Pages;
+using Xamarin.Forms.Xaml;
+using FFImageLoading;
+using SkiResort.XamarinApp.Services;
 
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace SkiResort.XamarinApp
 {
     public partial class App : Application
@@ -13,7 +17,7 @@ namespace SkiResort.XamarinApp
         public App()
         {
             InitializeComponent();
-            MainPage = new MainMasterDetailPage();
+            MainPage = NavigationService.Instance.MasterDetailPage;
         }
 
         protected override void OnStart()

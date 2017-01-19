@@ -39,12 +39,36 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Config.cs" />
+    <Compile Include="Converters\BoolToStringConverter.cs" />
+    <Compile Include="Converters\DateTimeToHourConverter.cs" />
+    <Compile Include="Converters\DistanceToRestaurantConverter.cs" />
+    <Compile Include="Converters\IntToInchesConverter.cs" />
+    <Compile Include="Converters\IntToRentalIdConverter.cs" />
     <Compile Include="Converters\LiftRatingToIconSourceConverter.cs" />
+    <Compile Include="Converters\DoubleToCurrencyConverter.cs" />
+    <Compile Include="Converters\LiftToAltitudeFormattedText.cs" />
+    <Compile Include="Converters\LiftToDistanceFormattedText.cs" />
+    <Compile Include="Converters\RentalToDateRangeConverter.cs" />
+    <Compile Include="Converters\RentalToTypeAndLevelConverter.cs" />
+    <Compile Include="Converters\RestaurantToImageSourceConverter.cs" />
+    <Compile Include="Entities\Geolocation.cs" />
     <Compile Include="Entities\LiftGroup.cs" />
     <Compile Include="Entities\Lift.cs" />
+    <Compile Include="Entities\Rental.cs" />
+    <Compile Include="Entities\Restaurant.cs" />
     <Compile Include="Entities\WeatherSummary.cs" />
     <Compile Include="Interfaces\IBarTint.cs" />
     <Compile Include="Pages\CustomNavigationPage.cs" />
+    <Compile Include="Pages\DiningDetailPage.xaml.cs">
+      <DependentUpon>DiningDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DiningPage.xaml.cs">
+      <DependentUpon>DiningPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LiftDetailPage.xaml.cs">
+      <DependentUpon>LiftDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LiftStatusPage.xaml.cs">
       <DependentUpon>LiftStatusPage.xaml</DependentUpon>
     </Compile>
@@ -55,13 +79,38 @@
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Page1.cs" />
+    <Compile Include="Pages\RentalFormPage.xaml.cs">
+      <DependentUpon>RentalFormPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RentalListPage.xaml.cs">
+      <DependentUpon>RentalListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RentalPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\HTTPService.cs" />
     <Compile Include="Services\LiftService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Services\RentalService.cs" />
+    <Compile Include="Services\RestaurantsService.cs" />
     <Compile Include="Services\WeatherService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\DiningDetailViewModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\LiftDetailViewModel.cs" />
     <Compile Include="ViewModels\LiftStatusViewModel.cs" />
+    <Compile Include="ViewModels\DiningViewModel.cs" />
+    <Compile Include="ViewModels\RentalFormViewModel.cs" />
+    <Compile Include="ViewModels\RentalListViewModel.cs" />
+    <Compile Include="ViewModels\RentalViewModel.cs" />
     <Compile Include="ViewModels\WeatherWidgetViewModel.cs" />
+    <Compile Include="Views\DiningView.xaml.cs">
+      <DependentUpon>DiningView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PriceLevelView.cs" />
+    <Compile Include="Views\RentalView.xaml.cs">
+      <DependentUpon>RentalView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WeatherWidget.xaml.cs">
       <DependentUpon>WeatherWidget.xaml</DependentUpon>
     </Compile>
@@ -102,6 +151,48 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\LiftStatusPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\RentalListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\RentalView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\DiningPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\DiningView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\LiftDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\DiningDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\RentalFormPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

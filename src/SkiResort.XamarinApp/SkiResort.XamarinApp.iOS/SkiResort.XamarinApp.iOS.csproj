@@ -213,6 +213,45 @@
   <ItemGroup>
     <BundleResource Include="Resources\logo-splash.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\reservation_list_bg.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\shoe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\skies.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\poles.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\marker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\star_5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\star_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\star_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\star_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\star_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\star_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\map.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\lift_map_marker.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

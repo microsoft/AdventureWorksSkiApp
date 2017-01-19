@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
+             xmlns:converters="clr-namespace:SkiResort.XamarinApp.Converters"
+             xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="SkiResort.XamarinApp.Pages.LiftDetailPage"
+             Title="{Binding Lift.Name}">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:LiftToDistanceFormattedText x:Key="liftToDistanceFormattedText"></converters:LiftToDistanceFormattedText>
+      <converters:LiftToAltitudeFormattedText x:Key="liftToAltitudeFormattedText"></converters:LiftToAltitudeFormattedText>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Content>
+    <StackLayout Spacing="0">
+      <StackLayout Orientation="Horizontal" BackgroundColor="#105D82" Padding="15">
+        <Label FormattedText="{Binding Lift, Converter={StaticResource liftToDistanceFormattedText}}" VerticalOptions="Center" TextColor="White" />
+      </StackLayout>
+      <views:WeatherWidget />
+      <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <ffil:CachedImage Source="map.jpg" Aspect="AspectFill" />
+        <AbsoluteLayout>
+          <StackLayout AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional" Spacing="0">
+            <StackLayout BackgroundColor="#333333" Padding="0,15,0,15" Spacing="0">
+              <Label FormattedText="{Binding Lift, Converter={StaticResource liftToAltitudeFormattedText}}" TextColor="White" HorizontalTextAlignment="Center" />
+              <Label Text="You are here!" TextColor="White" HorizontalTextAlignment="Center" FontSize="20" />
+            </StackLayout>
+            <ffil:CachedImage Source="lift_map_marker.png" VerticalOptions="Center" WidthRequest="170" />
+          </StackLayout>
+          
+        </AbsoluteLayout>
+      </Grid>
+    </StackLayout>
+  </ContentPage.Content>
+  
+</ContentPage>

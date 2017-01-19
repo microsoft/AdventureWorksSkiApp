@@ -17,17 +17,10 @@ namespace SkiResort.XamarinApp.Pages
     {
         public LiftStatusPage()
         {
-            BindingContext = new LiftStatusViewModel();
             InitializeComponent();
         }
 
-        public Color GetBarBackgroundColor()
-        {
-            return Color.FromHex("#15719E");
-        }
-        public Color GetBarTextColor()
-        {
-            return Color.FromHex("#FFFFFF");
-        }
+        public Color GetBarBackgroundColor() => Color.FromHex("#15719E");
+        public Color GetBarTextColor() => Color.FromHex("#FFFFFF");
     }
 }

@@ -803,6 +803,10 @@
       "type": "string",
       "value": "[variables('documentDBAccount_name')]"
     },
+    "documentDBEndpoint": {
+      "type": "string",
+      "value": "[reference(concat('Microsoft.DocumentDb/databaseAccounts/', variables('documentDBAccount_name'))).documentEndpoint]"
+    },
     "documentDBKey": {
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', variables('documentDBAccount_name')), '2015-04-08').primaryMasterKey]"

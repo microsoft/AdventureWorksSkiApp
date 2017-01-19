@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
+             xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="SkiResort.XamarinApp.Pages.RentalListPage"
+             Title="See my reservations">
+
+  <ContentPage.Resources>
+    <ResourceDictionary>
+
+      <Style x:Key="backgroundImageStyle" TargetType="ffil:CachedImage">
+        <Setter Property="Source" Value="reservation_list_bg.jpg" />
+        <Setter Property="Aspect" Value="AspectFill" />
+        <Setter Property="DownsampleToViewSize" Value="true" />
+        <Setter Property="BackgroundColor" Value="#464950" />
+      </Style>
+
+      <Style x:Key="listViewStyle" TargetType="ListView">
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="HasUnevenRows" Value="True" />
+        <Setter Property="SeparatorVisibility">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="SeparatorVisibility"
+                        iOS="Default"
+                        Android="None" />
+          </Setter.Value>
+        </Setter>
+        <Setter Property="BackgroundColor" Value="#00000000" />
+      </Style>
+
+      <Style x:Key="loadingStackLayoutStyle" TargetType="StackLayout">
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+      </Style>
+
+      <Style x:Key="rentalItemStyle" TargetType="ContentView">
+        <Setter Property="Padding">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="Thickness"
+                        iOS="0"
+                        Android="15,15,15,0" />
+          </Setter.Value>
+        </Setter>
+      </Style>
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+  <ContentPage.Content>
+    
+    <Grid>
+      <ffil:CachedImage Style="{StaticResource backgroundImageStyle}" />
+      
+      <ListView ItemsSource="{Binding Rentals}"
+                Style="{StaticResource listViewStyle}">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <views:RentalView Style="{StaticResource rentalItemStyle}" Rental="{Binding}" />
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+      
+      <StackLayout Style="{StaticResource loadingStackLayoutStyle}" IsVisible="{Binding Loading}">
+        <ActivityIndicator Color="White" IsRunning="{Binding Loading}" />
+      </StackLayout>
+    </Grid>
+    
+  </ContentPage.Content>
+
+</ContentPage>

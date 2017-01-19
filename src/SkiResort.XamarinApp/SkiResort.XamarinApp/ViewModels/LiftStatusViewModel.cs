@@ -1,4 +1,5 @@
 ﻿using SkiResort.XamarinApp.Entities;
+using SkiResort.XamarinApp.Pages;
 using SkiResort.XamarinApp.Services;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace SkiResort.XamarinApp.ViewModels
 {
@@ -22,6 +24,24 @@ namespace SkiResort.XamarinApp.ViewModels
             {
                 liftGroups = value;
                 OnPropertyChanged("LiftGroups");
+            }
+        }
+
+        private Lift selectedLift { get; set; }
+        public Lift SelectedLift
+        {
+            get
+            {
+                return selectedLift;
+            }
+            set
+            {
+                if (value != selectedLift)
+                {
+                    NavigationService.Instance.NavigateTo(typeof(LiftDetailViewModel), value);
+                    selectedLift = null;
+                    OnPropertyChanged("SelectedLift");
+                }
             }
         }
 
