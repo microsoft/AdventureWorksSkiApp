@@ -15,9 +15,9 @@ namespace Ski.Rentals.Generator
 
         private static readonly USAPublicHoliday Holidays = new USAPublicHoliday();
         private static string ConnectionString;
-        private static int[] SeasonYears = { 2013, 2014, 2015 };
+        private static int[] SeasonYears = { 2013, 2014, 2015, 2016 };
         private static int[] SeasonMonths = { 12, 1, 2, 3, 4 };
-        private static TimeSpan TimeOffset = TimeSpan.FromHours(-8); // PST
+        private static TimeSpan TimeOffset = TimeSpan.FromHours(-2); // PST
 
         static void Main(string[] args)
         {
@@ -46,7 +46,7 @@ namespace Ski.Rentals.Generator
             {
                 con.Open();
 
-                if (TableRowCount(con, "Rental") > 100)
+                if (TableRowCount(con, "Rentals") > 100)
                 {
                     return;
                 }
@@ -68,6 +68,7 @@ namespace Ski.Rentals.Generator
 
                 SqlTransaction tx = con.BeginTransaction();
                 int i = 0;
+                Random random = new Random();
 
                 foreach (RentalTransaction rental in rentals)
                 {
@@ -81,17 +82,19 @@ namespace Ski.Rentals.Generator
                         tx = con.BeginTransaction();
                     }
 
+                    int endgap = random.Next(24, 168);
+
                     DataRow row = table.NewRow();
-                    row["Activity"] = 1;
-                    row["Category"] = 3;
+                    row["Activity"] = random.Next(0,2);
+                    row["Category"] = random.Next(1, 4);
                     row["StartDate"] = rental.Date;
-                    row["EndDate"] = rental.Date.AddHours(5);
-                    row["Goal"] = 1;
+                    row["EndDate"] = rental.Date.AddHours(endgap);
+                    row["Goal"] = random.Next(1, 4) ;
                     row["PickupHour"] = 8;
                     row["PoleSize"] = 67;
                     row["ShoeSize"] = 9;
                     row["SkiSize"] = 150;
-                    row["TotalCost"] = 67;
+                    row["TotalCost"] = endgap*1.5;
                     row["UserEmail"] = "bulkuser@awski.com";
                     table.Rows.Add(row);
                 }
@@ -104,7 +107,7 @@ namespace Ski.Rentals.Generator
         private static void BulkCopyRentals(SqlConnection con, SqlTransaction tx, DataTable table)
         {
             SqlBulkCopy copy = new SqlBulkCopy(con, SqlBulkCopyOptions.Default, tx);
-            copy.DestinationTableName = "Rental";
+            copy.DestinationTableName = "Rentals";
             copy.BulkCopyTimeout = 60 * 5;
             copy.ColumnMappings.Add("Activity", "Activity");
             copy.ColumnMappings.Add("Category", "Category");

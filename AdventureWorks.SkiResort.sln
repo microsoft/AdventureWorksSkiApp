@@ -24,6 +24,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{78802279-E957-4D6E-9831-783E9CE7B704}"
 	ProjectSection(SolutionItems) = preProject
 		demo\RentalDemandExperiments.r = demo\RentalDemandExperiments.r
+		demo\SkiApp.pbix = demo\SkiApp.pbix
 	EndProjectSection
 EndProject
 Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "SkiResort.Mobile", "src\SkiResort.Mobile\SkiResort.Mobile.jsproj", "{C4A17398-FD28-49B3-AD34-926E0E86E1B2}"

@@ -530,6 +530,20 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
 	            EXEC sp_execute_external_script @language = N'R', @script = @s, @input_data_1 = @q, @params = N'@m VARBINARY(MAX)', @m = @serialized
 		            WITH RESULT SETS ((Predicted FLOAT))
             END");
+
+            await context.Database.ExecuteSqlCommandAsync(
+            @"CREATE VIEW [dbo].[vwRentals] AS
+            SELECT        RentalId, 
+            CASE
+	            when MONTH(StartDate)>=11 
+		            then 'Season ' + CONVERT(varchar(50),CONVERT(varchar(50),YEAR(StartDate)) + '-' + CONVERT(varchar(50), YEAR(StartDate) + 1) )
+	                else 'Season ' + CONVERT(varchar(50),CONVERT(varchar(50), YEAR(StartDate) - 1) + '-' + CONVERT(varchar(50),YEAR(StartDate)) )
+	            end as Season, Activity AS ActivityId, 
+                         CASE WHEN [Activity] = 0 THEN 'Ski' WHEN [Activity] = 1 THEN 'Snowboard' ELSE 'Unknown' END AS Activity, Category AS CategoryId, 
+                         CASE WHEN [Category] = 1 THEN 'Beginner' WHEN [Category] = 2 THEN 'Intermediate' WHEN [Category] = 3 THEN 'Advanced' ELSE 'Unknown' END AS Category, EndDate, Goal AS GoalId, 
+                         CASE WHEN [Goal] = 1 THEN 'Demo' WHEN [Goal] = 2 THEN 'Performance' WHEN [Goal] = 3 THEN 'Sport' ELSE 'Unknown' END AS Goal, PickupHour, PoleSize, ShoeSize, SkiSize, StartDate, TotalCost, 
+                         UserEmail, DATEDIFF(hh, StartDate, EndDate)/24 AS Duration, CONVERT(date, StartDate) AS Date
+            FROM            dbo.Rentals");
         }
     }
 }
