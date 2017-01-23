@@ -46,8 +46,7 @@ namespace SkiResort.XamarinApp.ViewModels
                                 orderBy = restaurant.PriceLevel;
                                 break;
                             case 3:
-                                // TODO
-                                orderBy = restaurant.Name;
+                                orderBy = restaurant.MilesAway;
                                 break;
                             case 4:
                                 orderBy = restaurant.FamilyFriendly;
@@ -171,6 +170,7 @@ namespace SkiResort.XamarinApp.ViewModels
 
             foreach(var restaurant in restaurants)
             {
+                restaurant.CalculateMilesAway();
                 Restaurants.Add(restaurant);
             }
 
