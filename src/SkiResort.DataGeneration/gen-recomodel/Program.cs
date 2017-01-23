@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Recommendations;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -11,6 +12,8 @@ namespace gen_recomodel
 {
     class Program
     {
+        private const string BaseUri = "https://westus.api.cognitive.microsoft.com/recommendations/v4.0";
+
         static void Main(string[] args)
         {
             const int users = 100;
@@ -19,48 +22,67 @@ namespace gen_recomodel
             RestaurantsToCsv(restaurants, "restaurants.txt");
             HistoryToCsv(GetReservationsHistory(restaurants, users), "history.txt");
 
-            AzureMLRecommendations recos = new AzureMLRecommendations();
-            recos.Init(ConfigurationManager.AppSettings["RecoUser"], ConfigurationManager.AppSettings["RecoKey"]);
-            string modelId = recos.CreateModel("diningprefs");
-            Console.WriteLine($"Model created, modelId: {modelId}");
-            recos.ImportFile(modelId, "restaurants.txt", AzureMLRecommendations.Uris.ImportCatalog);
-            recos.ImportFile(modelId, "history.txt", AzureMLRecommendations.Uris.ImportUsage);
+            RecommendationsApiWrapper recos = new RecommendationsApiWrapper(ConfigurationManager.AppSettings["RecoKey"], BaseUri);
+            ModelInfo modelInfo = recos.CreateModel("diningprefs");
+            Console.WriteLine($"Model created, modelId: {modelInfo.Id}");
+            recos.UploadCatalog(modelInfo.Id, "restaurants.txt", "RestaurantsCatalog");
+            recos.UploadUsage(modelInfo.Id, "history.txt", "RestaurantsUsage");
 
-            string buildId = recos.BuildModel(modelId, "build of " + DateTime.UtcNow.ToString("yyyyMMddHHmmss"));
-
-            AzureMLRecommendations.BuildStatus status;
-
-            do
+            BuildRequestInfo requestInfo = new BuildRequestInfo
             {
-                status = recos.GetBuildStatus(modelId, buildId);
-
-                if (status == AzureMLRecommendations.BuildStatus.Cancelled ||
-                    status == AzureMLRecommendations.BuildStatus.Error ||
-                    status == AzureMLRecommendations.BuildStatus.Success)
+                Description = "build of " + DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+                BuildType = BuildType.Recommendation,
+                BuildParameters = new BuildParameters
                 {
-                    break;
+                    Recommendation = new RecommendationBuildParameters
+                    {
+                        NumberOfModelIterations = 10,
+                        NumberOfModelDimensions = 20,
+                        ItemCutOffLowerBound = 1,
+                        EnableModelingInsights = true,
+                        EnableU2I = true,
+                        UseFeaturesInModel = false,
+                        AllowColdItemPlacement = true,
+                        EnableFeatureCorrelation = false
+                    }
                 }
+            };
+            string operationLocationHeader;
+            long buildId = recos.BuildModel(modelInfo.Id, requestInfo, out operationLocationHeader);
 
-                Console.WriteLine("Waiting for model build to be completed.");
-                Thread.Sleep(TimeSpan.FromSeconds(5));
-            } while (true);
+            // Monitor the build and wait for completion.
+            Console.WriteLine("Monitoring build {0}", buildId);
+            var buildInfo = recos.WaitForOperationCompletion<BuildInfo>(RecommendationsApiWrapper.GetOperationId(operationLocationHeader));
+            Console.WriteLine("Build {0} ended with status {1}.\n", buildId, buildInfo.Status);
 
-            if (status != AzureMLRecommendations.BuildStatus.Success)
+            if (String.Compare(buildInfo.Status, "Succeeded", StringComparison.OrdinalIgnoreCase) != 0)
             {
-                Console.WriteLine($"Model build failed, status: {status}");
+                Console.WriteLine("Build {0} did not end successfully, the sample app will stop here.", buildId);
                 return;
             }
+
+            // Waiting  in order to propagate the model updates from the build...
+            Console.WriteLine("Waiting for 40 sec for propagation of the built model...");
+            Thread.Sleep(TimeSpan.FromSeconds(40));
+
+            // The below api is more meaningful when you want to give a certain build id to be an active build.
+            // Currently this app has a single build which is already active.
+            Console.WriteLine("Setting build {0} as active build.", buildId);
+            recos.SetActiveBuild(modelInfo.Id, buildId);
 
             Console.WriteLine("Model ready");
 
             while (true)
             {
                 string restaurantId = Console.ReadLine();
-                var recommendations =  recos.GetRecommendation(modelId, new List<string> { restaurantId }, 3);
+                var recommendations =  recos.GetRecommendations(modelInfo.Id, null, restaurantId, 3);
 
-                foreach (var r in recommendations)
+                foreach (var r in recommendations.RecommendedItemSetInfo)
                 {
-                    Console.WriteLine($"Name: {r.Name}, Id: {r.Id}, Rating: {r.Rating}, Reasoning: {r.Reasoning}");
+                    foreach (var item in r.Items)
+                    {
+                        Console.WriteLine($"Name: {item.Name}, Id: {item.Id}, Rating: {r.Rating}, Reasoning: {r.Reasoning.First()}");
+                    }
                 }
 
                 Console.WriteLine();
