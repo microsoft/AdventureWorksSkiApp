@@ -47,9 +47,21 @@
     <Grid>
 
       <StackLayout Style="{StaticResource mainContainerStyle}">
+        <StackLayout BackgroundColor="#105D82" Padding="10" Orientation="Horizontal" Spacing="10">
+          <Entry Text="{Binding SearchText, Mode=TwoWay}" Placeholder="Search..." TextColor="White" HorizontalOptions="FillAndExpand" />
+          <Picker Title="Sort by..." SelectedIndex="{Binding SelectedSortableOptionIndex, Mode=TwoWay}" WidthRequest="140" TextColor="White">
+            <Picker.Items>
+              <x:String>Rating</x:String>
+              <x:String>Level Noise</x:String>
+              <x:String>Price</x:String>
+              <x:String>Miles Away</x:String>
+              <x:String>Family Friendly</x:String>
+            </Picker.Items>
+          </Picker>
+        </StackLayout>
         <ListView
           x:Name="listView"
-          ItemsSource="{Binding Restaurants}"
+          ItemsSource="{Binding FilteredRestaurants}"
           SelectedItem="{Binding SelectedRestaurant, Mode=TwoWay}"
           CachingStrategy="RecycleElement"
           Style="{StaticResource listViewStyle}">

@@ -51,9 +51,9 @@
     
     <Grid>
       <ffil:CachedImage Style="{StaticResource backgroundImageStyle}" />
-      
+
       <ListView ItemsSource="{Binding Rentals}"
-                Style="{StaticResource listViewStyle}">
+              Style="{StaticResource listViewStyle}">
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell>
