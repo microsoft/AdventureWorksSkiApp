@@ -12,7 +12,6 @@
 
       <converters:RestaurantToImageSourceConverter x:Key="restaurantToImageSource"></converters:RestaurantToImageSourceConverter>
       <converters:BoolToStringConverter x:Key="boolToString"></converters:BoolToStringConverter>
-      <converters:DistanceToRestaurantConverter x:Key="distanceToRestaurant"></converters:DistanceToRestaurantConverter>
       
       <Style x:Key="mainLayoutStyle" TargetType="StackLayout">
         <Setter Property="Orientation" Value="Horizontal" />
@@ -77,7 +76,7 @@
             Source="marker.png" />
           <Label
             Style="{StaticResource labelStyle}"
-            Text="{Binding Restaurant, Converter={StaticResource distanceToRestaurant}, Source={x:Reference control}, StringFormat='{0:0.#} miles away'}"
+            Text="{Binding Restaurant.MilesAway, Source={x:Reference control}, StringFormat='{0:0.#} miles away'}"
             VerticalOptions="Center" />
         </StackLayout>
         

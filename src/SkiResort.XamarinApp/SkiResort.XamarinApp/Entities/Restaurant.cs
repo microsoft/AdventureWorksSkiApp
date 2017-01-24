@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiResort.XamarinApp.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +36,18 @@ namespace SkiResort.XamarinApp.Entities
         public Noise LevelOfNoise { get; set; }
 
         public byte[] Photo { get; set; }
+
+        public double MilesAway { get; set; }
+
+        public void CalculateMilesAway()
+        {
+            var geolocationService = new GeolocationService();
+            MilesAway = geolocationService.DistanceTo(new Geolocation
+            {
+                Latitude = Latitude,
+                Longitude = Longitude
+            });
+        }
     }
 
     public enum PriceLevel

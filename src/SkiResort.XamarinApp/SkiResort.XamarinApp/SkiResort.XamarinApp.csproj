@@ -42,7 +42,6 @@
     <Compile Include="Config.cs" />
     <Compile Include="Converters\BoolToStringConverter.cs" />
     <Compile Include="Converters\DateTimeToHourConverter.cs" />
-    <Compile Include="Converters\DistanceToRestaurantConverter.cs" />
     <Compile Include="Converters\IntToInchesConverter.cs" />
     <Compile Include="Converters\IntToRentalIdConverter.cs" />
     <Compile Include="Converters\LiftRatingToIconSourceConverter.cs" />
@@ -88,6 +87,7 @@
     </Compile>
     <Compile Include="Pages\RentalPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\GeolocationService.cs" />
     <Compile Include="Services\HTTPService.cs" />
     <Compile Include="Services\LiftService.cs" />
     <Compile Include="Services\NavigationService.cs" />
