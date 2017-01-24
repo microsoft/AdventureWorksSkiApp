@@ -38,11 +38,11 @@ namespace AdventureWorks.SkiResort.Infrastructure.DocumentDB.Repositories
             string databaseId = "skiresortliftlinesarchive";
             string collection = "liftlinesarchive";
 
-            TimeSpan t = DateTimeOffset.UtcNow.Add(-timeBack) - new DateTime(1970, 1, 1);
+            TimeSpan t = DateTime.UtcNow.Add(-timeBack) - new DateTime(1970, 1, 1);
             int secondsSinceEpoch = (int)t.TotalSeconds;
 
             string query =
-                $"SELECT TOP 10 * FROM c WHERE c._ts >= {secondsSinceEpoch} order by c._ts desc";
+                $"SELECT * FROM c WHERE c._ts >= {secondsSinceEpoch} order by c._ts desc";
 
             var parameters = new List<DBParameter>();
             string response = await ExecuteQuery(databaseId, collection, query, parameters);
