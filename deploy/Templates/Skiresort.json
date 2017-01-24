@@ -94,11 +94,15 @@
       "type": "int",
       "defaultValue": 1
     },
-    "dataMarketKey": {
+    "anomalyDetectionKey": {
       "type": "string",
       "minLength": 1
     },
-    "dataMarketUser": {
+    "anomalyDetectionUri": {
+      "type": "string",
+      "minLength": 1
+    },
+    "recommendationsKey": {
       "type": "string",
       "minLength": 1
     }
@@ -583,7 +587,8 @@
             "DefaultUsername": "[parameters('webUsername')]",
             "DefaultFullName": "[parameters('webUserFullName')]",
             "DefaultPassword": "[parameters('webPassword')]",
-            "Data:AnomalyDetection:Key": "[parameters('dataMarketKey')]",
+            "Data:AnomalyDetection:Key": "[parameters('anomalyDetectionKey')]",
+            "Data:AnomalyDetection:RequestUri": "[parameters('anomalyDetectionUri')]",
             "Security:Authority": "[concat('http://', variables('webAdvancedApp_name'), '.azurewebsites.net/')]",
             "Security:Audience": "[concat('http://', variables('webAdvancedApp_name'), '.azurewebsites.net/')]"
           }
@@ -791,13 +796,17 @@
       "type": "string",
       "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', variables('azureSearch_name')), '2015-02-28').primaryKey]"
     },
-    "dataMarketKey": {
+    "anomalyDetectionKey": {
       "type": "string",
-      "value": "[parameters('dataMarketKey')]"
+      "value": "[parameters('anomalyDetectionKey')]"
     },
-    "dataMarketUser": {
+    "anomalyDetectionUri": {
       "type": "string",
-      "value": "[parameters('dataMarketUser')]"
+      "value": "[parameters('anomalyDetectionUri')]"
+    },
+    "recommendationsKey": {
+      "type": "string",
+      "value": "[parameters('recommendationsKey')]"
     },
     "documentDBAccount": {
       "type": "string",

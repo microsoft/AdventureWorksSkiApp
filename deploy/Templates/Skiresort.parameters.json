@@ -23,10 +23,13 @@
     "sqlserverAdminLoginPassword": {
       "value": "P2ssw0rd@1"
     },
-    "dataMarketKey": {
+    "anomalyDetectionKey": {
       "value": ""
     },
-    "dataMarketUser": {
+    "anomalyDetectionUri": {
+      "value": ""
+    },
+    "recommendationsKey": {
       "value": ""
     },
     "skuCapacityAzureSearch": {

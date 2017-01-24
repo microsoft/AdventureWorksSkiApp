@@ -90,7 +90,8 @@ if ($results) {
 	& $replacescript -Pattern '__YOUR_INSTRUMENTATION_KEY__' -Replacement $results.Outputs.applicationInsightsKey.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__SEARCHSERVICENAME__' -Replacement $results.Outputs.searchServiceName.value  -Overwrite -Path $configPath
 	& $replacescript -Pattern '__SEARCHKEY__' -Replacement $results.Outputs.searchServiceKey.value -Overwrite -Path $configPath
-	& $replacescript -Pattern '__ANOMALYDETECTIONKEY__' -Replacement $results.Outputs.dataMarketKey.value -Overwrite -Path $configPath
+	& $replacescript -Pattern '__ANOMALYDETECTIONKEY__' -Replacement $results.Outputs.anomalyDetectionKey.value -Overwrite -Path $configPath
+	& $replacescript -Pattern '__ANOMALYDETECTIONURI__' -Replacement $results.Outputs.anomalyDetectionUri.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__DOCUMENTDBENDPOINT__' -Replacement $results.Outputs.documentDBEndpoint.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__DOCUMENTDBKEY__' -Replacement $results.Outputs.documentDBKey.value -Overwrite -Path $configPath
 
@@ -110,14 +111,12 @@ if ($results) {
 	& $replacescript -Pattern '__SQLCONNECTIONSTRING__' -Replacement $results.Outputs.defaultConnection.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__SEARCHSERVICENAME__' -Replacement $results.Outputs.searchServiceName.value  -Overwrite -Path $configPath
 	& $replacescript -Pattern '__SEARCHKEY__' -Replacement $results.Outputs.searchServiceKey.value -Overwrite -Path $configPath
-	& $replacescript -Pattern '__RECOUSER__' -Replacement $results.Outputs.dataMarketUser.value -Overwrite -Path $configPath
-	& $replacescript -Pattern '__RECOKEY__' -Replacement $results.Outputs.dataMarketKey.value -Overwrite -Path $configPath
+	& $replacescript -Pattern '__RECOKEY__' -Replacement $results.Outputs.recommendationsKey.value -Overwrite -Path $configPath
 
 	$configRelativePath = "..\..\..\..\..\..\src\SkiResort.DataGeneration\gen-recomodel\App.config"
 	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
 	& $replacescript -Pattern '__SQLCONNECTIONSTRING__' -Replacement $results.Outputs.defaultConnection.value -Overwrite -Path $configPath
-	& $replacescript -Pattern '__RECOUSER__' -Replacement $results.Outputs.dataMarketUser.value -Overwrite -Path $configPath
-	& $replacescript -Pattern '__RECOKEY__' -Replacement $results.Outputs.dataMarketKey.value -Overwrite -Path $configPath
+	& $replacescript -Pattern '__RECOKEY__' -Replacement $results.Outputs.recommendationsKey.value -Overwrite -Path $configPath
 	
 	$configRelativePath = "..\..\..\..\..\..\demo\RentalDemandExperiments.r"
 	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
