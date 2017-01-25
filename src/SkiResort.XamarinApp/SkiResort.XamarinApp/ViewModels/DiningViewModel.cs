@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SkiResort.XamarinApp.ViewModels
 {
@@ -73,24 +75,6 @@ namespace SkiResort.XamarinApp.ViewModels
             }
         }
 
-        private Restaurant selectedRestaurant { get; set; }
-        public Restaurant SelectedRestaurant
-        {
-            get
-            {
-                return selectedRestaurant;
-            }
-            set
-            {
-                if (value != selectedRestaurant)
-                {
-                    NavigationService.Instance.NavigateTo(typeof(DiningDetailViewModel), value);
-                    selectedRestaurant = null;
-                    OnPropertyChanged("SelectedRestaurant");
-                }
-            }
-        }
-
         private string searchText { get; set; }
         public string SearchText
         {
@@ -144,6 +128,13 @@ namespace SkiResort.XamarinApp.ViewModels
                     OnPropertyChanged("FilteredRestaurants");
                 }
             }
+        }
+
+        public ICommand ItemSelectedCommand => new Command<Restaurant>(OnSelectItem);
+
+        private async void OnSelectItem(Restaurant obj)
+        {
+            await NavigationService.Instance.NavigateTo(typeof(DiningDetailViewModel), obj);
         }
 
         public DiningViewModel()

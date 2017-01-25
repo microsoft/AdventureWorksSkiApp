@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace SkiResort.XamarinApp.ViewModels
@@ -27,24 +28,6 @@ namespace SkiResort.XamarinApp.ViewModels
             }
         }
 
-        private Lift selectedLift { get; set; }
-        public Lift SelectedLift
-        {
-            get
-            {
-                return selectedLift;
-            }
-            set
-            {
-                if (value != selectedLift)
-                {
-                    NavigationService.Instance.NavigateTo(typeof(LiftDetailViewModel), value);
-                    selectedLift = null;
-                    OnPropertyChanged("SelectedLift");
-                }
-            }
-        }
-
         private bool loading { set; get; }
         public bool Loading
         {
@@ -57,6 +40,13 @@ namespace SkiResort.XamarinApp.ViewModels
                     OnPropertyChanged("Loading");
                 }
             }
+        }
+
+        public ICommand ItemSelectedCommand => new Command<Lift>(OnSelectItem);
+
+        private async void OnSelectItem(Lift obj)
+        {
+            await NavigationService.Instance.NavigateTo(typeof(LiftDetailViewModel), obj);
         }
 
         public LiftStatusViewModel()

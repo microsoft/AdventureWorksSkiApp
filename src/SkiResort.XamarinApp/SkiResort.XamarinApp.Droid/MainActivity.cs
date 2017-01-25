@@ -28,9 +28,6 @@ namespace SkiResort.XamarinApp.Droid
 
             base.OnCreate(bundle);
 
-            SupportToolbar toolbar = FindViewById<SupportToolbar>(ToolbarResource);
-            SetSupportActionBar(toolbar);
-
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
         }

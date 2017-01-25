@@ -40,10 +40,11 @@ namespace SkiResort.XamarinApp.Services
             mainMenu.ListView.ItemSelected += OnMenuItemSelected;
         }
 
-        public void NavigateTo(Type viewModelType, params object[] parameters)
+        public async Task NavigateTo(Type viewModelType, params object[] parameters)
         {
             var navigationPage = MasterDetailPage.Detail as CustomNavigationPage;
-            navigationPage.PushAsync(CreatePage(viewModelType, parameters));
+            await navigationPage.Navigation.PushAsync(CreatePage(viewModelType, parameters), true);
+            var stack = navigationPage.Navigation.NavigationStack;
         }
 
         private void registerViewModels()

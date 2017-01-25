@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
+             xmlns:behaviours="clr-namespace:SkiResort.XamarinApp.Behaviours;assembly=SkiResort.XamarinApp"
              x:Class="SkiResort.XamarinApp.Pages.DiningPage"
              x:Name="page"
              Title="Dining">
@@ -62,8 +63,8 @@
         <ListView
           x:Name="listView"
           ItemsSource="{Binding FilteredRestaurants}"
-          SelectedItem="{Binding SelectedRestaurant, Mode=TwoWay}"
           CachingStrategy="RecycleElement"
+          behaviours:ItemTappedCommandListView.ItemTappedCommand="{Binding ItemSelectedCommand}"
           Style="{StaticResource listViewStyle}">
 
           <ListView.ItemTemplate>

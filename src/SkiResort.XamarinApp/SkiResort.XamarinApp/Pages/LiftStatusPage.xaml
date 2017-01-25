@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SkiResort.XamarinApp.Pages.LiftStatusPage"
              xmlns:converters="clr-namespace:SkiResort.XamarinApp.Converters;assembly=SkiResort.XamarinApp"
+             xmlns:behaviours="clr-namespace:SkiResort.XamarinApp.Behaviours;assembly=SkiResort.XamarinApp"
              Title="Lift Status">
 
   <ContentPage.Resources>
@@ -41,9 +42,9 @@
       <ListView
         x:Name="listView"
         ItemsSource="{Binding LiftGroups}"
-        SelectedItem="{Binding SelectedLift, Mode=TwoWay}"
         GroupDisplayBinding="{Binding Title}"
-        Style="{StaticResource listViewStyle}">
+        Style="{StaticResource listViewStyle}"
+        behaviours:ItemTappedCommandListView.ItemTappedCommand="{Binding ItemSelectedCommand}" >
         
         <ListView.ItemTemplate>
           <DataTemplate>
