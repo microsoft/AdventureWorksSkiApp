@@ -3,5 +3,56 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SkiResort.XamarinApp.Pages.RentalFormPage"
              Title="Add new">
-  <Label Text="Rental Form" VerticalOptions="Center" HorizontalOptions="Center" />
+  
+  <ContentPage.Resources>
+    
+  </ContentPage.Resources>
+
+  <ContentPage.Content>
+
+    <StackLayout Padding="15">
+      <StackLayout Orientation="Horizontal">
+        <StackLayout HorizontalOptions="FillAndExpand">
+          <Label>Select Start Date</Label>
+          <DatePicker />
+        </StackLayout>
+        <StackLayout HorizontalOptions="FillAndExpand">
+          <Label>Select End Date</Label>
+          <DatePicker />
+        </StackLayout>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <StackLayout HorizontalOptions="FillAndExpand">
+          <Label>Pick Up Time</Label>
+          <DatePicker />
+        </StackLayout>
+        <StackLayout HorizontalOptions="FillAndExpand">
+          <Label>Ski or Snowboard</Label>
+          <DatePicker />
+        </StackLayout>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <StackLayout HorizontalOptions="FillAndExpand">
+          <Label>Which category it's right for you?</Label>
+          <Picker />
+        </StackLayout>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <StackLayout HorizontalOptions="FillAndExpand">
+          <Label>Shoe Size</Label>
+          <Picker />
+        </StackLayout>
+        <StackLayout HorizontalOptions="FillAndExpand">
+          <Label>Ski Size</Label>
+          <Picker />
+        </StackLayout>
+        <StackLayout HorizontalOptions="FillAndExpand">
+          <Label>Pole Size</Label>
+          <Picker />
+        </StackLayout>
+      </StackLayout>
+    </StackLayout>
+    
+  </ContentPage.Content>
+  
 </ContentPage>
