@@ -4,7 +4,7 @@
              xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
              xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="SkiResort.XamarinApp.Pages.RentalListPage"
-             Title="See my reservations">
+             Title="My reservations">
 
   <ContentPage.Resources>
     <ResourceDictionary>

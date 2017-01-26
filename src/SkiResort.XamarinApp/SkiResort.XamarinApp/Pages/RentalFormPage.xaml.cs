@@ -12,6 +12,10 @@ namespace SkiResort.XamarinApp.Pages
     {
         public RentalFormPage()
         {
+            if (Device.OS == TargetPlatform.iOS)
+            {
+                Icon = "plus-square-o-menuicon.png";
+            }
             InitializeComponent();
         }
     }

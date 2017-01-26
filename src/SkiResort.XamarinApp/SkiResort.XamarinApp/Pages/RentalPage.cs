@@ -15,7 +15,9 @@ namespace SkiResort.XamarinApp.Pages
     {
         public RentalPage()
         {
-            BarBackgroundColor = Color.FromHex("#1A90C9");
+            BarBackgroundColor = Device.OS == TargetPlatform.iOS ? Config.BAR_COLOR_BLACK : Color.FromHex("#1A90C9");
+            BarTextColor = Color.FromHex("#FFFFFF");
+
             Title = "Rental Reservation";
             Children.Add(NavigationService.Instance.CreatePage(typeof(RentalListViewModel)));
             Children.Add(NavigationService.Instance.CreatePage(typeof(RentalFormViewModel)));

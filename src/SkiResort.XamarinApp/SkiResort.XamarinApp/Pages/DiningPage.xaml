@@ -49,8 +49,8 @@
 
       <StackLayout Style="{StaticResource mainContainerStyle}">
         <StackLayout BackgroundColor="#105D82" Padding="10" Orientation="Horizontal" Spacing="10">
-          <Entry Text="{Binding SearchText, Mode=TwoWay}" Placeholder="Search..." TextColor="White" HorizontalOptions="FillAndExpand" />
-          <Picker Title="Sort by..." SelectedIndex="{Binding SelectedSortableOptionIndex, Mode=TwoWay}" WidthRequest="140" TextColor="White">
+          <Entry Text="{Binding SearchText, Mode=TwoWay}" Placeholder="Search..." TextColor="White" HorizontalOptions="FillAndExpand" BackgroundColor="#105D82" />
+          <Picker Title="Sort by..." SelectedIndex="{Binding SelectedSortableOptionIndex, Mode=TwoWay}" WidthRequest="140" TextColor="White" BackgroundColor="#105D82">
             <Picker.Items>
               <x:String>Rating</x:String>
               <x:String>Level Noise</x:String>
