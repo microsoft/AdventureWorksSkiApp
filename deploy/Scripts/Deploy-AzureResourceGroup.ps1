@@ -122,7 +122,12 @@ if ($results) {
 	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
     & $replacescript -Pattern '__RSQLCONNECTIONSTRING__' -Replacement $results.Outputs.rConnection.value -Overwrite -Path $configPath
 
+	$serverurl = "http://$($results.Outputs.webSiteName.value).azurewebsites.net"
+	$configRelativePath = "..\..\..\..\..\..\src\SkiResort.XamarinApp\SkiResort.XamarinApp\Config.cs"
+	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
+    & $replacescript -Pattern '__SERVERURI__' -Replacement $serverurl -Overwrite -Path $configPath
 
-	Write-Host "WebSite basic: http://$($results.Outputs.webSiteName.value).azurewebsites.net"
+
+	Write-Host "WebSite basic: $serverurl"
 	Write-Host "SQL Server VM Connection String: $($results.Outputs.defaultConnection.value)"
 }
