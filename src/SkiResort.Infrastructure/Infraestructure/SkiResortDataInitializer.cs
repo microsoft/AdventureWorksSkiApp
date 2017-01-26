@@ -503,8 +503,8 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
 
 	            BEGIN TRY
 		            BEGIN TRANSACTION
-		            DELETE FROM Models
-		            INSERT INTO Models
+		            DELETE FROM Model
+		            INSERT INTO Model
 		            EXEC sp_execute_external_script @language = N'R', @script = @s, @input_data_1 = @q, @output_data_1_name = N'serialized'
 		            COMMIT
 	            END TRY
