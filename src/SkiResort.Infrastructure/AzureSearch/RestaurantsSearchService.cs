@@ -23,9 +23,12 @@ namespace AdventureWorks.SkiResort.Infrastructure.AzureSearch
             _indexer = configuration["SearchConfig:Indexer"];
         }
 
-        public async Task<List<Restaurant>> GetNearByAsync(int count)
+        public async Task<List<Restaurant>> GetNearByAsync(int count, double latitude, double longitude)
         {
-            string uri = $"https://{_serviceName}.search.windows.net/indexes/{_indexer}/docs?api-version=2015-02-28&$top={count}&$orderby=RestaurantId";
+            // It uses the distance function to favor items that are within ten kilometers of the current location. 
+            string uri = $"https://{_serviceName}.search.windows.net/indexes/{_indexer}/docs?api-version=2016-09-01&$top={count}" +
+                $"&scoringProfile=nearrestaurants&scoringParameter=currentLocation:{latitude},{longitude}";
+
             using (var _httpClient = new HttpClient())
             {
                 _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

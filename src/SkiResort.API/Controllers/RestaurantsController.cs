@@ -43,9 +43,7 @@ namespace AdventureWorks.SkiResort.API.Controllers
                 return await _restaurantsRepository.GetNearByAsync(latitude, longitude, _restaurantsCount);
             else
             {
-                List<Restaurant> restaurants = await _restaurantsSearchService.GetNearByAsync(_restaurantsCount);
-                return restaurants
-                    .OrderBy(r => MathCoordinates.GetDistance(r.Latitude, r.Longitude, latitude, longitude, 'M'));
+                return await _restaurantsSearchService.GetNearByAsync(_restaurantsCount, latitude, longitude);
             }
         }
 
