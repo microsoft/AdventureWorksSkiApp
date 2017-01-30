@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
              x:Class="SkiResort.XamarinApp.Pages.RentalFormPage"
              Title="Add new">
   
@@ -24,32 +25,48 @@
       <StackLayout Orientation="Horizontal">
         <StackLayout HorizontalOptions="FillAndExpand">
           <Label>Pick Up Time</Label>
-          <DatePicker />
+          <views:BindablePicker ItemsSource="{Binding PickUpTimeOptions}" Title="Select One..." />
         </StackLayout>
         <StackLayout HorizontalOptions="FillAndExpand">
           <Label>Ski or Snowboard</Label>
-          <DatePicker />
+          <views:BindablePicker ItemsSource="{Binding SkiOrSnowboardOptions}" Title="Select One..." />
         </StackLayout>
       </StackLayout>
       <StackLayout Orientation="Horizontal">
         <StackLayout HorizontalOptions="FillAndExpand">
           <Label>Which category it's right for you?</Label>
-          <Picker />
+          <views:BindablePicker ItemsSource="{Binding RentalCategoryOptions}" Title="Select One..." />
         </StackLayout>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <Button Text="Demo" HorizontalOptions="FillAndExpand" BackgroundColor="{Binding DemoOptionBackgroundColor}" TextColor="#FFFFFF"
+                Command="{Binding ClickGoalOptionCommand}"
+                CommandParameter="Demo" />
+        <Button Text="Performance" HorizontalOptions="FillAndExpand" BackgroundColor="{Binding PerformanceOptionBackgroundColor}" TextColor="#FFFFFF"
+                Command="{Binding ClickGoalOptionCommand}"
+                CommandParameter="Performance"/>
+        <Button Text="Sport" HorizontalOptions="FillAndExpand" BackgroundColor="{Binding SportOptionBackgroundColor}" TextColor="#FFFFFF"
+                Command="{Binding ClickGoalOptionCommand}"
+                CommandParameter="Sport"/>
       </StackLayout>
       <StackLayout Orientation="Horizontal">
         <StackLayout HorizontalOptions="FillAndExpand">
           <Label>Shoe Size</Label>
-          <Picker />
+          <views:BindablePicker ItemsSource="{Binding ShoeSizeOptions}" Title="Select One..." />
         </StackLayout>
         <StackLayout HorizontalOptions="FillAndExpand">
           <Label>Ski Size</Label>
-          <Picker />
+          <views:BindablePicker ItemsSource="{Binding SkiSizeOptions}" Title="Select One..." />
         </StackLayout>
         <StackLayout HorizontalOptions="FillAndExpand">
           <Label>Pole Size</Label>
-          <Picker />
+          <views:BindablePicker ItemsSource="{Binding PoleSizeOptions}" Title="Select One..." />
         </StackLayout>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+        <Label Text="Total" VerticalOptions="Center" />
+        <Label Text="$0 USD" FontSize="30" TextColor="#1A90C9" HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
+        <Button Text="Save" BackgroundColor="#1A90C9" TextColor="White" VerticalOptions="Center" IsEnabled="{Binding CanSave}" />
       </StackLayout>
     </StackLayout>
     
