@@ -105,6 +105,7 @@
     <Compile Include="ViewModels\RentalListViewModel.cs" />
     <Compile Include="ViewModels\RentalViewModel.cs" />
     <Compile Include="ViewModels\WeatherWidgetViewModel.cs" />
+    <Compile Include="Views\BindablePickerView.cs" />
     <Compile Include="Views\DiningView.xaml.cs">
       <DependentUpon>DiningView.xaml</DependentUpon>
     </Compile>

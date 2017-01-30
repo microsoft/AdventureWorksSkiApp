@@ -15,7 +15,10 @@ namespace SkiResort.XamarinApp.Pages
     {
         public RentalListPage()
         {
-            BindingContext = new RentalListViewModel();
+            if (Device.OS == TargetPlatform.iOS)
+            {
+                Icon = "list-ul-menuicon.png";
+            }
             InitializeComponent();
         }
 

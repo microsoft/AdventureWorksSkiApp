@@ -252,6 +252,27 @@
   <ItemGroup>
     <BundleResource Include="Resources\lift_map_marker.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\list-ul-menuicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\list-ul-menuicon%403.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\list-ul-menuicon%402.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\plus-square-o-menuicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\plus-square-o-menuicon%402.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\plus-square-o-menuicon%403.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\check.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
