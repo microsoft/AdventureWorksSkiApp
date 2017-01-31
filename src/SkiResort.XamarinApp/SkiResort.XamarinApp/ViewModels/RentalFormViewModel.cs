@@ -287,25 +287,7 @@ namespace SkiResort.XamarinApp.ViewModels
 
         public RentalFormViewModel()
         {
-            initializeDatePeriod();
-            RentalActivityOptions = new ObservableCollection<RentalActivity>
-            {
-                RentalActivity.Ski,
-                RentalActivity.Snowboard,
-            };
-            SelectedRentalActivity = RentalActivity.Ski;
-            RentalCategoryOptions = new ObservableCollection<RentalCategory>
-            {
-                RentalCategory.Beginner,
-                RentalCategory.Intermediate,
-                RentalCategory.Advanced
-            };
-            SelectedRentalCategory = RentalCategory.Beginner;
-            selectedRentalGoal = RentalGoal.Demo;
-            initializePickUpHoursOptions();
-            initializeShoeSizeOptions();
-            initializeSkiSizeOptions();
-            initializePoleSizeOptions();
+            initializeData();
 
             ClickGoalOptionCommand = new Command<string>(ClickGoalOptionCommandHandler);
             ClickSaveCommand = new Command(ClickSaveCommandHandler);
@@ -338,6 +320,7 @@ namespace SkiResort.XamarinApp.ViewModels
             var rentalService = new RentalService();
             await rentalService.SaveRental(rental);
             MessagingCenter.Send(this, "SetRentalListTab");
+            initializeData();
         }
 
         RentalGoal getRentalGoalFromName(string rentalGoalName) {
@@ -362,6 +345,28 @@ namespace SkiResort.XamarinApp.ViewModels
         }
 
         #region Data Initializers
+
+        void initializeData() {
+            initializeDatePeriod();
+            RentalActivityOptions = new ObservableCollection<RentalActivity>
+            {
+                RentalActivity.Ski,
+                RentalActivity.Snowboard,
+            };
+            SelectedRentalActivity = RentalActivity.Ski;
+            RentalCategoryOptions = new ObservableCollection<RentalCategory>
+            {
+                RentalCategory.Beginner,
+                RentalCategory.Intermediate,
+                RentalCategory.Advanced
+            };
+            SelectedRentalCategory = RentalCategory.Beginner;
+            selectedRentalGoal = RentalGoal.Demo;
+            initializePickUpHoursOptions();
+            initializeShoeSizeOptions();
+            initializeSkiSizeOptions();
+            initializePoleSizeOptions();
+        }
 
         void initializeDatePeriod()
         {
