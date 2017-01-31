@@ -19,8 +19,17 @@ namespace SkiResort.XamarinApp.Pages
             BarTextColor = Color.FromHex("#FFFFFF");
 
             Title = "Rental Reservation";
-            Children.Add(NavigationService.Instance.CreatePage(typeof(RentalListViewModel)));
-            Children.Add(NavigationService.Instance.CreatePage(typeof(RentalFormViewModel)));
+
+            var rentalListPage = NavigationService.Instance.CreatePage(typeof(RentalListViewModel));
+            var rentalFormPage = NavigationService.Instance.CreatePage(typeof(RentalFormViewModel));
+
+            Children.Add(rentalListPage);
+            Children.Add(rentalFormPage);
+
+            MessagingCenter.Subscribe<RentalFormViewModel>(this, "SetRentalListTab", (sender) => {
+                SelectedItem = Children[0];
+                MessagingCenter.Send(this, "Refresh");
+            });
         }
 
         public Color GetBarBackgroundColor() => Color.FromHex("#15719E");

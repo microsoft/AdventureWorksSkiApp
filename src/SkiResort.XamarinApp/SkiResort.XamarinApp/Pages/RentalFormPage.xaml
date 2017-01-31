@@ -11,33 +11,54 @@
 
   <ContentPage.Content>
 
-    <StackLayout Padding="15">
-      <StackLayout Orientation="Horizontal">
-        <StackLayout HorizontalOptions="FillAndExpand">
+    <StackLayout Padding="15" Spacing="15">
+      
+      <Grid ColumnSpacing="15">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackLayout Grid.Column="0">
           <Label>Select Start Date</Label>
-          <DatePicker />
+          <DatePicker Date="{Binding StartDate, Mode=TwoWay}" />
         </StackLayout>
-        <StackLayout HorizontalOptions="FillAndExpand">
+        <StackLayout Grid.Column="1">
           <Label>Select End Date</Label>
-          <DatePicker />
+          <DatePicker Date="{Binding EndDate, Mode=TwoWay}" />
         </StackLayout>
-      </StackLayout>
-      <StackLayout Orientation="Horizontal">
-        <StackLayout HorizontalOptions="FillAndExpand">
+      </Grid>
+      
+      <Grid ColumnSpacing="15">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackLayout Grid.Column="0">
           <Label>Pick Up Time</Label>
-          <views:BindablePicker ItemsSource="{Binding PickUpTimeOptions}" Title="Select One..." />
+          <views:BindablePicker
+            Title="Select One..."
+            ItemsSource="{Binding PickUpTimeOptions}"
+            SelectedItem="{Binding SelectedPickUpTime, Mode=TwoWay}" />
         </StackLayout>
-        <StackLayout HorizontalOptions="FillAndExpand">
+        <StackLayout Grid.Column="1">
           <Label>Ski or Snowboard</Label>
-          <views:BindablePicker ItemsSource="{Binding SkiOrSnowboardOptions}" Title="Select One..." />
+          <views:BindablePicker
+            Title="Select One..."
+            ItemsSource="{Binding RentalActivityOptions}"
+            SelectedItem="{Binding SelectedRentalActivity, Mode=TwoWay}"/>
         </StackLayout>
-      </StackLayout>
+      </Grid>
+      
       <StackLayout Orientation="Horizontal">
         <StackLayout HorizontalOptions="FillAndExpand">
           <Label>Which category it's right for you?</Label>
-          <views:BindablePicker ItemsSource="{Binding RentalCategoryOptions}" Title="Select One..." />
+          <views:BindablePicker
+            Title="Select One..."
+            ItemsSource="{Binding RentalCategoryOptions}"
+            SelectedItem="{Binding SelectedRentalCategory, Mode=TwoWay}"/>
         </StackLayout>
       </StackLayout>
+      
       <StackLayout Orientation="Horizontal">
         <Button Text="Demo" HorizontalOptions="FillAndExpand" BackgroundColor="{Binding DemoOptionBackgroundColor}" TextColor="#FFFFFF"
                 Command="{Binding ClickGoalOptionCommand}"
@@ -49,24 +70,41 @@
                 Command="{Binding ClickGoalOptionCommand}"
                 CommandParameter="Sport"/>
       </StackLayout>
-      <StackLayout Orientation="Horizontal">
-        <StackLayout HorizontalOptions="FillAndExpand">
+      
+      <Grid ColumnSpacing="15">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackLayout Grid.Column="0">
           <Label>Shoe Size</Label>
-          <views:BindablePicker ItemsSource="{Binding ShoeSizeOptions}" Title="Select One..." />
+          <views:BindablePicker
+            Title="Select One..." 
+            ItemsSource="{Binding ShoeSizeOptions}"
+            SelectedItem="{Binding SelectedShoeSize, Mode=TwoWay}" />
         </StackLayout>
-        <StackLayout HorizontalOptions="FillAndExpand">
+        <StackLayout Grid.Column="1">
           <Label>Ski Size</Label>
-          <views:BindablePicker ItemsSource="{Binding SkiSizeOptions}" Title="Select One..." />
+          <views:BindablePicker
+            Title="Select One..."
+            ItemsSource="{Binding SkiSizeOptions}"
+            SelectedItem="{Binding SelectedSkiSize, Mode=TwoWay}" />
         </StackLayout>
-        <StackLayout HorizontalOptions="FillAndExpand">
+        <StackLayout Grid.Column="2">
           <Label>Pole Size</Label>
-          <views:BindablePicker ItemsSource="{Binding PoleSizeOptions}" Title="Select One..." />
+          <views:BindablePicker
+            Title="Select One..."
+            ItemsSource="{Binding PoleSizeOptions}"
+            SelectedItem="{Binding SelectedPoleSize, Mode=TwoWay}" />
         </StackLayout>
-      </StackLayout>
+      </Grid>
+      
       <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
         <Label Text="Total" VerticalOptions="Center" />
-        <Label Text="$0 USD" FontSize="30" TextColor="#1A90C9" HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
-        <Button Text="Save" BackgroundColor="#1A90C9" TextColor="White" VerticalOptions="Center" IsEnabled="{Binding CanSave}" />
+        <Label Text="{Binding TotalCost, StringFormat='${0} USD'}" FontSize="30" TextColor="#1A90C9" HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
+        <Button Text="Save" BackgroundColor="{Binding SaveButtonBackgroundColor}" TextColor="White" VerticalOptions="Center" IsEnabled="{Binding CanSave}" WidthRequest="100" FontSize="22"
+                Command="{Binding ClickSaveCommand}"/>
       </StackLayout>
     </StackLayout>
     

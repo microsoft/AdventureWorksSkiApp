@@ -1,13 +1,18 @@
 ﻿using System;
 using Xamarin.Forms;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace SkiResort.XamarinApp.Views
 {
     public class BindablePicker : Picker
     {
+        public List<object> TypedItems;
+
         public BindablePicker()
         {
+            TypedItems = new List<object>();
+
             this.SelectedIndexChanged += OnSelectedIndexChanged;
         }
 
@@ -33,12 +38,14 @@ namespace SkiResort.XamarinApp.Views
         {
             var picker = bindable as BindablePicker;
             picker.Items.Clear();
+            picker.TypedItems.Clear();
             if (newvalue != null)
             {
                 //now it works like "subscribe once" but you can improve
                 foreach (var item in newvalue)
                 {
                     picker.Items.Add(item.ToString());
+                    picker.TypedItems.Add(item);
                 }
             }
         }
@@ -51,7 +58,7 @@ namespace SkiResort.XamarinApp.Views
             }
             else
             {
-                SelectedItem = Items[SelectedIndex];
+                SelectedItem = TypedItems[SelectedIndex];
             }
         }
 
@@ -60,7 +67,7 @@ namespace SkiResort.XamarinApp.Views
             var picker = bindable as BindablePicker;
             if (newvalue != null)
             {
-                picker.SelectedIndex = picker.Items.IndexOf(newvalue.ToString());
+                picker.SelectedIndex = picker.TypedItems.IndexOf(newvalue);
             }
         }
     }

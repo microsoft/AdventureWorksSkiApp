@@ -16,12 +16,34 @@ namespace SkiResort.XamarinApp.Services
             BaseUrl = baseUrl;
         }
 
+        private Uri getUri(string path)
+        {
+            return new Uri(BaseUrl + path);
+        }
+
         public async Task<string> Get(string path)
         {
             var client = new HttpClient();
-            var uri = new Uri(BaseUrl + path);
+            var uri = getUri(path);
 
             var response = await client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return content;
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public async Task<string> Post(string path, string body)
+        {
+            var client = new HttpClient();
+            var uri = getUri(path);
+
+            var response = await client.PostAsync(uri, new StringContent(body, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
