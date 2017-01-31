@@ -102,8 +102,9 @@
       
       <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
         <Label Text="Total" VerticalOptions="Center" />
-        <Label Text="$0 USD" FontSize="30" TextColor="#1A90C9" HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
-        <Button Text="Save" BackgroundColor="{Binding SaveButtonBackgroundColor}" TextColor="White" VerticalOptions="Center" IsEnabled="{Binding CanSave}" WidthRequest="100" FontSize="22" />
+        <Label Text="{Binding TotalCost, StringFormat='${0} USD'}" FontSize="30" TextColor="#1A90C9" HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
+        <Button Text="Save" BackgroundColor="{Binding SaveButtonBackgroundColor}" TextColor="White" VerticalOptions="Center" IsEnabled="{Binding CanSave}" WidthRequest="100" FontSize="22"
+                Command="{Binding ClickSaveCommand}"/>
       </StackLayout>
     </StackLayout>
     

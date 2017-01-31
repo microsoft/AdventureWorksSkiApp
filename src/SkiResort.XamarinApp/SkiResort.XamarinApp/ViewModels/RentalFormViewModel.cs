@@ -1,4 +1,5 @@
 ﻿using SkiResort.XamarinApp.Entities;
+using SkiResort.XamarinApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +26,7 @@ namespace SkiResort.XamarinApp.ViewModels
                 startDate = DateTimeOffset.Parse(value);
                 OnPropertyChanged("StartDate");
                 OnPropertyChanged("CanSave");
+                OnPropertyChanged("TotalCost");
                 OnPropertyChanged("SaveButtonBackgroundColor");
             }
         }
@@ -41,6 +43,7 @@ namespace SkiResort.XamarinApp.ViewModels
                 endDate = DateTimeOffset.Parse(value);
                 OnPropertyChanged("EndDate");
                 OnPropertyChanged("CanSave");
+                OnPropertyChanged("TotalCost");
                 OnPropertyChanged("SaveButtonBackgroundColor");
             }
         }
@@ -253,6 +256,20 @@ namespace SkiResort.XamarinApp.ViewModels
             set { }
         }
 
+        public double TotalCost
+        {
+            get
+            {
+                double result = 0;
+                if (CanSave)
+                {
+                    result = 20 + ((endDate - startDate).TotalDays * 5);
+                }
+                return result;
+            }
+            set { }
+        }
+
         public string SaveButtonBackgroundColor
         {
             get
@@ -264,6 +281,7 @@ namespace SkiResort.XamarinApp.ViewModels
 
         #region Commands
         public ICommand ClickGoalOptionCommand { get; set; }
+        public ICommand ClickSaveCommand { get; set; }
         #endregion
 
         public RentalFormViewModel()
@@ -289,6 +307,7 @@ namespace SkiResort.XamarinApp.ViewModels
             initializePoleSizeOptions();
 
             ClickGoalOptionCommand = new Command<string>(ClickGoalOptionCommandHandler);
+            ClickSaveCommand = new Command(ClickSaveCommandHandler);
         }
 
         void ClickGoalOptionCommandHandler(string rentalGoalName)
@@ -297,6 +316,26 @@ namespace SkiResort.XamarinApp.ViewModels
             OnPropertyChanged("DemoOptionBackgroundColor");
             OnPropertyChanged("PerformanceOptionBackgroundColor");
             OnPropertyChanged("SportOptionBackgroundColor");
+        }
+
+        async void ClickSaveCommandHandler()
+        {
+            var rental = new Rental()
+            {
+                StartDate = startDate,
+                EndDate = endDate,
+                PickupHour = SelectedPickUpTime.Value,
+                Category = SelectedRentalCategory,
+                Activity = SelectedRentalActivity,
+                Goal = selectedRentalGoal,
+                ShoeSize = SelectedShoeSize.Value,
+                SkiSize = SelectedSkiSize.Value,
+                PoleSize = SelectedPoleSize.Value,
+                TotalCost = TotalCost,
+            };
+
+            var rentalService = new RentalService();
+            await rentalService.SaveRental(rental);
         }
 
         RentalGoal getRentalGoalFromName(string rentalGoalName) {
