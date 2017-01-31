@@ -9,10 +9,8 @@ namespace SkiResort.XamarinApp.Entities
 {
     public class Rental
     {
-        [JsonIgnore]
         public int RentalId { get; set; }
 
-        [JsonIgnore]
         public string UserEmail { get; set; }
 
         public DateTimeOffset StartDate { get; set; }
