@@ -23,17 +23,14 @@
     "sqlserverAdminLoginPassword": {
       "value": "P2ssw0rd@1"
     },
-    "anomalyDetectionKey": {
-      "value": ""
-    },
-    "anomalyDetectionUri": {
-      "value": ""
-    },
-    "recommendationsKey": {
-      "value": ""
-    },
     "skuCapacityAzureSearch": {
       "value": "free"
+    },
+    "billingPlanTier": {
+      "value": "DevTest"
+    },
+    "cognetivesku": {
+      "value": "F0"
     }
   }
 }
