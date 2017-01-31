@@ -26,23 +26,16 @@ namespace SkiResort.XamarinApp.Services
             var client = new HttpClient();
             var uri = getUri(path);
 
-            try
+            var response = await client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
             {
-                var response = await client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    return content;
-                }
-                else
-                {
-                    throw new Exception();
-                }
-            } catch(Exception ex)
-            {
-                throw ex;
+                var content = await response.Content.ReadAsStringAsync();
+                return content;
             }
-            
+            else
+            {
+                throw new Exception();
+            }
         }
 
         public async Task<string> Post(string path, string body)

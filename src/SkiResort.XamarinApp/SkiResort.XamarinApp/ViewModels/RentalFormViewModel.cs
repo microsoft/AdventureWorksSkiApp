@@ -1,4 +1,5 @@
 ﻿using SkiResort.XamarinApp.Entities;
+using SkiResort.XamarinApp.Pages;
 using SkiResort.XamarinApp.Services;
 using System;
 using System.Collections.Generic;
@@ -336,6 +337,7 @@ namespace SkiResort.XamarinApp.ViewModels
 
             var rentalService = new RentalService();
             await rentalService.SaveRental(rental);
+            MessagingCenter.Send(this, "SetRentalListTab");
         }
 
         RentalGoal getRentalGoalFromName(string rentalGoalName) {

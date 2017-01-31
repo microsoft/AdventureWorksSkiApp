@@ -1,4 +1,5 @@
 ﻿using SkiResort.XamarinApp.Entities;
+using SkiResort.XamarinApp.Pages;
 using SkiResort.XamarinApp.Services;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace SkiResort.XamarinApp.ViewModels
 {
@@ -40,12 +42,16 @@ namespace SkiResort.XamarinApp.ViewModels
         }
         public RentalListViewModel()
         {
-            Rentals = new ObservableCollection<Rental>();
             FetchRentals();
+
+            MessagingCenter.Subscribe<RentalPage>(this, "Refresh", (sender) => {
+                FetchRentals();
+            });
         }
 
         private async void FetchRentals()
         {
+            Rentals = new ObservableCollection<Rental>();
             Loading = true;
 
             var rentalService = new RentalService();
