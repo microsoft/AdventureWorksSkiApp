@@ -27,7 +27,7 @@
   <ItemGroup>
     <Content Include="Scripts\TestWebApps.ps1" />
     <Content Include="Scripts\StopStreamJob.ps1" />
-    <Content Include="Scripts\RestartStreamJob.ps1" />
+    <Content Include="Scripts\StartStreamJob.ps1" />
     <Content Include="WebApp\SkiResort.zip">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>

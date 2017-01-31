@@ -66,9 +66,9 @@ if ($results) {
 	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlines" "liftlines"
 	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlinesarchive" "liftlinesarchive"
 
-	Write-Host 'Restart Stream Analytics Job'
-	$restartscript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'RestartStreamJob.ps1'))
-	& $restartscript $ResourceGroupName
+	Write-Host 'Start Stream Analytics Job'
+	$startscript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'StartStreamJob.ps1'))
+	& $startscript $ResourceGroupName
 
 	Write-Host 'Test WebApp (basic)'
 	$testwebapps = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'TestWebApps.ps1'))

@@ -314,6 +314,9 @@
         "sku": {
           "name": "[parameters('skuCapacityStreamAnalytics')]"
         },
+        "outputStartMode": "JobStartTime",
+        "eventsOutOfOrderPolicy": "Adjust",
+        "eventsOutOfOrderMaxDelayInSeconds": 0,
         "inputs": [
           {
             "name": "locationevents",
@@ -371,22 +374,38 @@
           "type": "Microsoft.StreamAnalytics/streamingjobs/transformations",
           "properties": {
             "streamingUnits": 1,
-            "query": " WITH liftcounts AS (\r\n
-                    SELECT lifts.name AS Name, COUNT(*) AS SkierCount, System.TimeStamp AS Time\r\n
-                    FROM locationevents\r\n
-                    INNER JOIN lifts ON locationevents.Latitude = lifts.latitude AND locationevents.Longitude = lifts.longitude\r\n
-                    GROUP BY lifts.name, TumblingWindow(minute, 1)\r\n
-                )\r\n\r\n
-                SELECT *\r\n
-                INTO liftlines\r\n
-                FROM liftcounts\r\n\r\n
-                SELECT CAST(Time AS NVARCHAR(MAX)) pkey, Name as rkey, SkierCount, Time\r\n
-                INTO liftlinesarchive\r\n
-                FROM liftcounts\r\n\r\n
-                SELECT *\r\n
-                INTO archive\r\n
-                FROM locationevents\r\n
-              "
+            "query": "\" WITH liftcounts AS (\\r\\n",
+            "SELECT" "lifts.name",
+            "AS" "Name",
+            "COUNT(*)" "AS",
+            "SkierCount",
+            "System.TimeStamp" "AS",
+            "Time\\r\\n" "FROM",
+            "locationevents\\r\\n" "INNER",
+            "JOIN" "lifts",
+            "ON" "locationevents.Latitude",
+            "=" "lifts.latitude",
+            "AND" "locationevents.Longitude",
+            "=" "lifts.longitude\\r\\n",
+            "GROUP" "BY",
+            "lifts.name",
+            "TumblingWindow(minute",
+            "1)\\r\\n" ")\\r\\n\\r\\n",
+            "SELECT" "*\\r\\n",
+            "INTO" "liftlines\\r\\n",
+            "FROM" "liftcounts\\r\\n\\r\\n",
+            "SELECT" "CAST(Time",
+            "AS" "NVARCHAR(MAX))",
+            "pkey",
+            "Name" "as",
+            "rkey",
+            "SkierCount",
+            "Time\\r\\n" "INTO",
+            "liftlinesarchive\\r\\n" "FROM",
+            "liftcounts\\r\\n\\r\\n" "SELECT",
+            "*\\r\\n" "INTO",
+            "archive\\r\\n" "FROM",
+            "locationevents\\r\\n" "\""
           }
         },
         "outputs": [
