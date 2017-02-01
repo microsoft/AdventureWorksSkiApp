@@ -15,16 +15,16 @@ namespace SkiResort.XamarinApp.ViewModels
     class RentalFormViewModel : BaseViewModel
     {
         #region Properties
-        private DateTimeOffset startDate { set; get; }
-        public string StartDate
+        private DateTime startDate { set; get; }
+        public DateTime StartDate
         {
             get
             {
-                return startDate.ToString();
+                return startDate;
             }
             set
             {
-                startDate = DateTimeOffset.Parse(value);
+                startDate = value;
                 OnPropertyChanged("StartDate");
                 OnPropertyChanged("CanSave");
                 OnPropertyChanged("TotalCost");
@@ -32,16 +32,16 @@ namespace SkiResort.XamarinApp.ViewModels
             }
         }
 
-        private DateTimeOffset endDate { set; get; }
-        public string EndDate
+        private DateTime endDate { set; get; }
+        public DateTime EndDate
         {
             get
             {
-                return endDate.ToString();
+                return endDate;
             }
             set
             {
-                endDate = DateTimeOffset.Parse(value);
+                endDate = value;
                 OnPropertyChanged("EndDate");
                 OnPropertyChanged("CanSave");
                 OnPropertyChanged("TotalCost");
@@ -218,6 +218,21 @@ namespace SkiResort.XamarinApp.ViewModels
         }
 
         private RentalGoal selectedRentalGoal { get; set; }
+        public RentalGoal SelectedRentalGoal
+        {
+            get
+            {
+                return selectedRentalGoal;
+            }
+            set
+            {
+                selectedRentalGoal = value;
+                OnPropertyChanged("SelectedRentalGoal");
+                OnPropertyChanged("DemoOptionBackgroundColor");
+                OnPropertyChanged("PerformanceOptionBackgroundColor");
+                OnPropertyChanged("SportOptionBackgroundColor");
+            }
+        }
 
         public string DemoOptionBackgroundColor
         {
@@ -311,18 +326,17 @@ namespace SkiResort.XamarinApp.ViewModels
 
         public RentalFormViewModel()
         {
-            initializeData();
-
             ClickGoalOptionCommand = new Command<string>(ClickGoalOptionCommandHandler);
             ClickSaveCommand = new Command(ClickSaveCommandHandler);
+
+            initializeOptions();
+
+            resetValues();
         }
 
         void ClickGoalOptionCommandHandler(string rentalGoalName)
         {
-            selectedRentalGoal = getRentalGoalFromName(rentalGoalName);
-            OnPropertyChanged("DemoOptionBackgroundColor");
-            OnPropertyChanged("PerformanceOptionBackgroundColor");
-            OnPropertyChanged("SportOptionBackgroundColor");
+            SelectedRentalGoal = getRentalGoalFromName(rentalGoalName);
         }
 
         async void ClickSaveCommandHandler()
@@ -337,7 +351,7 @@ namespace SkiResort.XamarinApp.ViewModels
                 PickupHour = 0,
                 Category = SelectedRentalCategory,
                 Activity = SelectedRentalActivity,
-                Goal = selectedRentalGoal,
+                Goal = SelectedRentalGoal,
                 ShoeSize = SelectedShoeSize.Value,
                 SkiSize = SelectedSkiSize.Value,
                 PoleSize = SelectedPoleSize.Value,
@@ -347,7 +361,7 @@ namespace SkiResort.XamarinApp.ViewModels
             var rentalService = new RentalService();
             await rentalService.SaveRental(rental);
             MessagingCenter.Send(this, "SetRentalListTab");
-            initializeData();
+            resetValues();
             Loading = false;
         }
 
@@ -369,38 +383,41 @@ namespace SkiResort.XamarinApp.ViewModels
         }
 
         string getBackgroundForRentalGoal(RentalGoal rentalGoal) {
-            return selectedRentalGoal == rentalGoal ? "#1A90C9" : "#323232";
+            return SelectedRentalGoal == rentalGoal ? "#1A90C9" : "#323232";
         }
 
         #region Data Initializers
 
-        void initializeData() {
+        void resetValues() {
             Loading = false;
-            initializeDatePeriod();
+            StartDate = DateTime.Now.Date;
+            EndDate = DateTime.Now.Date;
+            SelectedRentalActivity = RentalActivity.Ski;
+            SelectedRentalCategory = RentalCategory.Beginner;
+            SelectedRentalGoal = RentalGoal.Demo;
+            SelectedPickUpTime = PickUpTimeOptions[0];
+            SelectedShoeSize = ShoeSizeOptions[0];
+            SelectedSkiSize = SkiSizeOptions[0];
+            SelectedPoleSize = PoleSizeOptions[0];
+        }
+
+        void initializeOptions()
+        {
             RentalActivityOptions = new ObservableCollection<RentalActivity>
             {
                 RentalActivity.Ski,
                 RentalActivity.Snowboard,
             };
-            SelectedRentalActivity = RentalActivity.Ski;
             RentalCategoryOptions = new ObservableCollection<RentalCategory>
             {
                 RentalCategory.Beginner,
                 RentalCategory.Intermediate,
                 RentalCategory.Advanced
             };
-            SelectedRentalCategory = RentalCategory.Beginner;
-            selectedRentalGoal = RentalGoal.Demo;
             initializePickUpHoursOptions();
             initializeShoeSizeOptions();
             initializeSkiSizeOptions();
             initializePoleSizeOptions();
-        }
-
-        void initializeDatePeriod()
-        {
-            StartDate = DateTimeOffset.Now.Date.ToString();
-            EndDate = DateTimeOffset.Now.Date.ToString();
         }
 
         void initializePickUpHoursOptions()
@@ -422,7 +439,6 @@ namespace SkiResort.XamarinApp.ViewModels
                     Text = string.Format("{0:00}:{1:00} {2}", hour % 12, minute, meridiem)
                 });
             }
-            SelectedPickUpTime = PickUpTimeOptions[0];
         }
 
         void initializeShoeSizeOptions()
@@ -445,7 +461,6 @@ namespace SkiResort.XamarinApp.ViewModels
                     Text = i.ToString()
                 });
             }
-            SelectedShoeSize = ShoeSizeOptions[0];
         }
 
         void initializeSkiSizeOptions()
@@ -461,7 +476,6 @@ namespace SkiResort.XamarinApp.ViewModels
                     Text = string.Format("{0} in", i)
                 });
             }
-            SelectedSkiSize = SkiSizeOptions[0];
         }
 
         void initializePoleSizeOptions()
@@ -477,7 +491,6 @@ namespace SkiResort.XamarinApp.ViewModels
                     Text = string.Format("{0} in", i)
                 });
             }
-            SelectedPoleSize = PoleSizeOptions[0];
         }
 
         #endregion

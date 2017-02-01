@@ -2227,8 +2227,8 @@ namespace SkiResort.XamarinApp.Droid
 			// aapt resource value: 0x7f0200a9
 			public const int mr_ic_play_light = 2130837673;
 			
-			// aapt resource value: 0x7f0200b8
-			public const int notification_template_icon_bg = 2130837688;
+			// aapt resource value: 0x7f0200ba
+			public const int notification_template_icon_bg = 2130837690;
 			
 			// aapt resource value: 0x7f0200aa
 			public const int poles = 2130837674;
@@ -2237,40 +2237,46 @@ namespace SkiResort.XamarinApp.Droid
 			public const int reservation_list_bg = 2130837675;
 			
 			// aapt resource value: 0x7f0200ac
-			public const int shoe = 2130837676;
+			public const int search = 2130837676;
 			
 			// aapt resource value: 0x7f0200ad
-			public const int skies = 2130837677;
+			public const int shoe = 2130837677;
 			
 			// aapt resource value: 0x7f0200ae
-			public const int star_0 = 2130837678;
+			public const int skies = 2130837678;
 			
 			// aapt resource value: 0x7f0200af
-			public const int star_1 = 2130837679;
+			public const int sort_amount_desc = 2130837679;
 			
 			// aapt resource value: 0x7f0200b0
-			public const int star_2 = 2130837680;
+			public const int star_0 = 2130837680;
 			
 			// aapt resource value: 0x7f0200b1
-			public const int star_3 = 2130837681;
+			public const int star_1 = 2130837681;
 			
 			// aapt resource value: 0x7f0200b2
-			public const int star_4 = 2130837682;
+			public const int star_2 = 2130837682;
 			
 			// aapt resource value: 0x7f0200b3
-			public const int star_5 = 2130837683;
+			public const int star_3 = 2130837683;
 			
 			// aapt resource value: 0x7f0200b4
-			public const int weatherWidget_base = 2130837684;
+			public const int star_4 = 2130837684;
 			
 			// aapt resource value: 0x7f0200b5
-			public const int weatherWidget_snow = 2130837685;
+			public const int star_5 = 2130837685;
 			
 			// aapt resource value: 0x7f0200b6
-			public const int weatherWidget_temp = 2130837686;
+			public const int weatherWidget_base = 2130837686;
 			
 			// aapt resource value: 0x7f0200b7
-			public const int weatherWidget_wind = 2130837687;
+			public const int weatherWidget_snow = 2130837687;
+			
+			// aapt resource value: 0x7f0200b8
+			public const int weatherWidget_temp = 2130837688;
+			
+			// aapt resource value: 0x7f0200b9
+			public const int weatherWidget_wind = 2130837689;
 			
 			static Drawable()
 			{
