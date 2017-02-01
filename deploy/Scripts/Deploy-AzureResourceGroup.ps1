@@ -51,6 +51,11 @@ if ($results) {
 	$storagescript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'ConfigureStorage.ps1'))
 	& $storagescript $ResourceGroupName $StorageName
 
+	Write-Host 'Create documentDB collections'
+	$documentdbscript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'DocumentDB.ps1'))
+	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlines" "liftlines"
+	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlinesarchive" "liftlinesarchive"
+
 	Write-Host 'Deploy ASP.NET app (Basic)'
 	$webAppName = $results.Outputs.webSiteName.value
 	$publisScript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'PublishASPNET.ps1'))
@@ -60,11 +65,6 @@ if ($results) {
 	$webAppName = $results.Outputs.webSiteAdvancedName.value
 	$publisScript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'PublishASPNET.ps1'))
 	& $publisScript $ResourceGroupName $webAppName "..\WebApp\SkiResortAdvanced.zip"
-
-	Write-Host 'Create documentDB collections'
-	$documentdbscript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'DocumentDB.ps1'))
-	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlines" "liftlines"
-	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlinesarchive" "liftlinesarchive"
 
 	Write-Host 'Start Stream Analytics Job'
 	$startscript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'StartStreamJob.ps1'))
@@ -90,8 +90,6 @@ if ($results) {
 	& $replacescript -Pattern '__YOUR_INSTRUMENTATION_KEY__' -Replacement $results.Outputs.applicationInsightsKey.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__SEARCHSERVICENAME__' -Replacement $results.Outputs.searchServiceName.value  -Overwrite -Path $configPath
 	& $replacescript -Pattern '__SEARCHKEY__' -Replacement $results.Outputs.searchServiceKey.value -Overwrite -Path $configPath
-	#& $replacescript -Pattern '__ANOMALYDETECTIONKEY__' -Replacement $results.Outputs.anomalyDetectionKey.value -Overwrite -Path $configPath
-	#& $replacescript -Pattern '__ANOMALYDETECTIONURI__' -Replacement $results.Outputs.anomalyDetectionUri.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__DOCUMENTDBENDPOINT__' -Replacement $results.Outputs.documentDBEndpoint.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__DOCUMENTDBKEY__' -Replacement $results.Outputs.documentDBKey.value -Overwrite -Path $configPath
 

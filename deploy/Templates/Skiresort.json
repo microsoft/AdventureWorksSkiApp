@@ -621,8 +621,8 @@
             "DefaultUsername": "[parameters('webUsername')]",
             "DefaultFullName": "[parameters('webUserFullName')]",
             "DefaultPassword": "[parameters('webPassword')]",
-            "Data:AnomalyDetection:Key": "your_anomaly_detection_key",
-            "Data:AnomalyDetection:RequestUri": "http://your_anomaly_detection_uri",
+            "AnomalyDetection:Key": "your_anomaly_detection_key",
+            "AnomalyDetection:RequestUri": "http://your_anomaly_detection_uri",
             "Security:Authority": "[concat('http://', variables('webAdvancedApp_name'), '.azurewebsites.net/')]",
             "Security:Audience": "[concat('http://', variables('webAdvancedApp_name'), '.azurewebsites.net/')]"
           }
