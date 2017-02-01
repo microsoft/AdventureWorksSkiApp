@@ -8,6 +8,10 @@ param(
 
 begin
 {
+	Write-Host $accountName
+	Write-Host $databaseName
+	Write-Host $collectionName
+
 	function GetKey([System.String]$Verb = '',[System.String]$ResourceId = '',
 		[System.String]$ResourceType = '',[System.String]$Date = '',[System.String]$masterKey = '') {
         
