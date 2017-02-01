@@ -122,6 +122,12 @@ if ($results) {
 	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
     & $replacescript -Pattern '__RSQLCONNECTIONSTRING__' -Replacement $results.Outputs.rConnection.value -Overwrite -Path $configPath
 
+	$configRelativePath = "..\..\..\..\..\..\reports\provision\ProvisionSample.exe.config"
+	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
+    & $replacescript -Pattern '__COLLECTIONNAME__' -Replacement $results.Outputs.powerbiname.value -Overwrite -Path $configPath
+	& $replacescript -Pattern '__ACCESSKEY__' -Replacement $results.Outputs.powerbikey.value -Overwrite -Path $configPath
+
+
 	$serverurl = "http://$($results.Outputs.webSiteName.value).azurewebsites.net"
 	$configRelativePath = "..\..\..\..\..\..\src\SkiResort.XamarinApp\SkiResort.XamarinApp\Config.cs"
 	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))

@@ -1429,6 +1429,14 @@
     "recommendationsKey": {
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts/', variables('cognetivename')), '2016-02-01-preview').key1]"
+    },
+    "powerbikey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.PowerBI/workspaceCollections/', variables('powerbiname')), '2016-01-29').key1]"
+    },
+    "powerbiname": {
+      "type": "string",
+      "value": "[variables('powerbiname')]"
     }
   }
 }
