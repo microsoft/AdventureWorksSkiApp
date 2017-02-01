@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
              xmlns:behaviours="clr-namespace:SkiResort.XamarinApp.Behaviours;assembly=SkiResort.XamarinApp"
+             xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="SkiResort.XamarinApp.Pages.DiningPage"
              x:Name="page"
              Title="Dining">
@@ -49,16 +50,23 @@
 
       <StackLayout Style="{StaticResource mainContainerStyle}">
         <StackLayout BackgroundColor="#105D82" Padding="10" Orientation="Horizontal" Spacing="10">
-          <Entry Text="{Binding SearchText, Mode=TwoWay}" Placeholder="Search..." TextColor="White" HorizontalOptions="FillAndExpand" BackgroundColor="#105D82" />
-          <Picker Title="Sort by..." SelectedIndex="{Binding SelectedSortableOptionIndex, Mode=TwoWay}" WidthRequest="140" TextColor="White" BackgroundColor="#105D82">
-            <Picker.Items>
-              <x:String>Rating</x:String>
-              <x:String>Level Noise</x:String>
-              <x:String>Price</x:String>
-              <x:String>Miles Away</x:String>
-              <x:String>Family Friendly</x:String>
-            </Picker.Items>
-          </Picker>
+          <StackLayout Orientation="Horizontal" Spacing="0" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+            <Entry Text="{Binding SearchText, Mode=TwoWay}" Placeholder="Search..." TextColor="White" HorizontalOptions="FillAndExpand" BackgroundColor="#105D82" VerticalOptions="Center" />
+          </StackLayout>
+          <StackLayout Orientation="Horizontal" Spacing="0" VerticalOptions="Center">
+            <ffil:CachedImage Source="sort_amount_desc.png" Aspect="AspectFit" HeightRequest="17" WidthRequest="17" VerticalOptions="Center" />
+            <Picker Title="Sort by..." SelectedIndex="{Binding SelectedSortableOptionIndex, Mode=TwoWay}" WidthRequest="140" TextColor="White" BackgroundColor="#105D82" VerticalOptions="Center">
+              <Picker.Items>
+                <x:String>Rating</x:String>
+                <x:String>Level Noise</x:String>
+                <x:String>Price</x:String>
+                <x:String>Miles Away</x:String>
+                <x:String>Family Friendly</x:String>
+              </Picker.Items>
+            </Picker>
+          </StackLayout>
+
+
         </StackLayout>
         <ListView
           x:Name="listView"
