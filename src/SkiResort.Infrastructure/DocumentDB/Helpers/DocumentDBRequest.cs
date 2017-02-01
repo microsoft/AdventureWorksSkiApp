@@ -19,7 +19,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.DocumentDB.Helpers
         {
             _EndpointUrl = configuration["DocumentDB:EndpointUri"];
             _Key = configuration["DocumentDB:Key"];
-            utc_date = DateTime.UtcNow.ToString("r");
+            utc_date = DateTime.UtcNow.ToString("ddd, dd MMM yyyy HH:mm:ss \\G\\M\\T");
         }
 
         public async Task<string> ExecuteQuery(string databaseId, string collection, string query)

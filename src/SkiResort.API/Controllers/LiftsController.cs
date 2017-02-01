@@ -38,15 +38,18 @@ namespace AdventureWorks.SkiResort.API.Controllers
             var liftCounts = await _liftLinesRepository.GetLiftSkiersWaitingAsync();
             var liftHistory = await _liftLinesRepository.GetLiftWaitHistoryWaitingAsync(TimeSpan.FromMinutes(30));
 
-            foreach (var lift in lifts)
+            if (liftCounts != null && liftHistory != null)
             {
-                lift.WaitingTime = GetWaitingTime(liftCounts, lift);
+                foreach (var lift in lifts)
+                {
+                    lift.WaitingTime = GetWaitingTime(liftCounts, lift);
 
-                var history = liftHistory.Where(lh => lh.Rkey == lift.Name)
-                                         .Select(lh => Tuple.Create(lh.Time, lh.Skiercount))
-                                         .ToList();
+                    var history = liftHistory.Where(lh => lh.Rkey == lift.Name)
+                                             .Select(lh => Tuple.Create(lh.Time, lh.Skiercount))
+                                             .ToList();
 
-                lift.StayAway = ShowStayAway(lift) ? true : await AnomalyDetector.SlowChairliftAsync(history);
+                    lift.StayAway = ShowStayAway(lift) ? true : await AnomalyDetector.SlowChairliftAsync(history);
+                }
             }
 
             return lifts;
