@@ -18,3 +18,4 @@ src/SkiResort.Web/src/ts/**/*.js
 /src/SkiResort.Web/wwwroot/azureSearch/index.json
 /src/SkiResort.Web/wwwroot/azureSearch/data.json
 /src/**/*.lock.json
+/src/SkiResort.DataGeneration/.vs/SkiResort.DataGeneration/v14/.suo

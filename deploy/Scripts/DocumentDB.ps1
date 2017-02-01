@@ -28,7 +28,7 @@ begin
     function GetUTDate() {
         $date = get-date
         $date = $date.ToUniversalTime();
-        return $date.ToString("ddd, d MMM yyyy HH:mm:ss \G\M\T")
+		return $date.ToString("ddd, dd MMM yyyy HH:mm:ss \G\M\T")
     }
 
 	function BuildHeaders([string]$action = "get",[string]$resType, [string]$resourceId){

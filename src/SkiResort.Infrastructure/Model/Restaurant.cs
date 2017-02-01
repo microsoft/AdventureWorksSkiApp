@@ -38,8 +38,8 @@ namespace AdventureWorks.SkiResort.Infrastructure.Model
         {
             set
             {
-                Longitude = value.coordinates[0];
-                Latitude = value.coordinates[1];
+                Latitude = value.coordinates[0];
+                Longitude = value.coordinates[1];
             }
         }
     }
