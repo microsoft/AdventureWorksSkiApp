@@ -278,6 +278,30 @@ namespace SkiResort.XamarinApp.ViewModels
                 return CanSave ? "#1A90C9" : "#F1F1F1";
             }
         }
+
+        private bool loading { set; get; }
+        public bool Loading
+        {
+            get
+            {
+                return loading;
+            }
+            set
+            {
+                loading = value;
+                OnPropertyChanged("Loading");
+                OnPropertyChanged("ContentOpacity");
+            }
+        }
+
+        public float ContentOpacity
+        {
+            get
+            {
+                return Loading ? 0.3F : 1F;
+            }
+            set { }
+        }
         #endregion
 
         #region Commands
@@ -303,6 +327,7 @@ namespace SkiResort.XamarinApp.ViewModels
 
         async void ClickSaveCommandHandler()
         {
+            Loading = true;
             var completeStartDate = startDate;
             completeStartDate = completeStartDate.Date.Add(SelectedPickUpTime.Value);
             var rental = new Rental()
@@ -323,6 +348,7 @@ namespace SkiResort.XamarinApp.ViewModels
             await rentalService.SaveRental(rental);
             MessagingCenter.Send(this, "SetRentalListTab");
             initializeData();
+            Loading = false;
         }
 
         RentalGoal getRentalGoalFromName(string rentalGoalName) {
@@ -349,6 +375,7 @@ namespace SkiResort.XamarinApp.ViewModels
         #region Data Initializers
 
         void initializeData() {
+            Loading = false;
             initializeDatePeriod();
             RentalActivityOptions = new ObservableCollection<RentalActivity>
             {
