@@ -77,8 +77,8 @@ namespace SkiResort.XamarinApp.ViewModels
             }
         }
 
-        private ObservableCollection<PickerItem<int>> pickUpTimeOptions { set; get; }
-        public ObservableCollection<PickerItem<int>> PickUpTimeOptions
+        private ObservableCollection<PickerItem<TimeSpan>> pickUpTimeOptions { set; get; }
+        public ObservableCollection<PickerItem<TimeSpan>> PickUpTimeOptions
         {
             get
             {
@@ -91,8 +91,8 @@ namespace SkiResort.XamarinApp.ViewModels
             }
         }
 
-        private PickerItem<int> selectedPickUpTime { set; get; }
-        public PickerItem<int> SelectedPickUpTime
+        private PickerItem<TimeSpan> selectedPickUpTime { set; get; }
+        public PickerItem<TimeSpan> SelectedPickUpTime
         {
             get
             {
@@ -278,6 +278,30 @@ namespace SkiResort.XamarinApp.ViewModels
                 return CanSave ? "#1A90C9" : "#F1F1F1";
             }
         }
+
+        private bool loading { set; get; }
+        public bool Loading
+        {
+            get
+            {
+                return loading;
+            }
+            set
+            {
+                loading = value;
+                OnPropertyChanged("Loading");
+                OnPropertyChanged("ContentOpacity");
+            }
+        }
+
+        public float ContentOpacity
+        {
+            get
+            {
+                return Loading ? 0.3F : 1F;
+            }
+            set { }
+        }
         #endregion
 
         #region Commands
@@ -303,11 +327,14 @@ namespace SkiResort.XamarinApp.ViewModels
 
         async void ClickSaveCommandHandler()
         {
+            Loading = true;
+            var completeStartDate = startDate;
+            completeStartDate = completeStartDate.Date.Add(SelectedPickUpTime.Value);
             var rental = new Rental()
             {
-                StartDate = startDate,
+                StartDate = completeStartDate,
                 EndDate = endDate,
-                PickupHour = SelectedPickUpTime.Value,
+                PickupHour = 0,
                 Category = SelectedRentalCategory,
                 Activity = SelectedRentalActivity,
                 Goal = selectedRentalGoal,
@@ -321,6 +348,7 @@ namespace SkiResort.XamarinApp.ViewModels
             await rentalService.SaveRental(rental);
             MessagingCenter.Send(this, "SetRentalListTab");
             initializeData();
+            Loading = false;
         }
 
         RentalGoal getRentalGoalFromName(string rentalGoalName) {
@@ -347,6 +375,7 @@ namespace SkiResort.XamarinApp.ViewModels
         #region Data Initializers
 
         void initializeData() {
+            Loading = false;
             initializeDatePeriod();
             RentalActivityOptions = new ObservableCollection<RentalActivity>
             {
@@ -376,7 +405,7 @@ namespace SkiResort.XamarinApp.ViewModels
 
         void initializePickUpHoursOptions()
         {
-            PickUpTimeOptions = new ObservableCollection<PickerItem<int>>();
+            PickUpTimeOptions = new ObservableCollection<PickerItem<TimeSpan>>();
             int nOfOptions = 57;
             int startHour = 6;
             int startMinute = 0;
@@ -386,8 +415,10 @@ namespace SkiResort.XamarinApp.ViewModels
                 double minute = (startMinute + (double)((i * 15))) % 60;
                 string meridiem = hour >= 12 ? "pm" : "am";
 
-                PickUpTimeOptions.Add(new PickerItem<int> {
-                    Value = i,
+                var timeSpan = new TimeSpan((int)hour, (int)minute, 0);
+
+                PickUpTimeOptions.Add(new PickerItem<TimeSpan> {
+                    Value = timeSpan,
                     Text = string.Format("{0:00}:{1:00} {2}", hour % 12, minute, meridiem)
                 });
             }
