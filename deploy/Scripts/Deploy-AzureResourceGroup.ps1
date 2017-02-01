@@ -90,8 +90,8 @@ if ($results) {
 	& $replacescript -Pattern '__YOUR_INSTRUMENTATION_KEY__' -Replacement $results.Outputs.applicationInsightsKey.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__SEARCHSERVICENAME__' -Replacement $results.Outputs.searchServiceName.value  -Overwrite -Path $configPath
 	& $replacescript -Pattern '__SEARCHKEY__' -Replacement $results.Outputs.searchServiceKey.value -Overwrite -Path $configPath
-	& $replacescript -Pattern '__ANOMALYDETECTIONKEY__' -Replacement $results.Outputs.anomalyDetectionKey.value -Overwrite -Path $configPath
-	& $replacescript -Pattern '__ANOMALYDETECTIONURI__' -Replacement $results.Outputs.anomalyDetectionUri.value -Overwrite -Path $configPath
+	#& $replacescript -Pattern '__ANOMALYDETECTIONKEY__' -Replacement $results.Outputs.anomalyDetectionKey.value -Overwrite -Path $configPath
+	#& $replacescript -Pattern '__ANOMALYDETECTIONURI__' -Replacement $results.Outputs.anomalyDetectionUri.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__DOCUMENTDBENDPOINT__' -Replacement $results.Outputs.documentDBEndpoint.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__DOCUMENTDBKEY__' -Replacement $results.Outputs.documentDBKey.value -Overwrite -Path $configPath
 
@@ -121,6 +121,12 @@ if ($results) {
 	$configRelativePath = "..\..\..\..\..\..\demo\RentalDemandExperiments.r"
 	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
     & $replacescript -Pattern '__RSQLCONNECTIONSTRING__' -Replacement $results.Outputs.rConnection.value -Overwrite -Path $configPath
+
+	$configRelativePath = "..\..\..\..\..\..\reports\provision\ProvisionSample.exe.config"
+	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
+    & $replacescript -Pattern '__COLLECTIONNAME__' -Replacement $results.Outputs.powerbiname.value -Overwrite -Path $configPath
+	& $replacescript -Pattern '__ACCESSKEY__' -Replacement $results.Outputs.powerbikey.value -Overwrite -Path $configPath
+
 
 	$serverurl = "http://$($results.Outputs.webSiteName.value).azurewebsites.net"
 	$configRelativePath = "..\..\..\..\..\..\src\SkiResort.XamarinApp\SkiResort.XamarinApp\Config.cs"
