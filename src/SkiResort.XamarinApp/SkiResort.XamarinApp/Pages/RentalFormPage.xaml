@@ -22,7 +22,7 @@
       <ScrollView>
         <StackLayout Opacity="{Binding ContentOpacity}">
           <StackLayout Padding="15" Spacing="15" Orientation="Horizontal" IsVisible="{Binding HighDemand}" BackgroundColor="#E13F3F">
-            <ffil:CachedImage Source="exclamation_triangle_white.png" Aspect="AspectFit" WidthRequest="35" HeightRequest="35" VerticalOptions="Center" DownsampleToViewSize="True" />
+            <ffil:CachedImage Source="exclamation_triangle_white.png" Aspect="AspectFit" WidthRequest="36" HeightRequest="36" VerticalOptions="Center" DownsampleToViewSize="True" />
             <Label Text="Ski rental is high demand on the dates you selected, please show up early to secure your rental." FontSize="17" TextColor="White" VerticalOptions="Center" />
           </StackLayout>
 
