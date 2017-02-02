@@ -9,10 +9,26 @@ namespace SkiResort.XamarinApp.Services
 {
     class HTTPService
     {
+        #region Singleton
+        private static HTTPService instance;
+        public static HTTPService Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new HTTPService(Config.API_URL);
+                return instance;
+            }
+        }
+        #endregion
+
+        HttpClient _httpClient;
         public readonly string BaseUrl;
 
         public HTTPService(string baseUrl)
         {
+            _httpClient = new HttpClient();
+
             BaseUrl = baseUrl;
         }
 
@@ -23,10 +39,9 @@ namespace SkiResort.XamarinApp.Services
 
         public async Task<string> Get(string path)
         {
-            var client = new HttpClient();
             var uri = getUri(path);
 
-            var response = await client.GetAsync(uri);
+            var response = await _httpClient.GetAsync(uri);
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
@@ -40,10 +55,9 @@ namespace SkiResort.XamarinApp.Services
 
         public async Task<string> Post(string path, string body)
         {
-            var client = new HttpClient();
             var uri = getUri(path);
 
-            var response = await client.PostAsync(uri, new StringContent(body, Encoding.UTF8, "application/json"));
+            var response = await _httpClient.PostAsync(uri, new StringContent(body, Encoding.UTF8, "application/json"));
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
