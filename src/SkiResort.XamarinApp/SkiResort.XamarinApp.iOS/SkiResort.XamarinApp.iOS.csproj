@@ -288,6 +288,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\lift.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\exclamation_triangle_white.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -29,6 +29,20 @@ namespace SkiResort.XamarinApp.ViewModels
                 OnPropertyChanged("CanSave");
                 OnPropertyChanged("TotalCost");
                 OnPropertyChanged("SaveButtonBackgroundColor");
+                CheckHighDemand();
+            }
+        }
+
+        private bool highDemand { get; set; }
+        public bool HighDemand
+        {
+            get
+            {
+                return highDemand;
+            }
+            set {
+                highDemand = value;
+                OnPropertyChanged("HighDemand");
             }
         }
 
@@ -365,6 +379,12 @@ namespace SkiResort.XamarinApp.ViewModels
             Loading = false;
         }
 
+        async void CheckHighDemand()
+        {
+            var rentalService = new RentalService();
+            HighDemand = await rentalService.CheckHighDemand(startDate);
+        }
+
         RentalGoal getRentalGoalFromName(string rentalGoalName) {
             RentalGoal matchingRentalGoal = RentalGoal.Demo;
             switch(rentalGoalName)
@@ -389,6 +409,7 @@ namespace SkiResort.XamarinApp.ViewModels
         #region Data Initializers
 
         void resetValues() {
+            HighDemand = false;
             Loading = false;
             StartDate = DateTime.Now.Date;
             EndDate = DateTime.Now.Date;

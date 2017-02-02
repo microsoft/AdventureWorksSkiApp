@@ -29,6 +29,21 @@ namespace SkiResort.XamarinApp.Services
             var rentalJson = JsonConvert.SerializeObject(RentalDTOForCreation.Create(rental), jsonSettings);
             await httpService.Post("/rentals", rentalJson);
         }
+
+        public async Task<bool> CheckHighDemand(DateTime date)
+        {
+            var httpService = new HTTPService(Config.API_URL);
+            var result = "";
+            try
+            {
+                result = await httpService.Get("/rentals/check_high_demand?date=" + date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
+            }
+            catch (Exception ex)
+            {
+                result = "false";
+            }
+            return result == "true";
+        }
     }
 
     public class RentalDTOForCreation
