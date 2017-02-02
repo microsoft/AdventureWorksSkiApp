@@ -52,6 +52,8 @@
     <Compile Include="Converters\RentalToDateRangeConverter.cs" />
     <Compile Include="Converters\RentalToTypeAndLevelConverter.cs" />
     <Compile Include="Converters\RestaurantToImageSourceConverter.cs" />
+    <Compile Include="Converters\StayAwayToLiftNameColorConverter.cs" />
+    <Compile Include="Converters\WaitingTimeToStringConverter.cs" />
     <Compile Include="Entities\Geolocation.cs" />
     <Compile Include="Entities\LiftGroup.cs" />
     <Compile Include="Entities\Lift.cs" />

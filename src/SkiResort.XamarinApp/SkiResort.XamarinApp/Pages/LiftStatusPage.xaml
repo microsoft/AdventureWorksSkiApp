@@ -4,12 +4,15 @@
              x:Class="SkiResort.XamarinApp.Pages.LiftStatusPage"
              xmlns:converters="clr-namespace:SkiResort.XamarinApp.Converters;assembly=SkiResort.XamarinApp"
              xmlns:behaviours="clr-namespace:SkiResort.XamarinApp.Behaviours;assembly=SkiResort.XamarinApp"
+             xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              Title="Lift Status">
 
   <ContentPage.Resources>
     <ResourceDictionary>
 
       <converters:LiftRatingToImageSourceConverter x:Key="liftRatingToImageSourceConverter"></converters:LiftRatingToImageSourceConverter>
+      <converters:StayAwayToLiftNameColorConverter x:Key="stayAwayToLiftNameColorConverter"></converters:StayAwayToLiftNameColorConverter>
+      <converters:WaitingTimeToStringConverter x:Key="waitingTimeToStringConverter"></converters:WaitingTimeToStringConverter>
 
       <Style x:Key="listViewStyle" TargetType="ListView">
         <Setter Property="VerticalOptions" Value="FillAndExpand" />
@@ -45,6 +48,21 @@
         GroupDisplayBinding="{Binding Title}"
         Style="{StaticResource listViewStyle}"
         behaviours:ItemTappedCommandListView.ItemTappedCommand="{Binding ItemSelectedCommand}" >
+
+        <ListView.GroupHeaderTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <StackLayout
+                Orientation="Horizontal"
+                VerticalOptions="FillAndExpand"
+                Padding="5"
+                BackgroundColor="#1A90C9">
+                <ffil:CachedImage Source="{Binding IconPath}" Aspect="AspectFit" WidthRequest="20" HeightRequest="18" Margin="16,0,0,0" />
+                <Label Text="{Binding Title}" TextColor="White" VerticalOptions="Center" FontSize="17" />
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.GroupHeaderTemplate>
         
         <ListView.ItemTemplate>
           <DataTemplate>
@@ -53,7 +71,10 @@
               <StackLayout Style="{StaticResource listItemContainerStyle}">
                 <Image Style="{StaticResource listItemImageStyle}"
                        Source="{Binding Rating, Converter={StaticResource liftRatingToImageSourceConverter}}" />
-                <Label Text="{Binding Name}" />
+                <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" TextColor="{Binding StayAway, Converter={StaticResource stayAwayToLiftNameColorConverter}}" />
+                <ffil:CachedImage Source="exclamation_triangle.png" Aspect="AspectFit" WidthRequest="14" HeightRequest="14" IsVisible="{Binding StayAway}" />
+                <Label Text="{Binding WaitingTime, Converter={StaticResource waitingTimeToStringConverter}}" FontSize="14" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" />
+                <ffil:CachedImage Source="marker_tiny.png" Aspect="AspectFit" WidthRequest="10" HeightRequest="10" Margin="3,0,18,0" />
               </StackLayout>
               
             </ViewCell>

@@ -276,6 +276,18 @@
   <ItemGroup>
     <BundleResource Include="Resources\sort_amount_desc.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\exclamation_triangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\marker_tiny.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\lift_closed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\lift.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

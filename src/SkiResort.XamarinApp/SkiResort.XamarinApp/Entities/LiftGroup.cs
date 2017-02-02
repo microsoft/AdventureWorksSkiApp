@@ -9,11 +9,13 @@ namespace SkiResort.XamarinApp.Entities
     public class LiftGroup : List<Lift>
     {
         public string Title { get; set; }
+        public string IconPath { get; set; }
         public string ShortName { get; set; }
-        public LiftGroup(string title, string shortName)
+        public LiftGroup(string title, string shortName, string iconPath)
         {
             Title = title;
             ShortName = shortName;
+            IconPath = iconPath;
         }
 
         public static IList<LiftGroup> All { private set; get; }

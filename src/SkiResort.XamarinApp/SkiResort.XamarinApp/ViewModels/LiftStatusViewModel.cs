@@ -61,8 +61,8 @@ namespace SkiResort.XamarinApp.ViewModels
             var liftService = new LiftService();
             var lifts = await liftService.GetLifts();
 
-            var openLifts = new LiftGroup("Open Lifts", "O");
-            var closedLifts = new LiftGroup("Closed Lifts", "C");
+            var openLifts = new LiftGroup("Open Lifts", "O", "lift.png");
+            var closedLifts = new LiftGroup("Closed Lifts", "C", "lift_closed.png");
 
             foreach(var lift in lifts)
             {
