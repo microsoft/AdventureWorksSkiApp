@@ -517,7 +517,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
             await context.Database.ExecuteSqlCommandAsync(
             @"CREATE PROCEDURE PredictRentals @q NVARCHAR(MAX) AS
             BEGIN
-	            DECLARE @serialized VARBINARY(MAX) = (SELECT TOP 1 Serialized FROM Models)
+	            DECLARE @serialized VARBINARY(MAX) = (SELECT TOP 1 Serialized FROM Model)
 	            DECLARE @s NVARCHAR(MAX) = N'
             rentals = InputDataSet
             rentals$FHoliday = factor(rentals$Holiday)
