@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
+             xmlns:behaviours="clr-namespace:SkiResort.XamarinApp.Behaviours;assembly=SkiResort.XamarinApp"
+             xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="SkiResort.XamarinApp.Pages.DiningPage"
+             x:Name="page"
+             Title="Dining">
+
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      
+      <Style x:Key="mainContainerStyle" TargetType="StackLayout">
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="Spacing" Value="0" />
+      </Style>
+
+      <Style x:Key="titleStyle" TargetType="StackLayout">
+        <Setter Property="BackgroundColor" Value="#1A90C9" />
+        <Setter Property="HeightRequest" Value="60" />
+        <Setter Property="Orientation" Value="Horizontal" />
+      </Style>
+
+      <Style x:Key="titleLabelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+      </Style>
+
+      <Style x:Key="listViewStyle" TargetType="ListView">
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="RowHeight" Value="90" />
+        <Setter Property="BackgroundColor" Value="#00000000" />
+      </Style>
+
+      <Style x:Key="loadingStackLayoutStyle" TargetType="StackLayout">
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+      </Style>
+      
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+  <ContentPage.Content>
+
+    <Grid>
+
+      <StackLayout Style="{StaticResource mainContainerStyle}">
+        <StackLayout BackgroundColor="#105D82" Padding="10" Orientation="Horizontal" Spacing="10">
+          <StackLayout Orientation="Horizontal" Spacing="0" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+            <Entry Text="{Binding SearchText, Mode=TwoWay}" Placeholder="Search..." TextColor="White" HorizontalOptions="FillAndExpand" BackgroundColor="#105D82" VerticalOptions="Center" />
+          </StackLayout>
+          <StackLayout Orientation="Horizontal" Spacing="0" VerticalOptions="Center">
+            <ffil:CachedImage Source="sort_amount_desc.png" Aspect="AspectFit" HeightRequest="17" WidthRequest="17" VerticalOptions="Center" />
+            <Picker Title="Sort by..." SelectedIndex="{Binding SelectedSortableOptionIndex, Mode=TwoWay}" WidthRequest="140" TextColor="White" BackgroundColor="#105D82" VerticalOptions="Center">
+              <Picker.Items>
+                <x:String>Rating</x:String>
+                <x:String>Level Noise</x:String>
+                <x:String>Price</x:String>
+                <x:String>Miles Away</x:String>
+                <x:String>Family Friendly</x:String>
+              </Picker.Items>
+            </Picker>
+          </StackLayout>
+
+
+        </StackLayout>
+        <ListView
+          x:Name="listView"
+          ItemsSource="{Binding FilteredRestaurants}"
+          CachingStrategy="RecycleElement"
+          behaviours:ItemTappedCommandListView.ItemTappedCommand="{Binding ItemSelectedCommand}"
+          Style="{StaticResource listViewStyle}">
+
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+
+                <views:DiningView Restaurant="{Binding}" />
+
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+
+        </ListView>
+      </StackLayout>
+
+      <StackLayout Style="{StaticResource loadingStackLayoutStyle}" IsVisible="{Binding Loading}">
+        <ActivityIndicator Color="Black" IsRunning="{Binding Loading}" />
+      </StackLayout>
+
+    </Grid>
+
+  </ContentPage.Content>
+  
+
+</ContentPage>

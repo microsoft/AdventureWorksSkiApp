@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SkiResort.XamarinApp.Pages.LiftStatusPage"
+             xmlns:converters="clr-namespace:SkiResort.XamarinApp.Converters;assembly=SkiResort.XamarinApp"
+             xmlns:behaviours="clr-namespace:SkiResort.XamarinApp.Behaviours;assembly=SkiResort.XamarinApp"
+             xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             Title="Lift Status">
+
+  <ContentPage.Resources>
+    <ResourceDictionary>
+
+      <converters:LiftRatingToImageSourceConverter x:Key="liftRatingToImageSourceConverter"></converters:LiftRatingToImageSourceConverter>
+      <converters:StayAwayToLiftNameColorConverter x:Key="stayAwayToLiftNameColorConverter"></converters:StayAwayToLiftNameColorConverter>
+      <converters:WaitingTimeToStringConverter x:Key="waitingTimeToStringConverter"></converters:WaitingTimeToStringConverter>
+
+      <Style x:Key="listViewStyle" TargetType="ListView">
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="IsGroupingEnabled" Value="True" />
+      </Style>
+
+      <Style x:Key="listItemContainerStyle" TargetType="StackLayout">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="VerticalOptions" Value="Center" />
+      </Style>
+
+      <Style x:Key="listItemImageStyle" TargetType="Image">
+        <Setter Property="WidthRequest" Value="10" />
+        <Setter Property="HeightRequest" Value="10" />
+        <Setter Property="Margin" Value="18,0,0,0" />
+      </Style>
+
+      <Style x:Key="loadingStackLayoutStyle" TargetType="StackLayout">
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+      </Style>
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  
+  <ContentPage.Content>
+
+    <Grid>
+
+      <ListView
+        x:Name="listView"
+        ItemsSource="{Binding LiftGroups}"
+        GroupDisplayBinding="{Binding Title}"
+        Style="{StaticResource listViewStyle}"
+        behaviours:ItemTappedCommandListView.ItemTappedCommand="{Binding ItemSelectedCommand}" >
+
+        <ListView.GroupHeaderTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <StackLayout
+                Orientation="Horizontal"
+                VerticalOptions="FillAndExpand"
+                Padding="5"
+                BackgroundColor="#1A90C9">
+                <ffil:CachedImage Source="{Binding IconPath}" Aspect="AspectFit" WidthRequest="20" HeightRequest="18" Margin="16,0,0,0" />
+                <Label Text="{Binding Title}" TextColor="White" VerticalOptions="Center" FontSize="17" />
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.GroupHeaderTemplate>
+        
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              
+              <StackLayout Style="{StaticResource listItemContainerStyle}">
+                <Image Style="{StaticResource listItemImageStyle}"
+                       Source="{Binding Rating, Converter={StaticResource liftRatingToImageSourceConverter}}" />
+                <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" TextColor="{Binding StayAway, Converter={StaticResource stayAwayToLiftNameColorConverter}}" />
+                <ffil:CachedImage Source="exclamation_triangle.png" Aspect="AspectFit" WidthRequest="14" HeightRequest="14" IsVisible="{Binding StayAway}" />
+                <Label Text="{Binding WaitingTime, Converter={StaticResource waitingTimeToStringConverter}}" FontSize="14" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" />
+                <ffil:CachedImage Source="marker_tiny.png" Aspect="AspectFit" WidthRequest="10" HeightRequest="10" Margin="3,0,18,0" />
+              </StackLayout>
+              
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+        
+      </ListView>
+
+      <StackLayout Style="{StaticResource loadingStackLayoutStyle}">
+        <ActivityIndicator Color="Black" IsRunning="{Binding Loading}" IsVisible="{Binding Loading}" />
+      </StackLayout>
+
+    </Grid>
+
+  </ContentPage.Content>
+</ContentPage>

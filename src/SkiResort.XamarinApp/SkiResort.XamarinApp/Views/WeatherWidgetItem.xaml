@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SkiResort.XamarinApp.Views.WeatherWidgetItem"
+             x:Name="control">
+  
+  <ContentView.Resources>
+    <ResourceDictionary>
+      
+      <Style x:Key="iconImageStyle" TargetType="Image">
+        <Setter Property="HeightRequest" Value="25" />
+        <Setter Property="WidthRequest">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="x:Double"
+                        iOS="18"
+                        Android="25" />
+          </Setter.Value>
+        </Setter>
+      </Style>
+      
+      <Style x:Key="labelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="#FFFFFF" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+      </Style>
+
+      <Style x:Key="titleLabelStyle" TargetType="Label" BasedOn="{StaticResource labelStyle}">
+        <Setter Property="FontSize">
+            <Setter.Value>
+              <OnPlatform x:TypeArguments="x:Double"
+                          iOS="8"
+                          Android="10" />
+            </Setter.Value>
+          </Setter>
+      </Style>
+      
+      <Style x:Key="valueLabelStyle" TargetType="Label" BasedOn="{StaticResource labelStyle}">
+        <Setter Property="FontSize">
+            <Setter.Value>
+              <OnPlatform x:TypeArguments="x:Double"
+                          iOS="9"
+                          Android="13" />
+            </Setter.Value>
+          </Setter>
+      </Style>
+    
+    </ResourceDictionary>
+  </ContentView.Resources>
+    
+  <ContentView.Content>
+
+    <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+      <Image Source="{Binding Icon, Source={x:Reference control}}" Style="{StaticResource iconImageStyle}" />
+      <StackLayout>
+        <Label Text="{Binding Title, Source={x:Reference control}}" Style="{StaticResource titleLabelStyle}" />
+        <Label Text="{Binding Value, Source={x:Reference control}}" Style="{StaticResource valueLabelStyle}" />
+      </StackLayout>
+    </StackLayout>
+
+  </ContentView.Content>
+</ContentView>

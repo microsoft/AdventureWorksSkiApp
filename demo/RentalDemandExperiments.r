@@ -1,6 +1,6 @@
 library(rpart.plot)
 
-serverData = RxSqlServerData(sqlQuery = "SELECT * FROM RentalFeatures ORDER BY Year, Month, Day", connectionString = "__RSQLCONNECTIONSTRING__")
+serverData = RxSqlServerData(sqlQuery = "SELECT * FROM RentalFeatures ORDER BY Year, Month, Day", connectionString = "__RSQLCONNECTIONSTRING__") 
 
 rentals = rxImport(serverData)
 

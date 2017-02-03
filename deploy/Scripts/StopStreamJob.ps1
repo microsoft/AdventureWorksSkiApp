@@ -10,7 +10,6 @@ $sasJobs = Find-AzureRmResource -ResourceGroupNameContains $resourceGroupName -R
 foreach ($sasJob in $sasJobs)
 {
     if ($sasJob.ResourceGroupName -eq $resourceGroupName) {
-		Write-Host $sasJob.ResourceName
         $null = Stop-AzureRmStreamAnalyticsJob -Name $sasJob.ResourceName -ResourceGroupName $resourceGroupName
     }
 }

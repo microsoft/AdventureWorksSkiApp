@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SkiResort.XamarinApp.Pages"
+             xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
+             xmlns:converters="clr-namespace:SkiResort.XamarinApp.Converters"
+             xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             x:Class="SkiResort.XamarinApp.Pages.HomePage"
+             Title="Adventure Works Ski Resort">
+
+  <ContentPage.Resources>
+    <ResourceDictionary>
+
+      <converters:UserToWelcomeMessageConverter x:Key="userToWelcomeMessageConverter"></converters:UserToWelcomeMessageConverter>
+      <converters:Base64ToImageSourceConverter x:Key="base64ToImageSourceConverter"></converters:Base64ToImageSourceConverter>
+
+      <Style x:Key="backgroundImageStyle" TargetType="ffil:CachedImage">
+        <Setter Property="Source" Value="home_background.jpg" />
+        <Setter Property="Aspect" Value="AspectFill" />
+        <Setter Property="DownsampleToViewSize" Value="true" />
+        <Setter Property="BackgroundColor" Value="#5f9ec1" />
+      </Style>
+
+      <Style x:Key="mainStackLayoutStyle" TargetType="StackLayout">
+        <Setter Property="Spacing" Value="0" />
+        <Setter Property="Padding" Value="0" />
+      </Style>
+
+      <Style x:Key="stackLayoutButtonContainerStyle" TargetType="StackLayout">
+        <Setter Property="Padding" Value="20" />
+      </Style>
+
+      <Style x:Key="loginButtonStyle" TargetType="Button">
+        <Setter Property="Text" Value="Login" />
+        <Setter Property="BackgroundColor" Value="#141414" />
+        <Setter Property="TextColor" Value="#FFFFFF" />
+      </Style>
+      
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Content>
+    <Grid>
+      <ffil:CachedImage Style="{StaticResource backgroundImageStyle}" />
+      <StackLayout Style="{StaticResource mainStackLayoutStyle}">
+        <StackLayout VerticalOptions="FillAndExpand">
+          <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" IsVisible="{Binding UserExists}">
+            <ffil:CachedImage Source="{Binding User.Photo, Converter={StaticResource base64ToImageSourceConverter}}" WidthRequest="200" HeightRequest="230" Aspect="AspectFit" DownsampleToViewSize="True">
+              <ffil:CachedImage.Transformations>
+                <fftransformations:CircleTransformation BorderSize="10" BorderHexColor="#FFFFFF" />
+              </ffil:CachedImage.Transformations>
+            </ffil:CachedImage>
+            <Label FormattedText="{Binding User, Converter={StaticResource userToWelcomeMessageConverter}}" TextColor="White" />
+          </StackLayout>
+        </StackLayout>
+        <StackLayout Style="{StaticResource stackLayoutButtonContainerStyle}" IsVisible="{Binding ShowLoginButton}">
+          <Button Style="{StaticResource loginButtonStyle}" Command="{Binding ClickLoginCommand}" />
+        </StackLayout>
+        <views:WeatherWidget />
+      </StackLayout>
+    </Grid>
+  </ContentPage.Content>
+
+</ContentPage>

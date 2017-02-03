@@ -7,11 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.Search;
 using Microsoft.Azure.Search.Models;
+using Recommendations;
 
 namespace gen_restaurantssearch
 {
     class Program
     {
+        private const string BaseUri = "https://westus.api.cognitive.microsoft.com/recommendations/v4.0";
+
         static void Main(string[] args)
         {
             bool clear = false;
@@ -20,8 +23,7 @@ namespace gen_restaurantssearch
                                                                  new SearchCredentials(ConfigurationManager.AppSettings["AzureSearchKey"]));
             SearchIndexClient indexClient = client.Indexes.GetClient("restaurant");
 
-            AzureMLRecommendations recos = new AzureMLRecommendations();
-            recos.Init(ConfigurationManager.AppSettings["RecoUser"], ConfigurationManager.AppSettings["RecoKey"]);
+            RecommendationsApiWrapper recos = new RecommendationsApiWrapper(ConfigurationManager.AppSettings["RecoKey"], BaseUri);
             string modelId = ConfigurationManager.AppSettings["RecoModelId"];
 
             List<IndexAction> actions = new List<IndexAction>();
@@ -30,8 +32,11 @@ namespace gen_restaurantssearch
                 List<string> recommendedIds = new List<string>();
                 if (!clear)
                 {
-                    var r = recos.GetRecommendation(modelId, new List<string> { id.ToString() }, 3);
-                    recommendedIds.AddRange(r.Select(i => i.Id));
+                    var r = recos.GetRecommendations(modelId, null, id.ToString(), 3);
+                    var ids = from info in r.RecommendedItemSetInfo
+                              from item in info.Items
+                              select item.Id;
+                    recommendedIds.AddRange(ids);
                 }
                 actions.Add(IndexAction.Merge(new Document { { "RestaurantId", id.ToString() }, { "RecommendedIds", recommendedIds } }));
             }
@@ -60,7 +65,7 @@ namespace gen_restaurantssearch
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT TOP 20 RestaurantId FROM Restaurant", con);
+                SqlCommand cmd = new SqlCommand("SELECT TOP 20 RestaurantId FROM Restaurants", con);
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())

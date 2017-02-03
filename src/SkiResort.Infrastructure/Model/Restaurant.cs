@@ -1,7 +1,6 @@
 ﻿using AdventureWorks.SkiResort.Infrastructure.Model.Enums;
+using Microsoft.Spatial;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace AdventureWorks.SkiResort.Infrastructure.Model
 {
@@ -34,5 +33,32 @@ namespace AdventureWorks.SkiResort.Infrastructure.Model
         public Noise LevelOfNoise { get; set; }
 
         public byte[] Photo { get; set; }
+
+        public Location Location
+        {
+            set
+            {
+                Latitude = value.coordinates[0];
+                Longitude = value.coordinates[1];
+            }
+        }
     }
+
+    public class Location
+    {
+        public string type { get; set; }
+        public List<double> coordinates { get; set; }
+        public Crs crs { get; set; }
+    }
+
+    public class Crs
+    {
+        public string type { get; set; }
+        public Properties properties { get; set; }
+    }
+    public class Properties
+    {
+        public string name { get; set; }
+    }
+
 }

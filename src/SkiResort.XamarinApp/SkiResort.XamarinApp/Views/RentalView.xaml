@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:SkiResort.XamarinApp.Converters;assembly=SkiResort.XamarinApp"
+             xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="SkiResort.XamarinApp.Views.RentalView"
+             x:Name="control">
+
+  <ContentView.Resources>
+    <ResourceDictionary>
+      
+      <converters:DoubleToCurrencyConverter x:Key="doubleToCurrency"></converters:DoubleToCurrencyConverter>
+      <converters:IntToRentalIdConverter x:Key="intToRentalId"></converters:IntToRentalIdConverter>
+      <converters:RentalToDateRangeConverter x:Key="rentalToDateRange"></converters:RentalToDateRangeConverter>
+      <converters:DateTimeToHourConverter x:Key="dateTimeToHour"></converters:DateTimeToHourConverter>
+      <converters:RentalToTypeAndLevelConverter x:Key="rentalToTypeAndLevel"></converters:RentalToTypeAndLevelConverter>
+      <converters:IntToInchesConverter x:Key="intToInches"></converters:IntToInchesConverter>
+
+      <Style x:Key="mainContainerStyle" TargetType="StackLayout">
+        <Setter Property="BackgroundColor" Value="White" />
+      </Style>
+
+      <Style x:Key="titleRowStyle" TargetType="StackLayout">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="Padding" Value="15,15,15,0" />
+      </Style>
+
+      <Style x:Key="titleIdStyle" TargetType="Label">
+        <Setter Property="VerticalOptions" Value="Center" />
+      </Style>
+
+      <Style x:Key="titlePriceStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="23" />
+        <Setter Property="TextColor" Value="#1780B3" />
+      </Style>
+
+      <Style x:Key="detailsRowStyle" TargetType="Grid">
+        <Setter Property="Padding" Value="15,15,15,0" />
+      </Style>
+
+      <Style x:Key="detailTitleStyle" TargetType="Label">
+        <Setter Property="FontAttributes" Value="Bold" />
+      </Style>
+
+      <Style x:Key="detailValueStyle" TargetType="Label">
+        <!--<Setter Property="LineBreakMode" Value="NoWrap" />-->
+      </Style>
+
+      <Style x:Key="sizesRowStyle" TargetType="Grid">
+        <Setter Property="Padding" Value="15" />
+      </Style>
+
+    </ResourceDictionary>
+  </ContentView.Resources>
+
+  <ContentView.Content>
+    <StackLayout Style="{StaticResource mainContainerStyle}">
+      
+      <StackLayout Style="{StaticResource titleRowStyle}">
+        <Label Style="{StaticResource titleIdStyle}"
+               Text="{Binding Rental.RentalId, Source={x:Reference control}, Converter={StaticResource intToRentalId}}"  />
+        <Label Style="{StaticResource titlePriceStyle}"
+               Text="{Binding Rental.TotalCost, Source={x:Reference control}, Converter={StaticResource doubleToCurrency}}"  />
+      </StackLayout>
+      
+      <Grid Style="{StaticResource detailsRowStyle}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackLayout Grid.Column="0">
+          <Label Style="{StaticResource detailTitleStyle}" Text="Dates" />
+          <Label Style="{StaticResource detailValueStyle}" Text="{Binding Rental, Source={x:Reference control}, Converter={StaticResource rentalToDateRange}}" />
+        </StackLayout>
+        <StackLayout Grid.Column="1">
+          <Label Style="{StaticResource detailTitleStyle}" Text="Pick up at"  />
+          <Label Style="{StaticResource detailValueStyle}" Text="{Binding Rental.StartDate, Source={x:Reference control}, Converter={StaticResource dateTimeToHour}}" />
+        </StackLayout>
+        <StackLayout Grid.Column="2">
+          <Label Style="{StaticResource detailTitleStyle}" Text="Type / Level" />
+          <Label Style="{StaticResource detailValueStyle}" Text="{Binding Rental, Source={x:Reference control}, Converter={StaticResource rentalToTypeAndLevel}}" />
+        </StackLayout>
+      </Grid>
+      
+      <Grid Style="{StaticResource sizesRowStyle}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackLayout Orientation="Horizontal" Grid.Column="0">
+          <ffil:CachedImage Source="shoe.png" WidthRequest="30" HeightRequest="30" DownsampleToViewSize="true" />
+          <StackLayout>
+            <Label Text="Shoe Size" Style="{StaticResource detailTitleStyle}" />
+            <Label Text="{Binding Rental.ShoeSize, Source={x:Reference control}}" />
+          </StackLayout>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" Grid.Column="1">
+          <ffil:CachedImage Source="skies.png" WidthRequest="30" HeightRequest="30" DownsampleToViewSize="true" />
+          <StackLayout>
+            <Label Text="Ski Size" Style="{StaticResource detailTitleStyle}" />
+            <Label Text="{Binding Rental.SkiSize, Source={x:Reference control}, Converter={StaticResource intToInches}}" />
+          </StackLayout>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" Grid.Column="2">
+          <ffil:CachedImage Source="poles.png" WidthRequest="30" HeightRequest="30" DownsampleToViewSize="true" />
+          <StackLayout>
+            <Label Text="Poles" Style="{StaticResource detailTitleStyle}" />
+            <Label Text="{Binding Rental.PoleSize, Source={x:Reference control}, Converter={StaticResource intToInches}}" />
+          </StackLayout>
+        </StackLayout>
+      </Grid>
+      
+    </StackLayout>
+  </ContentView.Content>
+</ContentView>

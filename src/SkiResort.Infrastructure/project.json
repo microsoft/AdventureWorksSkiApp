@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "description": "Adventure Works Ski Resort",
   "authors": [ "Microsoft" ],
@@ -13,7 +13,8 @@
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0",
     "Microsoft.AspNetCore.Http.Extensions": "1.0.0",
     "WindowsAzure.Storage": "7.0.2-preview",
-    "Microsoft.Extensions.PlatformAbstractions": "1.0.0"
+    "Microsoft.Extensions.PlatformAbstractions": "1.0.0",
+    "Microsoft.Spatial": "6.13.0"
   },
 
   "frameworks": {

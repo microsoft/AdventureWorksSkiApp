@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SkiResort.XamarinApp.Views"
+             x:Class="SkiResort.XamarinApp.Views.WeatherWidget">
+  <ContentView.Resources>
+    <ResourceDictionary>
+
+      <Style x:Key="gridStyle" TargetType="Grid">
+        <Setter Property="BackgroundColor" Value="#CC000000" />
+      </Style>
+      
+    </ResourceDictionary>
+  </ContentView.Resources>
+  <ContentView.Content>
+
+    <Grid Padding="7" Style="{StaticResource gridStyle}">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <local:WeatherWidgetItem Icon="weatherWidget_snow.png" Title="Weather Now" Value="{Binding Weather}" Grid.Column="0" Opacity="{Binding ItemsOpacity}" />
+      <local:WeatherWidgetItem Icon="weatherWidget_temp.png" Title="Temperature" Value="{Binding Temperature}" Grid.Column="1" Opacity="{Binding ItemsOpacity}" />
+      <local:WeatherWidgetItem Icon="weatherWidget_wind.png" Title="Wind" Value="{Binding Wind}" Grid.Column="2" Opacity="{Binding ItemsOpacity}" />
+      <local:WeatherWidgetItem Icon="weatherWidget_base.png" Title="Base Depth" Value="{Binding BaseDepth}" Grid.Column="3" Opacity="{Binding ItemsOpacity}" />
+      <ActivityIndicator Color="White" IsRunning="{Binding Loading}" Grid.ColumnSpan="4" />
+    </Grid>
+    
+  </ContentView.Content>
+</ContentView>

@@ -94,13 +94,29 @@
       "type": "int",
       "defaultValue": 1
     },
-    "dataMarketKey": {
+    "billingPlanTier": {
       "type": "string",
-      "minLength": 1
+      "defaultValue": "DevTest",
+      "allowedValues": [
+        "DevTest",
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "metadata": {
+        "description": "Billing plan for AzureML Web Services.  Note that you are only allowed one DevTest plan per Azure subscription."
+      }
     },
-    "dataMarketUser": {
+    "cognetivesku": {
       "type": "string",
-      "minLength": 1
+      "defaultValue": "F0",
+      "allowedValues": [
+        "F0",
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
     }
   },
   "variables": {
@@ -147,9 +163,46 @@
     "hostingPlanName": "[concat('hostingplan', uniqueString(resourceGroup().id))]",
     "sqlserverName": "[concat('sql', uniqueString(resourceGroup().id))]",
     "dscLocation": "https://adventureworksartifacts.blob.core.windows.net/artifacts/ConfigureSQL.zip",
-    "PowershellExtensionConfigurationFunction": "ConfigureSQL.ps1\\ConfigureSQL"
+    "PowershellExtensionConfigurationFunction": "ConfigureSQL.ps1\\ConfigureSQL",
+    "documentDBAccount_name": "[concat('db', uniqueString(resourceGroup().id))]",
+    "documentDBOfferType": "Standard",
+
+    "uniqueNamePrefix": "[uniqueString(resourceGroup().id)]",
+    "stgVersion": "2015-06-15",
+    "storageAccountName": "[concat('sml', uniqueString(resourceGroup().id))]",
+    "storageAccountNameToLower": "[toLower(variables('storageAccountName'))]",
+    "storageAccountType": "Standard_LRS",
+    "mlWebSvcWebJobName": "AzureMlWebSvc",
+    "mlWsApiVersion": "2016-05-01-preview",
+    "planName": "[concat('mlplan', uniqueString(resourceGroup().id))]",
+    "planSkuTier": "Standard",
+    "mlWebServiceName": "[concat(variables('uniqueNamePrefix'),'scoremlwebsvc')]",
+    "mlWebserviceTitle": "[concat(variables('uniqueNamePrefix'),'scoremlwebsvc')]",
+    "webserviceDescription": "Anomaly Detection Machine Learning Service",
+    "mlSeasonalityWebServiceName": "[concat(variables('uniqueNamePrefix'),'seasonalitymlwebsvc')]",
+    "mlSeasonalityWebServiceTitle": "[concat(variables('uniqueNamePrefix'),'seasonalitymlwebsvc')]",
+    "seasonalityWebserviceDescription": "Anomaly Detection with Seasonality Machine Learning Service",
+    "mlLocation": "eastus2",
+    "cognetivename": "[concat('cognetive', uniqueString(resourceGroup().id))]",
+    "cognetivelocation": "westus",
+    "cognetiveapiType": "Recommendations",
+    "powerbiname": "[concat('powerbi', uniqueString(resourceGroup().id))]"
+
   },
   "resources": [
+    {
+      "apiVersion": "2015-04-08",
+      "type": "Microsoft.DocumentDB/databaseAccounts",
+      "name": "[variables('documentDBAccount_name')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "DocumentDB"
+      },
+      "properties": {
+        "name": "[variables('documentDBAccount_name')]",
+        "databaseAccountOfferType": "[variables('documentDBOfferType')]"
+      }
+    },
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageAccount_name')]",
@@ -230,7 +283,7 @@
           }
         ],
         "dnsSettings": {
-          "dnsServers": [ ]
+          "dnsServers": []
         },
         "enableIPForwarding": false
       }
@@ -285,7 +338,8 @@
         "[resourceId('Microsoft.Storage/storageAccounts',variables('storageAccount_name'))]",
         "[concat('Microsoft.Web/sites/', variables('webApp_name'))]",
         "[concat('Microsoft.Compute/virtualMachines/', variables('virtualMachine_Name'))]",
-        "[concat('Microsoft.EventHub/namespaces/', variables('eventHub_serviceBusNamespace'))]"
+        "[concat('Microsoft.EventHub/namespaces/', variables('eventHub_serviceBusNamespace'))]",
+        "[concat('Microsoft.DocumentDB/databaseAccounts/', variables('documentDBAccount_name'))]"
       ],
       "tags": {
         "displayName": "Stream Analytics"
@@ -294,9 +348,6 @@
         "sku": {
           "name": "[parameters('skuCapacityStreamAnalytics')]"
         },
-        "outputStartMode": "JobStartTime",
-        "eventsOutOfOrderPolicy": "Adjust",
-        "eventsOutOfOrderMaxDelayInSeconds": 0,
         "inputs": [
           {
             "name": "locationevents",
@@ -407,13 +458,12 @@
             "type": "Microsoft.StreamAnalytics/streamingjobs/outputs",
             "properties": {
               "datasource": {
-                "type": "Microsoft.Storage/Table",
+                "type": "Microsoft.Storage/DocumentDB",
                 "properties": {
-                  "table": "liftlines",
-                  "partitionKey": "Name",
-                  "rowKey": "Name",
-                  "AccountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_name')), '2015-06-15').key1]",
-                  "AccountName": "[variables('storageAccount_name')]"
+                  "accountId": "[variables('documentDBAccount_name')]",
+                  "accountKey": "[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', variables('documentDBAccount_name')), '2015-04-08').primaryMasterKey]",
+                  "database": "skiresortliftlines",
+                  "collectionNamePattern": "liftlines"
                 }
               }
             }
@@ -423,13 +473,12 @@
             "type": "Microsoft.StreamAnalytics/streamingjobs/outputs",
             "properties": {
               "datasource": {
-                "type": "Microsoft.Storage/Table",
+                "type": "Microsoft.Storage/DocumentDB",
                 "properties": {
-                  "table": "liftlinesarchive",
-                  "partitionKey": "pkey",
-                  "rowKey": "rkey",
-                  "AccountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccount_name')), '2015-06-15').key1]",
-                  "AccountName": "[variables('storageAccount_name')]"
+                  "accountId": "[variables('documentDBAccount_name')]",
+                  "accountKey": "[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', variables('documentDBAccount_name')), '2015-04-08').primaryMasterKey]",
+                  "database": "skiresortliftlinesarchive",
+                  "collectionNamePattern": "liftlinesarchive"
                 }
               }
             }
@@ -457,7 +506,7 @@
       "apiVersion": "2014-04-01",
       "name": "[variables('webApp_name')]",
       "type": "Microsoft.Insights/components",
-      "location": "Central US",
+      "location": "East US",
       "dependsOn": [
         "[concat('Microsoft.Web/sites/', variables('webApp_name'))]"
       ],
@@ -572,7 +621,8 @@
             "DefaultUsername": "[parameters('webUsername')]",
             "DefaultFullName": "[parameters('webUserFullName')]",
             "DefaultPassword": "[parameters('webPassword')]",
-            "Data:AnomalyDetection:Key": "[parameters('dataMarketKey')]",
+            "AnomalyDetection:Key": "your_anomaly_detection_key",
+            "AnomalyDetection:RequestUri": "http://your_anomaly_detection_uri",
             "Security:Authority": "[concat('http://', variables('webAdvancedApp_name'), '.azurewebsites.net/')]",
             "Security:Audience": "[concat('http://', variables('webAdvancedApp_name'), '.azurewebsites.net/')]"
           }
@@ -676,7 +726,7 @@
 
               }
             },
-            "protectedSettings": { }
+            "protectedSettings": {}
           }
         }
       ]
@@ -686,7 +736,7 @@
       "type": "Microsoft.Sql/servers",
       "location": "[resourceGroup().location]",
       "apiVersion": "2014-04-01-preview",
-      "dependsOn": [ ],
+      "dependsOn": [],
       "tags": {
         "displayName": "sqlserver"
       },
@@ -709,6 +759,590 @@
           }
         }
       ]
+    },
+    {
+      "name": "[variables('storageAccountNameToLower')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "[variables('mlLocation')]",
+      "tags": {
+        "displayName": "azuremlstorage"
+      },
+      "apiVersion": "[variables('stgVersion')]",
+      "dependsOn": [],
+      "properties": {
+        "accountType": "[variables('storageAccountType')]"
+      }
+    },
+    {
+      "apiVersion": "[variables('mlWsApiVersion')]",
+      "name": "[variables('planName')]",
+      "type": "Microsoft.MachineLearning/CommitmentPlans",
+      "tags": {
+        "displayName": "azuremlplan"
+      },
+      "location": "[variables('mlLocation')]",
+      "sku": {
+        "name": "[parameters('billingPlanTier')]",
+        "tier": "[variables('planSkuTier')]",
+        "capacity": "1"
+      },
+      "properties": {}
+    },
+    {
+      "apiVersion": "[variables('mlWsApiVersion')]",
+      "name": "[variables('mlWebServiceName')]",
+      "type": "Microsoft.MachineLearning/webservices",
+      "tags": {
+        "displayName": "azuremlscorewebservice"
+      },
+      "location": "[variables('mlLocation')]",
+      "dependsOn": [
+        "[concat('Microsoft.MachineLearning/CommitmentPlans/', variables('planName'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountNameToLower'))]"
+      ],
+      "properties": {
+        "title": "[variables('mlWebserviceTitle')]",
+        "description": "[variables('webserviceDescription')]",
+        "commitmentPlan": {
+          "id": "[resourceId('Microsoft.MachineLearning/CommitmentPlans', variables('planName'))]"
+        },
+        "StorageAccount": {
+          "name": "[variables('storageAccountNameToLower')]",
+          "key": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountNameToLower')), '2015-06-15').key1]"
+        },
+        "MachineLearningWorkspace": {
+          "Id": "3a4a8c0191ee462fa185189f3ecd1799"
+        },
+        "Assets": {
+          "asset1": {
+            "Name": "Tail Join",
+            "Type": "Module",
+            "LocationInfo": {
+              "Uri": "https://adcustommodules.blob.core.windows.net/custommodules/TailJoin.zip",
+              "Credentials": ""
+            },
+            "InputPorts": {
+              "data_in1": {
+                "Type": "Dataset"
+              },
+              "data_in2": {
+                "Type": "Dataset"
+              },
+              "data_in3": {
+                "Type": "Dataset"
+              },
+              "data_in4": {
+                "Type": "Dataset"
+              },
+              "data_in5": {
+                "Type": "Dataset"
+              }
+            },
+            "OutputPorts": {
+              "data_out": {
+                "Type": "Dataset"
+              }
+            },
+            "Id": "3a4a8c0191ee462fa185189f3ecd1799.80d70f92a27f424b88b3e62df9acfbfb.v1-default-140",
+            "Parameters": [
+              {
+                "Name": "col",
+                "ParameterType": "ColumnPicker"
+              },
+              {
+                "Name": "tailRows",
+                "ParameterType": "Int"
+              }
+            ],
+            "Metadata": {
+              "UseDrawBridge": null,
+              "runTimeVersionId": "6.0",
+              "InterfaceString": "/dll \"e331813e47604557aae324c8939c4985, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;Microsoft.Analytics.Modules.Custom._80d70f92a27f424b88b3e62df9acfbfb.Dll.CustomModule;Run\" /Output0 {out:Dataset:data_out} /data_in1 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in1} /data_in2 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in2} [ /data_in3 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in3} ] [ /data_in4 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in4} ] [ /data_in5 {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data_in5} ] /col \"(col:columnpicker,data_in1,False,All,None)\" /tailRows \"(tailRows:int,0,10000:default,0)\" ",
+              "Description": "Join AD datasets by a column, and return all or user specified number of rows",
+              "hostVersionId": "3.1.0",
+              "host": "R",
+              "FamilyId": "80d70f92a27f424b88b3e62df9acfbfb"
+            },
+            "BlobUri": "https://adcustommodules.blob.core.windows.net/custommodules/TailJoin.zip"
+          },
+          "asset2": {
+            "Name": "Select Columns in Dataset",
+            "Type": "Module",
+            "LocationInfo": {
+              "Uri": "aml://module/506153734175476c4f62416c57734963.1ec722fab6234e26a44ea50c6d726223.v1-default-1730",
+              "Credentials": ""
+            }
+          },
+          "asset3": {
+            "Name": "SpikeDetector",
+            "Type": "Module",
+            "LocationInfo": {
+              "Uri": "https://adcustommodules.blob.core.windows.net/custommodules/SpikeDetector.zip",
+              "Credentials": ""
+            },
+            "InputPorts": {
+              "data": {
+                "Type": "Dataset"
+              }
+            },
+            "OutputPorts": {
+              "spikesORdips": {
+                "Type": "Dataset"
+              }
+            },
+            "Id": "3a4a8c0191ee462fa185189f3ecd1799.3370ffac732040ed9c366f3094d85fa1.v1-default-162",
+            "Parameters": [
+              {
+                "Name": "Data column",
+                "ParameterType": "ColumnPicker"
+              },
+              {
+                "Name": "Tukey Threshold",
+                "ParameterType": "Double"
+              },
+              {
+                "Name": "Zscore Threshold",
+                "ParameterType": "Double"
+              },
+              {
+                "Name": "Detect Spike or Dip",
+                "ParameterType": "Enumerated",
+                "ModeValuesInfo": {
+                  "Spikes": {
+                    "InterfaceString": "",
+                    "Parameters": []
+                  },
+                  "Dips": {
+                    "InterfaceString": "",
+                    "Parameters": []
+                  },
+                  "Both": {
+                    "InterfaceString": "",
+                    "Parameters": []
+                  }
+                }
+              }
+            ],
+            "Metadata": {
+              "UseDrawBridge": null,
+              "runTimeVersionId": "6.0",
+              "InterfaceString": "/dll \"SpikeDetector, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;AnomalyDetection.AnomalyDetectionModules;SpikeDetector\" /Output0 {out:Dataset:spikesORdips} /dataTable {in:Dataset|DataTableDotNet|GenericCSV|GenericCSVNoHeader|ARFF|GenericTSV|GenericTSVNoHeader:data} /dataCol \"(Data column:columnpicker,data,True,All,)\" /tukeyThresh \"(Tukey Threshold:double,1,20:default,3)\" /zscoreThresh \"(Zscore Threshold:double,1,20:default,3)\" /spikeOrDip \"(Detect Spike or Dip:enum,Spikes,Dips,Both:default,Both)\" ",
+              "Description": "Detect the spikes or dips in incoming dataset",
+              "hostVersionId": "4.5.0",
+              "host": "DotNet",
+              "FamilyId": "3370ffac732040ed9c366f3094d85fa1"
+            },
+            "BlobUri": "https://adcustommodules.blob.core.windows.net/custommodules/SpikeDetector.zip"
+          },
+          "asset4": {
+            "Name": "Edit Metadata",
+            "Type": "Module",
+            "LocationInfo": {
+              "Uri": "aml://module/506153734175476c4f62416c57734963.370b6676c11c486fbf7335349f842a66.v1-default-1742",
+              "Credentials": ""
+            }
+          },
+          "asset5": {
+            "Name": "test.csv",
+            "Type": "Resource",
+            "LocationInfo": {
+              "Uri": "https://adcustommodules.blob.core.windows.net/custommodules/data.csv",
+              "Credentials": ""
+            },
+            "OutputPorts": {
+              "Results dataset": {
+                "Type": "Dataset"
+              }
+            }
+          },
+          "asset6": {
+            "Name": "Time Series Anomaly Detection",
+            "Type": "Module",
+            "LocationInfo": {
+              "Uri": "aml://module/506153734175476c4f62416c57734963.96b98cc050df46ffbc18c0665d69f3e3.v1-default-1743",
+              "Credentials": ""
+            }
+          }
+        },
+        "Parameters": {
+          "postprocess.tailRows": "0",
+          "tspikedetector.sensitivity": "3",
+          "zspikedetector.sensitivity": "3",
+          "detectors.historywindow": "500",
+          "bileveldetector.sensitivity": "3.25",
+          "trenddetector.sensitivity": "3.25",
+          "detectors.spikesdips": "Both"
+        },
+        "Input": {
+          "Title": "",
+          "Description": "",
+          "Type": "object",
+          "Properties": {
+            "input1": {
+              "Title": "",
+              "Description": "",
+              "Type": "object",
+              "Properties": {
+                "Time": {
+                  "Type": "String",
+                  "Format": "Date-time",
+                  "x-ms-isnullable": false
+                },
+                "Data": {
+                  "Type": "Number",
+                  "Format": "Double",
+                  "x-ms-isnullable": false
+                }
+              }
+            }
+          }
+        },
+        "Output": {
+          "Title": "",
+          "Description": "",
+          "Type": "object",
+          "Properties": {
+            "output1": {
+              "Title": "",
+              "Description": "",
+              "Type": "object",
+              "Properties": {
+                "Time": {
+                  "Type": "String",
+                  "Format": "Date-time",
+                  "x-ms-isnullable": false
+                },
+                "Data": {
+                  "Type": "Number",
+                  "Format": "Double",
+                  "x-ms-isnullable": false
+                },
+                "TSpike": {
+                  "Type": "Number",
+                  "Format": "Double",
+                  "x-ms-isnullable": false
+                },
+                "ZSpike": {
+                  "Type": "Number",
+                  "Format": "Double",
+                  "x-ms-isnullable": false
+                },
+                "rpscore": {
+                  "Type": "Number",
+                  "Format": "Double",
+                  "x-ms-isnullable": false
+                },
+                "rpalert": {
+                  "Type": "Integer",
+                  "Format": "Int32",
+                  "x-ms-isnullable": false
+                },
+                "tscore": {
+                  "Type": "Number",
+                  "Format": "Double",
+                  "x-ms-isnullable": false
+                },
+                "talert": {
+                  "Type": "Integer",
+                  "Format": "Int32",
+                  "x-ms-isnullable": false
+                }
+              }
+            }
+          }
+        },
+        "packageType": "Graph",
+        "Package": {
+          "Nodes": {
+            "node1": {
+              "AssetId": "asset1",
+              "Parameters": {
+                "col": "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
+                "tailRows": "0"
+              }
+            },
+            "node2": {
+              "AssetId": "asset2",
+              "Parameters": {
+                "Select Columns": "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%2C%22Data.x%22%2C%22TSpike%22%2C%22ZSpike%22%2C%22Anomaly.score.x%22%2C%22Alert.indicator.x%22%2C%22Anomaly.score.y%22%2C%22Alert.indicator.y%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D"
+              }
+            },
+            "node3": {
+              "AssetId": "asset3",
+              "Parameters": {
+                "Data column": "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                "Tukey Threshold": "5",
+                "Zscore Threshold": "5",
+                "Detect Spike or Dip": "Both"
+              }
+            },
+            "node4": {
+              "AssetId": "asset4",
+              "Parameters": {
+                "Column": "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                "Data Type": "DateTime",
+                "Categorical": "Unchanged",
+                "Fields": "Unchanged"
+              }
+            },
+            "node5": {
+              "AssetId": "asset4",
+              "Parameters": {
+                "Column": "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data.x%22%2C%22Anomaly.score.x%22%2C%22Alert.indicator.x%22%2C%22Anomaly.score.y%22%2C%22Alert.indicator.y%22%5D%2C%22exclude%22%3Afalse%7D%5D%2C%22ui%22%3A%7B%22withRules%22%3Atrue%7D%7D",
+                "Data Type": "Unchanged",
+                "Categorical": "Unchanged",
+                "Fields": "Unchanged",
+                "New Column Name": "Data, rpscore, rpalert, tscore, talert"
+              }
+            },
+            "node6": {
+              "AssetId": "asset6",
+              "Parameters": {
+                "Data Column": "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                "Time Column": "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                "Martingale Type": "PowerAvg",
+                "Strangeness Function Type": "RangePercentile",
+                "Length of Martingale History": "500",
+                "Length of Strangeness Value History": "500",
+                "Alert Threshold": "3.25"
+              }
+            },
+            "node7": {
+              "AssetId": "asset6",
+              "Parameters": {
+                "Data Column": "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Data%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                "Time Column": "%7B%22isFilter%22%3Atrue%2C%22rules%22%3A%5B%7B%22ruleType%22%3A%22ColumnNames%22%2C%22columns%22%3A%5B%22Time%22%5D%2C%22exclude%22%3Afalse%7D%5D%7D",
+                "Martingale Type": "PowerAvg",
+                "Strangeness Function Type": "SlowPosTrend",
+                "Length of Martingale History": "500",
+                "Length of Strangeness Value History": "500",
+                "Alert Threshold": "3.25"
+              }
+            },
+            "node8": {
+              "AssetId": "asset5"
+            },
+            "node9": {
+              "InputId": "input1"
+            },
+            "node10": {
+              "OutputId": "output1"
+            }
+          },
+          "Edges": [
+            {
+              "SourceNodeId": "node1",
+              "SourcePortId": "data_out",
+              "TargetNodeId": "node2",
+              "TargetPortId": "Dataset"
+            },
+            {
+              "SourceNodeId": "node2",
+              "SourcePortId": "Results dataset",
+              "TargetNodeId": "node5",
+              "TargetPortId": "Dataset"
+            },
+            {
+              "SourceNodeId": "node3",
+              "SourcePortId": "spikesORdips",
+              "TargetNodeId": "node1",
+              "TargetPortId": "data_in1"
+            },
+            {
+              "SourceNodeId": "node4",
+              "SourcePortId": "Results dataset",
+              "TargetNodeId": "node3",
+              "TargetPortId": "data"
+            },
+            {
+              "SourceNodeId": "node4",
+              "SourcePortId": "Results dataset",
+              "TargetNodeId": "node6",
+              "TargetPortId": "Dataset"
+            },
+            {
+              "SourceNodeId": "node4",
+              "SourcePortId": "Results dataset",
+              "TargetNodeId": "node7",
+              "TargetPortId": "Dataset"
+            },
+            {
+              "SourceNodeId": "node6",
+              "SourcePortId": "Results dataset",
+              "TargetNodeId": "node1",
+              "TargetPortId": "data_in2"
+            },
+            {
+              "SourceNodeId": "node7",
+              "SourcePortId": "Results dataset",
+              "TargetNodeId": "node1",
+              "TargetPortId": "data_in3"
+            },
+            {
+              "SourceNodeId": "node8",
+              "SourcePortId": "Results dataset",
+              "TargetNodeId": "node4",
+              "TargetPortId": "Dataset"
+            },
+            {
+              "SourceNodeId": "node9",
+              "TargetNodeId": "node4",
+              "TargetPortId": "Dataset"
+            },
+            {
+              "SourceNodeId": "node5",
+              "SourcePortId": "Results dataset",
+              "TargetNodeId": "node10"
+            }
+          ],
+          "GraphParameters": {
+            "postprocess.tailRows": {
+              "Type": "Int",
+              "Description": "postprocess.tailRows",
+              "Links": [
+                {
+                  "NodeId": "node1",
+                  "ParameterKey": "tailRows"
+                }
+              ]
+            },
+            "tspikedetector.sensitivity": {
+              "Type": "Double",
+              "Description": "tspikedetector.sensitivity",
+              "Links": [
+                {
+                  "NodeId": "node3",
+                  "ParameterKey": "Tukey Threshold"
+                }
+              ]
+            },
+            "zspikedetector.sensitivity": {
+              "Type": "Double",
+              "Description": "zspikedetector.sensitivity",
+              "Links": [
+                {
+                  "NodeId": "node3",
+                  "ParameterKey": "Zscore Threshold"
+                }
+              ]
+            },
+            "detectors.historywindow": {
+              "Type": "Int",
+              "Description": "detectors.historywindow",
+              "Links": [
+                {
+                  "NodeId": "node6",
+                  "ParameterKey": "Length of Martingale History"
+                },
+                {
+                  "NodeId": "node6",
+                  "ParameterKey": "Length of Strangeness Value History"
+                },
+                {
+                  "NodeId": "node7",
+                  "ParameterKey": "Length of Martingale History"
+                },
+                {
+                  "NodeId": "node7",
+                  "ParameterKey": "Length of Strangeness Value History"
+                }
+              ]
+            },
+            "bileveldetector.sensitivity": {
+              "Type": "Double",
+              "Description": "bileveldetector.sensitivity",
+              "Links": [
+                {
+                  "NodeId": "node6",
+                  "ParameterKey": "Alert Threshold"
+                }
+              ]
+            },
+            "trenddetector.sensitivity": {
+              "Type": "Double",
+              "Description": "trenddetector.sensitivity",
+              "Links": [
+                {
+                  "NodeId": "node7",
+                  "ParameterKey": "Alert Threshold"
+                }
+              ]
+            },
+            "detectors.spikesdips": {
+              "Type": "Enumerated",
+              "Description": "detectors.spikesdips",
+              "Links": [
+                {
+                  "NodeId": "node3",
+                  "ParameterKey": "Detect Spike or Dip"
+                }
+              ]
+            }
+          }
+        },
+        "ExampleRequest": {
+          "Inputs": {
+            "input1": [
+              [
+                "2014-06-18T02:00:00Z",
+                4600
+              ],
+              [
+                "2014-06-18T03:00:00Z",
+                8265
+              ],
+              [
+                "2014-06-18T04:00:00Z",
+                8265
+              ],
+              [
+                "2014-06-18T05:00:00Z",
+                8265
+              ],
+              [
+                "2014-06-18T06:00:00Z",
+                8265
+              ]
+            ]
+          },
+          "GlobalParameters": {
+            "postprocess.tailRows": 0,
+            "tspikedetector.sensitivity": 5,
+            "zspikedetector.sensitivity": 5,
+            "detectors.spikesdips": "Both",
+            "detectors.historywindow": 500,
+            "bileveldetector.sensitivity": 3.25,
+            "trenddetector.sensitivity": 3.25
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-02-01-preview",
+      "name": "[variables('cognetivename')]",
+      "location": "[variables('cognetivelocation')]",
+      "type": "Microsoft.CognitiveServices/accounts",
+      "tags": {
+        "displayName": "cognetiveservice"
+      },
+      "kind": "[variables('cognetiveapiType')]",
+      "sku": {
+        "name": "[parameters('cognetivesku')]"
+      },
+      "properties": {}
+    },
+    {
+      "apiVersion": "2016-01-29",
+      "name": "[variables('powerbiname')]",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "displayName": "PowerBI"
+      },
+      "sku": {
+        "name": "S1",
+        "tier": "Standard"
+      },
+      "type": "Microsoft.PowerBI/workspaceCollections"
     }
   ],
   "outputs": {
@@ -780,13 +1414,29 @@
       "type": "string",
       "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', variables('azureSearch_name')), '2015-02-28').primaryKey]"
     },
-    "dataMarketKey": {
+    "documentDBAccount": {
       "type": "string",
-      "value": "[parameters('dataMarketKey')]"
+      "value": "[variables('documentDBAccount_name')]"
     },
-    "dataMarketUser": {
+    "documentDBEndpoint": {
       "type": "string",
-      "value": "[parameters('dataMarketUser')]"
+      "value": "[reference(concat('Microsoft.DocumentDb/databaseAccounts/', variables('documentDBAccount_name'))).documentEndpoint]"
+    },
+    "documentDBKey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', variables('documentDBAccount_name')), '2015-04-08').primaryMasterKey]"
+    },
+    "recommendationsKey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts/', variables('cognetivename')), '2016-02-01-preview').key1]"
+    },
+    "powerbikey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.PowerBI/workspaceCollections/', variables('powerbiname')), '2016-01-29').key1]"
+    },
+    "powerbiname": {
+      "type": "string",
+      "value": "[variables('powerbiname')]"
     }
   }
 }

@@ -23,14 +23,14 @@
     "sqlserverAdminLoginPassword": {
       "value": "P2ssw0rd@1"
     },
-    "dataMarketKey": {
-      "value": ""
-    },
-    "dataMarketUser": {
-      "value": ""
-    },
     "skuCapacityAzureSearch": {
       "value": "free"
+    },
+    "billingPlanTier": {
+      "value": "DevTest"
+    },
+    "cognetivesku": {
+      "value": "F0"
     }
   }
 }

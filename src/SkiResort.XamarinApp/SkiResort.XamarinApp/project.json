@@ -1,0 +1,15 @@
+﻿{
+  "supports": {},
+  "dependencies": {
+    "NETStandard.Library": "1.6.0",
+    "Newtonsoft.Json": "9.0.1",
+    "Xamarin.FFImageLoading.Forms": "2.2.7",
+    "Xamarin.FFImageLoading.Transformations": "2.2.8",
+    "Xamarin.Forms": "2.3.3.180"
+  },
+  "frameworks": {
+    "netstandard1.4": {
+      "imports": "portable-win+net45+wp8+win81+wpa8"
+    }
+  }
+}

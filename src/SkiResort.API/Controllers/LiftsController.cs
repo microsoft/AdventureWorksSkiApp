@@ -7,6 +7,8 @@ using AdventureWorks.SkiResort.Infrastructure.Model;
 using AdventureWorks.SkiResort.Infrastructure.Model.Enums;
 using AdventureWorks.SkiResort.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using AdventureWorks.SkiResort.Infrastructure.DocumentDB.Repositories;
+using SkiResort.Infrastructure.DocumentDB.Model;
 
 namespace AdventureWorks.SkiResort.API.Controllers
 {
@@ -33,28 +35,33 @@ namespace AdventureWorks.SkiResort.API.Controllers
         public async Task<IEnumerable<Lift>> GetNearByAsync(double latitude, double longitude)
         {
             var lifts = await _liftsRepository.GetNearByAsync(latitude, longitude);
-            var liftCounts = await _liftLinesRepository.LiftSkiersWaitingAsync();
-            var liftHistory = await _liftLinesRepository.LiftWaitHistoryAsync(TimeSpan.FromMinutes(30));
+            var liftCounts = await _liftLinesRepository.GetLiftSkiersWaitingAsync();
+            var liftHistory = await _liftLinesRepository.GetLiftWaitHistoryWaitingAsync(TimeSpan.FromMinutes(30));
 
-            foreach (var lift in lifts)
+            if (liftCounts != null && liftHistory != null)
             {
-                lift.WaitingTime = GetWaitingTime(liftCounts, lift);
+                foreach (var lift in lifts)
+                {
+                    lift.WaitingTime = GetWaitingTime(liftCounts, lift);
 
-                var history = liftHistory.Where(lh => lh.Item1 == lift.Name)
-                                         .Select(lh => Tuple.Create(lh.Item2, lh.Item3));
-                lift.StayAway = ShowStayAway(lift) ? true : await AnomalyDetector.SlowChairliftAsync(history);
+                    var history = liftHistory.Where(lh => lh.Rkey == lift.Name)
+                                             .Select(lh => Tuple.Create(lh.Time, lh.Skiercount))
+                                             .ToList();
+
+                    lift.StayAway = ShowStayAway(lift) ? true : await AnomalyDetector.SlowChairliftAsync(history);
+                }
             }
 
             return lifts;
         }
 
-        private int GetWaitingTime(IEnumerable<Tuple<string, int?>> liftCounts, Lift lift)
+        private int GetWaitingTime(List<LiftLines> liftCounts, Lift lift)
         {
             if (lift.Name == "Education Hill")
                 return 12; // for the demo porpouse this value is fixed.
 
             return lift.Status != LiftStatus.Open ? -1 :
-                ComputeWaitTime(liftCounts.FirstOrDefault(l => l.Item1 == lift.Name)?.Item2);
+                ComputeWaitTime(liftCounts.FirstOrDefault(l => l.Name == lift.Name)?.SkierCount);
         }
 
         private int ComputeWaitTime(int? skiersWaiting)

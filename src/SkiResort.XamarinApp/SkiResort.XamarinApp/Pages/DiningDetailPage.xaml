@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:converters="clr-namespace:SkiResort.XamarinApp.Converters;assembly=SkiResort.XamarinApp"
+             xmlns:views="clr-namespace:SkiResort.XamarinApp.Views"
+             x:Class="SkiResort.XamarinApp.Pages.DiningDetailPage"
+             Title="{Binding Restaurant.Name}">
+
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:RestaurantToImageSourceConverter x:Key="restaurantToImageSource"></converters:RestaurantToImageSourceConverter>
+      <converters:BoolToStringConverter x:Key="boolToString"></converters:BoolToStringConverter>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  
+  <ContentPage.Content>
+    <StackLayout BackgroundColor="White" Spacing="0">
+      <ffil:CachedImage
+        Source="{Binding Restaurant, Converter={StaticResource restaurantToImageSource}}"
+        HorizontalOptions="FillAndExpand"
+        DownsampleToViewSize="True"
+        Aspect="AspectFill"
+        HeightRequest="200"/>
+
+      <ScrollView VerticalOptions="FillAndExpand">
+        
+        <StackLayout Padding="20" Spacing="15">
+        
+
+          <StackLayout Spacing="0" Orientation="Horizontal">
+            <StackLayout Spacing="15" HorizontalOptions="FillAndExpand">
+              <StackLayout Spacing="5">
+                <Label Text="{Binding Restaurant.Name}" FontSize="20" TextColor="#1A90C9" />
+              </StackLayout>
+
+              <StackLayout Spacing="5">
+                <Label Text="Level of noise" FontSize="17" />
+                <Label Text="{Binding Restaurant.LevelOfNoise}" FontSize="14" />
+              </StackLayout>
+
+              <StackLayout Spacing="5">
+                <Label Text="Family friendly" FontSize="17" />
+                <Label Text="{Binding Restaurant.FamilyFriendly, Converter={StaticResource boolToString}}" FontSize="14" />
+              </StackLayout>
+            </StackLayout>
+            <StackLayout>
+              <ffil:CachedImage
+                WidthRequest="70"
+                HeightRequest="20"
+                Aspect="AspectFit"
+                DownsampleToViewSize="True"
+                HorizontalOptions="End"
+                Source="{Binding Restaurant.Rating, StringFormat='star_{0}.png'}" />
+              <views:PriceLevelView Value="{Binding Restaurant.PriceLevel}" HorizontalOptions="End" />
+            </StackLayout>
+          </StackLayout>
+
+          <StackLayout Spacing="5">
+            <Label Text="Address" FontSize="17" />
+            <Label Text="{Binding Restaurant.Address}" FontSize="14" />
+          </StackLayout>
+
+          <StackLayout Spacing="5">
+            <Label Text="Description" FontSize="17" />
+            <Label Text="{Binding Restaurant.Description}" FontSize="14" />
+          </StackLayout>
+        
+        </StackLayout>
+
+      </ScrollView>
+
+      <StackLayout BackgroundColor="#1A90C9" Padding="20" IsVisible="{Binding ShowRecommendedRestaurants}">
+        <Label Text="Similar restaurants recommendations" FontSize="18" TextColor="White" />
+        <Label Text="{Binding FirstRecommendedRestaurant.Name}" TextColor="White"></Label>
+        <Label Text="{Binding SecondRecommendedRestaurant.Name}" TextColor="White"></Label>
+        <Label Text="{Binding ThirdRecommendedRestaurant.Name}" TextColor="White"></Label>
+      </StackLayout>
+
+    </StackLayout>
+  </ContentPage.Content>
+  
+</ContentPage>

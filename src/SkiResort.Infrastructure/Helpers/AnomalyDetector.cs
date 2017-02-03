@@ -7,21 +7,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AdventureWorks.SkiResort.Infrastructure.Helpers
 {
     public class AnomalyDetector
     {
-        private const string ParamsString = "SpikeDetector.TukeyThresh=3; SpikeDetector.ZscoreThresh=3";
-        private static readonly string ApiTemplate = "https://api.datamarket.azure.com/data.ashx/aml_labs/anomalydetection/v1/Score?data={0}&params={1}";
         private static HttpClient _client;
 
         public static void Initialize(IConfiguration configuration)
         {
             string key = configuration["AnomalyDetection:Key"];
-            string auth = Convert.ToBase64String(Encoding.ASCII.GetBytes($"any:{key}"));
+            string requestUri = configuration["AnomalyDetection:RequestUri"];
+
             _client = new HttpClient();
-            _client.DefaultRequestHeaders.Add("Authorization", $"Basic {auth}");
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", key);
+            _client.BaseAddress = new Uri(requestUri);
         }
 
         public static async Task<bool> SlowChairliftAsync(IEnumerable<Tuple<DateTimeOffset, int>> data)
@@ -41,33 +42,51 @@ namespace AdventureWorks.SkiResort.Infrastructure.Helpers
 
             try
             {
-
-                StringBuilder buffer = new StringBuilder();
+                var inputs = new List<Dictionary<string, string>>();
                 foreach (var d in data)
                 {
-                    buffer.AppendFormat("{0:u}={1};", d.Item1, d.Item2);
+                    inputs.Add(
+                        new Dictionary<string, string>()
+                        {
+                            { "Time", d.Item1.ToString(("MM/dd/yy HH:mm:ss")) },
+                            { "Data", d.Item2.ToString() },
+                        });
                 }
 
-                if (buffer.Length > 0)
+                if (inputs.Count > 0)
                 {
-                    string response = await _client.GetStringAsync(string.Format(ApiTemplate, Uri.EscapeDataString(buffer.ToString()), Uri.EscapeDataString(ParamsString)));
-                    dynamic json = JsonConvert.DeserializeObject(response);
-                    string table = (string)json.table;
-
-                    string[] rows = table.Split(';');
-
-                    for (int i = 1; i < rows.Length && !string.IsNullOrWhiteSpace(rows[i]); i++)
+                    var request = new
                     {
-                        string[] values = rows[i].Split(',');
-                        if (values.Length < 3)
+                        Inputs = new Dictionary<string, List<Dictionary<string, string>>>()
                         {
-                            break;
+                            {
+                                "input1", inputs
+                            },
+                        },
+                        GlobalParameters = new Dictionary<string, string>()
+                        {
+                            {
+                                "tspikedetector.sensitivity", "3"
+                            },
+                            {
+                                "zspikedetector.sensitivity", "3"
+                            },
                         }
+                    };
 
-                        int tspike = 0;
-                        if (int.TryParse(values[2], out tspike) && tspike > 0)
+                    HttpResponseMessage response = await _client.PostAsync("", new StringContent(JsonConvert.SerializeObject(request)));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string content = await response.Content.ReadAsStringAsync();
+                        dynamic json = JObject.Parse(content);
+
+                        for (int i = 0; i < json.Results.output1.Count; i++)
                         {
-                            result.Add(i - 1);
+                            int tspike = 0;
+                            if (int.TryParse(json.Results.output1[i].TSpike.Value, out tspike) && tspike > 0)
+                            {
+                                result.Add(i);
+                            }
                         }
                     }
                 }

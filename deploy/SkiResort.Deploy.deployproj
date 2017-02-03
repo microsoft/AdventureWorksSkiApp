@@ -27,7 +27,7 @@
   <ItemGroup>
     <Content Include="Scripts\TestWebApps.ps1" />
     <Content Include="Scripts\StopStreamJob.ps1" />
-    <Content Include="Scripts\RestartStreamJob.ps1" />
+    <Content Include="Scripts\StartStreamJob.ps1" />
     <Content Include="WebApp\SkiResort.zip">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
@@ -42,7 +42,8 @@
     <Content Include="Scripts\ConfigureStorage.ps1" />
     <Content Include="Scripts\PublishASPNET.ps1" />
     <Content Include="Scripts\default-publish.ps1" />
-    <None Include="WebApp\SkiResortAdvanced.zip" />
+    <Content Include="WebApp\SkiResortAdvanced.zip" />
+    <Content Include="Scripts\DocumentDB.ps1" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>

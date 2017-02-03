@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SkiResort.XamarinApp.Pages.LoginPage"
+             Title="Login">
+
+  <ContentPage.Content>
+
+    <StackLayout Padding="15" Spacing="6">
+      <Entry Placeholder="Username" Text="{Binding Username, Mode=TwoWay}" IsEnabled="{Binding InputEnabled}" />
+      <Entry Placeholder="Password" Text="{Binding Password, Mode=TwoWay}" IsEnabled="{Binding InputEnabled}" IsPassword="True" />
+      <Button Text="Login" BackgroundColor="#15719E" TextColor="White" FontSize="18" Command="{Binding ClickLoginCommand}" IsEnabled="{Binding LoginButtonEnabled}" />
+      <Label Text="The combination of username and password isn't correct" TextColor="Red" IsVisible="{Binding LoginFailed}" />
+    </StackLayout>
+    
+  </ContentPage.Content>
+</ContentPage>
