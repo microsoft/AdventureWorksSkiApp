@@ -14,10 +14,18 @@ namespace SkiResort.XamarinApp
 {
     public partial class App : Application
     {
+        public static Page RootPage
+        {
+            get
+            {
+                return NavigationService.Instance.MasterDetailPage;
+            }
+            set { }
+        }
         public App()
         {
             InitializeComponent();
-            MainPage = NavigationService.Instance.MasterDetailPage;
+            MainPage = App.RootPage;
         }
 
         protected override void OnStart()

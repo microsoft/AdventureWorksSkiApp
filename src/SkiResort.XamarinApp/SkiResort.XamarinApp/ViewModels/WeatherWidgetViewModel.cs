@@ -101,10 +101,13 @@ namespace SkiResort.XamarinApp.ViewModels
             var weatherService = new WeatherService();
             var weatherSummary = await weatherService.GetSummary();
 
-            Weather = "Snowing";
-            Temperature = weatherSummary.MinTemperature + "/" + weatherSummary.MaxTemperature + "º F";
-            Wind = weatherSummary.Wind + " mph";
-            BaseDepth = weatherSummary.BaseDepth + " inch";
+            if (weatherSummary != null)
+            {
+                Weather = "Snowing";
+                Temperature = weatherSummary.MinTemperature + "/" + weatherSummary.MaxTemperature + "º F";
+                Wind = weatherSummary.Wind + " mph";
+                BaseDepth = weatherSummary.BaseDepth + " inch";
+            }
 
             ItemsOpacity = 1;
             Loading = false;

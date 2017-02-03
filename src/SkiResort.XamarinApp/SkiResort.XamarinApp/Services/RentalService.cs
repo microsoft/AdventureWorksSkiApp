@@ -13,36 +13,38 @@ namespace SkiResort.XamarinApp.Services
 {
     class RentalService
     {
+        private HTTPService _httpService;
+        public RentalService()
+        {
+            _httpService = HTTPService.Instance;
+        }
         public async Task<List<Rental>> GetRentals()
         {
-            var httpService = new HTTPService(Config.API_URL);
-            var rentalsData = await httpService.Get("/rentals");
-            var rentals = JsonConvert.DeserializeObject<List<Rental>>(rentalsData);
+            var response = await _httpService.Get("/api/rentals");
+
+            var rentals = new List<Rental>();
+
+            if (response.IsSuccessful)
+                rentals = JsonConvert.DeserializeObject<List<Rental>>(response.Content);
+
             return rentals;
         }
 
-        public async Task SaveRental(Rental rental)
+        public async Task<bool> SaveRental(Rental rental)
         {
-            var httpService = new HTTPService(Config.API_URL);
             var jsonSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
             jsonSettings.Converters.Add(new IsoDateTimeConverter() { DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffZ" });
             var rentalJson = JsonConvert.SerializeObject(RentalDTOForCreation.Create(rental), jsonSettings);
-            await httpService.Post("/rentals", rentalJson);
+
+            var response = await _httpService.Post("/api/rentals", rentalJson);
+
+            return response.IsSuccessful;
         }
 
         public async Task<bool> CheckHighDemand(DateTime date)
         {
-            var httpService = new HTTPService(Config.API_URL);
-            var result = "";
-            try
-            {
-                result = await httpService.Get("/rentals/check_high_demand?date=" + date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
-            }
-            catch (Exception ex)
-            {
-                result = "false";
-            }
-            return result == "true";
+            var response = await _httpService.Get("/api/rentals/check_high_demand?date=" + date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
+            return response.Content == "true";
         }
     }
 

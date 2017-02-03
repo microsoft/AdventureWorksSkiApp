@@ -373,9 +373,17 @@ namespace SkiResort.XamarinApp.ViewModels
             };
 
             var rentalService = new RentalService();
-            await rentalService.SaveRental(rental);
-            MessagingCenter.Send(this, "SetRentalListTab");
-            resetValues();
+            var saved = await rentalService.SaveRental(rental);
+            if (saved)
+            {
+                MessagingCenter.Send(this, "SetRentalListTab");
+                resetValues();
+            }
+            else
+            {
+                await App.RootPage.DisplayAlert("Something went wrong", "Sorry, couldn't save the rental. Please, try again later.", "OK");
+            }
+            
             Loading = false;
         }
 

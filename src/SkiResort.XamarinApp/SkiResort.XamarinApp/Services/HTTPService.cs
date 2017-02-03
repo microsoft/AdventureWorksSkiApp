@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,36 +38,73 @@ namespace SkiResort.XamarinApp.Services
             return new Uri(BaseUrl + path);
         }
 
-        public async Task<string> Get(string path)
+        public async Task<HTTPServiceResponse> Get(string path)
         {
             var uri = getUri(path);
+            HTTPServiceResponse response = null;
 
-            var response = await _httpClient.GetAsync(uri);
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var content = await response.Content.ReadAsStringAsync();
-                return content;
+                response = await processResponseMessage(await _httpClient.GetAsync(uri));
             }
-            else
+            catch
             {
-                throw new Exception();
+                response = buildExceptionResponse();
             }
+
+            return response;
         }
 
-        public async Task<string> Post(string path, string body)
+        public async Task<HTTPServiceResponse> Post(string path, string body)
+        {
+            return await Post(path, new StringContent(body, Encoding.UTF8, "application/json"));
+        }
+
+        public async Task<HTTPServiceResponse> Post(string path, HttpContent content)
         {
             var uri = getUri(path);
+            HTTPServiceResponse response = null;
 
-            var response = await _httpClient.PostAsync(uri, new StringContent(body, Encoding.UTF8, "application/json"));
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var content = await response.Content.ReadAsStringAsync();
-                return content;
+                response = await processResponseMessage(await _httpClient.PostAsync(uri, content));
             }
-            else
+            catch
             {
-                throw new Exception();
+                response = buildExceptionResponse();
             }
+
+            return response;
         }
+
+        private async Task<HTTPServiceResponse> processResponseMessage(HttpResponseMessage message)
+        {
+            var content = await message.Content.ReadAsStringAsync();
+            if (content == "")
+                content = null;
+            return new HTTPServiceResponse()
+            {
+                IsSuccessful = message.IsSuccessStatusCode,
+                StatusCode = message.StatusCode,
+                Content = content
+            };
+        }
+
+        private HTTPServiceResponse buildExceptionResponse()
+        {
+            return new HTTPServiceResponse()
+            {
+                IsSuccessful = false,
+                StatusCode = HttpStatusCode.ServiceUnavailable,
+                Content = null
+            };
+        }
+    }
+
+    public class HTTPServiceResponse
+    {
+        public bool IsSuccessful { get; set; }
+        public HttpStatusCode StatusCode { get; set; }
+        public string Content { get; set; }
     }
 }

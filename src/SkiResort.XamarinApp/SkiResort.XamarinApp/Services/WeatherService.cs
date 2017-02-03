@@ -12,11 +12,20 @@ namespace SkiResort.XamarinApp.Services
 {
     class WeatherService
     {
+        private HTTPService _httpService;
+        public WeatherService()
+        {
+            _httpService = HTTPService.Instance;
+        }
         public async Task<WeatherSummary> GetSummary()
         {
-            var httpService = new HTTPService(Config.API_URL);
-            var summaryData = await httpService.Get("/summaries");
-            var summary = JsonConvert.DeserializeObject<WeatherSummary>(summaryData);
+            var response = await _httpService.Get("/api/summaries");
+
+            WeatherSummary summary = null;
+
+            if (response.IsSuccessful)
+                summary = JsonConvert.DeserializeObject<WeatherSummary>(response.Content);
+
             return summary;
         }
     }

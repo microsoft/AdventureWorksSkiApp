@@ -19,26 +19,46 @@ namespace SkiResort.XamarinApp.Services
 
         public async Task<List<Restaurant>> GetRestaurants()
         {
-            var restaurantsData = await _httpService.Get(
-                string.Format("/restaurants/nearby?latitude={0}&longitude={1}",
+            var response = await _httpService.Get(
+                string.Format("/api/restaurants/nearby?latitude={0}&longitude={1}",
                     Config.USER_DEFAULT_POSITION_LATITUDE,
                     Config.USER_DEFAULT_POSITION_LONGITUDE));
-            var restaurants = JsonConvert.DeserializeObject<List<Restaurant>>(restaurantsData);
+
+            var restaurants = new List<Restaurant>();
+
+            if (response.IsSuccessful)
+                restaurants = JsonConvert.DeserializeObject<List<Restaurant>>(response.Content);
+
             return restaurants;
         }
 
         public async Task<Restaurant> GetRestaurant(int restaurantId)
         {
-            var data = await _httpService.Get(string.Format("/restaurants/{0}", restaurantId));
-            var restaurant = JsonConvert.DeserializeObject<Restaurant>(data);
+            var response = await _httpService.Get(string.Format("/api/restaurants/{0}", restaurantId));
+
+            Restaurant restaurant = null;
+
+            if (response.IsSuccessful)
+                restaurant = JsonConvert.DeserializeObject<Restaurant>(response.Content);
+
             return restaurant;
+        }
+
+        private async Task<List<int>> GetRecommendedRestaurantsIds(int restaurantId)
+        {
+            var response = await _httpService.Get(string.Format("/api/restaurants/recommendations/{0}", restaurantId));
+
+            var ids = new List<int>();
+
+            if (response.IsSuccessful)
+                ids = JsonConvert.DeserializeObject<List<int>>(response.Content);
+
+            return ids;
         }
 
         public async Task<List<Restaurant>> GetRecommendedRestaurants(int restaurantId)
         {
-            var rawRestaurantIds = await _httpService.Get(string.Format("/restaurants/recommendations/{0}", restaurantId));
-            var restaurantIds = JsonConvert.DeserializeObject<List<int>>(rawRestaurantIds);
-
+            var restaurantIds = await GetRecommendedRestaurantsIds(restaurantId);
             var taskList = new List<Task<Restaurant>>();
             var result = new List<Restaurant>();
 
@@ -49,7 +69,9 @@ namespace SkiResort.XamarinApp.Services
 
             foreach(var task in taskList)
             {
-                result.Add(await task);
+                var restaurant = await task;
+                if (restaurant != null)
+                    result.Add(restaurant);
             }
 
             return result;
