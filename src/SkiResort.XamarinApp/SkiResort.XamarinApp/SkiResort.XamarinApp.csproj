@@ -41,6 +41,7 @@
     </Compile>
     <Compile Include="Behaviours\ItemTappedCommandListView.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Converters\Base64ToImageSourceConverter.cs" />
     <Compile Include="Converters\BoolToStringConverter.cs" />
     <Compile Include="Converters\DateTimeToHourConverter.cs" />
     <Compile Include="Converters\IntToInchesConverter.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="Converters\DoubleToCurrencyConverter.cs" />
     <Compile Include="Converters\LiftToAltitudeFormattedText.cs" />
     <Compile Include="Converters\LiftToDistanceFormattedText.cs" />
+    <Compile Include="Converters\UserToWelcomeMessageConverter.cs" />
     <Compile Include="Converters\RentalToDateRangeConverter.cs" />
     <Compile Include="Converters\RentalToTypeAndLevelConverter.cs" />
     <Compile Include="Converters\RestaurantToImageSourceConverter.cs" />

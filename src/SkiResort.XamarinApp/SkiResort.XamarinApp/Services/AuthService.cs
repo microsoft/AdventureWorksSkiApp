@@ -31,6 +31,7 @@ namespace SkiResort.XamarinApp.Services
         public AuthService() {
             _httpService = HTTPService.Instance;
             AccessToken = null;
+            User = null;
         }
 
         public async Task<bool> Login(string username, string password)
