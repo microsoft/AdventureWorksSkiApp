@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,21 +39,17 @@ namespace SkiResort.XamarinApp.Services
             return new Uri(BaseUrl + path);
         }
 
-        public async Task<HTTPServiceResponse> Get(string path)
+        public async Task<HTTPServiceResponse> Get(string path, string bearerToken = null)
         {
-            var uri = getUri(path);
-            HTTPServiceResponse response = null;
-
-            try
+            var request = new HttpRequestMessage()
             {
-                response = await processResponseMessage(await _httpClient.GetAsync(uri));
-            }
-            catch
-            {
-                response = buildExceptionResponse();
-            }
+                RequestUri = getUri(path),
+                Method = HttpMethod.Get
+            };
+            if (bearerToken != null)
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
 
-            return response;
+            return await sendRequest(request);
         }
 
         public async Task<HTTPServiceResponse> Post(string path, string body)
@@ -62,12 +59,23 @@ namespace SkiResort.XamarinApp.Services
 
         public async Task<HTTPServiceResponse> Post(string path, HttpContent content)
         {
-            var uri = getUri(path);
+            var request = new HttpRequestMessage()
+            {
+                RequestUri = getUri(path),
+                Method = HttpMethod.Post,
+                Content = content
+            };
+
+            return await sendRequest(request);
+        }
+
+        private async Task<HTTPServiceResponse> sendRequest(HttpRequestMessage request)
+        {
             HTTPServiceResponse response = null;
 
             try
             {
-                response = await processResponseMessage(await _httpClient.PostAsync(uri, content));
+                response = await processResponseMessage(await _httpClient.SendAsync(request));
             }
             catch
             {

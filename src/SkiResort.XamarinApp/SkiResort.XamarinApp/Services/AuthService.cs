@@ -25,13 +25,40 @@ namespace SkiResort.XamarinApp.Services
 
         private HTTPService _httpService;
 
+        public string AccessToken { get; private set; }
+        public User User { get; private set; }
+
         public AuthService() {
             _httpService = HTTPService.Instance;
+            AccessToken = null;
         }
 
         public async Task<bool> Login(string username, string password)
         {
-            var formContent = new FormUrlEncodedContent(new[]
+            var formContent = buildLoginForm(username, password);
+
+            var response = await _httpService.Post("/connect/token", formContent);
+
+            LoginResponse loginResponse = new LoginResponse();
+
+            if (response.Content != null)
+                loginResponse = JsonConvert.DeserializeObject<LoginResponse>(response.Content);
+
+            if (loginResponse.AccessToken != null)
+            {
+                AccessToken = loginResponse.AccessToken;
+                await fetchUserInfo();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private HttpContent buildLoginForm(string username, string password)
+        {
+            return new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("client_id", "skiresort"),
                 new KeyValuePair<string, string>("client_secret", "secret"),
@@ -40,22 +67,16 @@ namespace SkiResort.XamarinApp.Services
                 new KeyValuePair<string, string>("username", username),
                 new KeyValuePair<string, string>("password", password),
             });
+        }
 
-            var result = await _httpService.Post("/connect/token", formContent);
+        private async Task fetchUserInfo()
+        {
+            var response = await _httpService.Get("/api/users/user", AccessToken);
 
-            LoginResponse loginResponse = new LoginResponse();
+            User = null;
 
-            if (result.Content != null)
-                loginResponse = JsonConvert.DeserializeObject<LoginResponse>(result.Content);
-
-            if (loginResponse.Error == null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (response.IsSuccessful)
+                User = JsonConvert.DeserializeObject<User>(response.Content);
         }
     }
 
@@ -72,5 +93,14 @@ namespace SkiResort.XamarinApp.Services
 
         [JsonProperty("error")]
         public string Error { get; set; }
+    }
+
+    class User
+    {
+        [JsonProperty("fullName")]
+        public string FullName { get; set; }
+
+        [JsonProperty("photo")]
+        public string Photo { get; set; }
     }
 }
