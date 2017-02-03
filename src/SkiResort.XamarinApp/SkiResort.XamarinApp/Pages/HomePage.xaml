@@ -44,7 +44,7 @@
       <StackLayout Style="{StaticResource mainStackLayoutStyle}">
         <Label Style="{StaticResource placeholderLabelStyle}" />
         <StackLayout Style="{StaticResource stackLayoutButtonContainerStyle}">
-          <Button Style="{StaticResource loginButtonStyle}" />
+          <Button Style="{StaticResource loginButtonStyle}" Command="{Binding ClickLoginCommand}" />
         </StackLayout>
         <views:WeatherWidget />
       </StackLayout>

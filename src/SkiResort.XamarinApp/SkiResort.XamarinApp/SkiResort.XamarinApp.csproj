@@ -74,6 +74,9 @@
     <Compile Include="Pages\LiftStatusPage.xaml.cs">
       <DependentUpon>LiftStatusPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\MainMasterDetailPage.cs" />
     <Compile Include="Pages\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
@@ -81,7 +84,6 @@
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Page1.cs" />
     <Compile Include="Pages\RentalFormPage.xaml.cs">
       <DependentUpon>RentalFormPage.xaml</DependentUpon>
     </Compile>
@@ -104,6 +106,7 @@
     <Compile Include="ViewModels\LiftDetailViewModel.cs" />
     <Compile Include="ViewModels\LiftStatusViewModel.cs" />
     <Compile Include="ViewModels\DiningViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\RentalFormViewModel.cs" />
     <Compile Include="ViewModels\RentalListViewModel.cs" />
     <Compile Include="ViewModels\RentalViewModel.cs" />
@@ -198,6 +201,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\RentalFormPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

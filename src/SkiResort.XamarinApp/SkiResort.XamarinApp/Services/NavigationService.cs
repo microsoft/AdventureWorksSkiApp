@@ -44,7 +44,12 @@ namespace SkiResort.XamarinApp.Services
         {
             var navigationPage = MasterDetailPage.Detail as CustomNavigationPage;
             await navigationPage.Navigation.PushAsync(CreatePage(viewModelType, parameters), true);
-            var stack = navigationPage.Navigation.NavigationStack;
+        }
+
+        public async Task NavigateBack()
+        {
+            var navigationPage = MasterDetailPage.Detail as CustomNavigationPage;
+            await navigationPage.Navigation.PopAsync();
         }
 
         private void registerViewModels()
@@ -54,6 +59,7 @@ namespace SkiResort.XamarinApp.Services
             homeViewModel = typeof(HomeViewModel);
 
             viewModelPageMapping.Add(typeof(HomeViewModel), typeof(HomePage));
+            viewModelPageMapping.Add(typeof(LoginViewModel), typeof(LoginPage));
             viewModelPageMapping.Add(typeof(LiftStatusViewModel), typeof(LiftStatusPage));
             viewModelPageMapping.Add(typeof(RentalViewModel), typeof(RentalPage));
             viewModelPageMapping.Add(typeof(RentalListViewModel), typeof(RentalListPage));
