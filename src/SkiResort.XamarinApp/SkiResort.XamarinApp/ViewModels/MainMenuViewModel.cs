@@ -71,12 +71,12 @@ namespace SkiResort.XamarinApp.ViewModels
         {
             MainMenuItems = new ObservableCollection<MainMenuItem>()
             {
-                new MainMenuItem("Home", typeof(HomeViewModel)),
-                new MainMenuItem("Lift Status", typeof(LiftStatusViewModel)),
-                new MainMenuItem("Rental Reservation",typeof(RentalViewModel)),
-                new MainMenuItem("Dining", typeof(DiningViewModel)),
-                new MainMenuItem("Live Webcams", null),
-                new MainMenuItem("Lift Tickets", null)
+                new MainMenuItem("Home", "home.png", typeof(HomeViewModel)),
+                new MainMenuItem("Lift Status", "lift.png", typeof(LiftStatusViewModel)),
+                new MainMenuItem("Rental Reservation", "rental.png",typeof(RentalViewModel)),
+                new MainMenuItem("Dining", "dining.png", typeof(DiningViewModel)),
+                new MainMenuItem("Live Webcams", "webcam.png", null),
+                new MainMenuItem("Lift Tickets", "ticket.png", null)
             };
         }
 
@@ -86,9 +86,10 @@ namespace SkiResort.XamarinApp.ViewModels
             public string IconSource { get; set; }
             public Type TargetType { get; set; }
 
-            public MainMenuItem(string title, Type targetType)
+            public MainMenuItem(string title, string iconSource, Type targetType)
             {
                 Title = title;
+                IconSource = iconSource;
                 TargetType = targetType;
             }
         }

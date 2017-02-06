@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:behaviours="clr-namespace:SkiResort.XamarinApp.Behaviours;assembly=SkiResort.XamarinApp"
+             xmlns:ffil="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="SkiResort.XamarinApp.Pages.MainMenu"
              Title="Menu"
              BackgroundColor="#1A90C9"
@@ -29,13 +30,38 @@
         behaviours:ItemTappedCommandListView.ItemTappedCommand="{Binding ItemSelectedCommand}" >
         <ListView.ItemTemplate>
           <DataTemplate>
-            <ImageCell Text="{Binding Title}" ImageSource="{Binding IconSource}" TextColor="#FFFFFF" />
+            <ViewCell>
+
+              <StackLayout
+                Orientation="Horizontal"
+                Spacing="20"
+                Padding="20,0,0,0">
+                <ffil:CachedImage
+                  Source="{Binding IconSource}"
+                  Aspect="AspectFit"
+                  WidthRequest="28"
+                  HeightRequest="28"
+                  DownsampleToViewSize="True"
+                  VerticalOptions="Center" />
+                <Label
+                  Text="{Binding Title}"
+                  VerticalOptions="Center"
+                  FontSize="14"
+                  HorizontalOptions="FillAndExpand"
+                  HorizontalTextAlignment="Start"
+                  TextColor="White" />
+              </StackLayout>
+
+            </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-      <StackLayout Padding="0" Spacing="0" IsVisible="{Binding ShowLogoutButton}">
+      <StackLayout
+        Padding="0"
+        Spacing="0"
+        IsVisible="{Binding ShowLogoutButton}">
         <Button
-          Text="Log out"
+          Text="Logout"
           TextColor="White"
           BackgroundColor="#1877a4"
           BorderRadius="0"

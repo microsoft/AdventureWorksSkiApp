@@ -291,6 +291,21 @@
   <ItemGroup>
     <BundleResource Include="Resources\exclamation_triangle_white.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\dining.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\rental.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ticket.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\webcam.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\home.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
