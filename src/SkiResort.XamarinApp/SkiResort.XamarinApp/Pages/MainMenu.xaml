@@ -33,7 +33,7 @@
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-      <StackLayout Padding="0" Spacing="0">
+      <StackLayout Padding="0" Spacing="0" IsVisible="{Binding ShowLogoutButton}">
         <Button
           Text="Log out"
           TextColor="White"

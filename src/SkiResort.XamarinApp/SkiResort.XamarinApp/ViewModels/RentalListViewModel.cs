@@ -13,6 +13,7 @@ namespace SkiResort.XamarinApp.ViewModels
 {
     class RentalListViewModel : BaseViewModel
     {
+        #region Properties
         private ObservableCollection<Rental> rentals { set; get; }
         public ObservableCollection<Rental> Rentals
         {
@@ -40,16 +41,18 @@ namespace SkiResort.XamarinApp.ViewModels
                 }
             }
         }
+        #endregion
+
         public RentalListViewModel()
         {
-            FetchRentals();
+            fetchRentals();
 
             MessagingCenter.Subscribe<RentalPage>(this, "Refresh", (sender) => {
-                FetchRentals();
+                fetchRentals();
             });
         }
 
-        private async void FetchRentals()
+        private async void fetchRentals()
         {
             Rentals = new ObservableCollection<Rental>();
             Loading = true;

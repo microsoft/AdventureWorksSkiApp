@@ -91,30 +91,16 @@ namespace SkiResort.XamarinApp.ViewModels
         }
         #endregion
 
-        public ICommand ClickLoginCommand { get; set; }
-
-        private NavigationService _navigationService;
-        private AuthService _authService;
-
-        public LoginViewModel()
-        {
-            _authService = AuthService.Instance;
-            _navigationService = NavigationService.Instance;
-
-            ClickLoginCommand = new Command(ClickLoginCommandHandler);
-
-            Username = "";
-            Password = "";
-            Loading = false;
-        }
-
-        private async void ClickLoginCommandHandler()
+        #region Commands
+        public ICommand ClickLoginCommand => new Command(clickLoginCommandHandler);
+        private async void clickLoginCommandHandler()
         {
             Loading = true;
             LoginFailed = false;
             var success = await _authService.Login(Username, Password);
             if (success)
             {
+                resetData();
                 await _navigationService.NavigateBack();
             }
             else
@@ -122,6 +108,25 @@ namespace SkiResort.XamarinApp.ViewModels
                 LoginFailed = true;
                 Loading = false;
             }
+        }
+        #endregion
+
+        #region Dependencies
+        private NavigationService _navigationService;
+        private AuthService _authService;
+        #endregion
+
+        public LoginViewModel()
+        {
+            _authService = AuthService.Instance;
+            _navigationService = NavigationService.Instance;
+        }
+
+        private void resetData()
+        {
+            Username = "";
+            Password = "";
+            Loading = false;
         }
     }
 }

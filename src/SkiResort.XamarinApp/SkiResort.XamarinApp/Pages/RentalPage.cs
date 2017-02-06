@@ -15,8 +15,8 @@ namespace SkiResort.XamarinApp.Pages
     {
         public RentalPage()
         {
-            BarBackgroundColor = Device.OS == TargetPlatform.iOS ? Config.BAR_COLOR_BLACK : Color.FromHex("#1A90C9");
-            BarTextColor = Color.FromHex("#FFFFFF");
+            BarBackgroundColor = Device.OS == TargetPlatform.iOS ? Config.DEFAULT_BAR_COLOR : Config.PRIMARY_COLOR;
+            BarTextColor = Config.DEFAULT_BAR_TEXT_COLOR;
 
             Title = "Rental Reservation";
 
@@ -32,7 +32,7 @@ namespace SkiResort.XamarinApp.Pages
             });
         }
 
-        public Color GetBarBackgroundColor() => Color.FromHex("#15719E");
-        public Color GetBarTextColor() => Color.FromHex("#FFFFFF");
+        public Color GetBarBackgroundColor() => Config.BLUE_BAR_COLOR;
+        public Color GetBarTextColor() => Config.DEFAULT_BAR_TEXT_COLOR;
     }
 }

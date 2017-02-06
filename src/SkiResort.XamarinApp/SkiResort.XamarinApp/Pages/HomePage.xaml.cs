@@ -9,21 +9,11 @@ using Xamarin.Forms;
 
 namespace SkiResort.XamarinApp.Pages
 {
-    public partial class HomePage : ContentPage, IBarTint
+    public partial class HomePage : ContentPage
     {
         public HomePage()
         {
             InitializeComponent();
-        }
-
-        public Color GetBarBackgroundColor()
-        {
-            return Color.FromHex("#141414");
-        }
-
-        public Color GetBarTextColor()
-        {
-            return Color.FromHex("#FFFFFF");
         }
     }
 }

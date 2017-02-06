@@ -61,7 +61,7 @@ namespace SkiResort.XamarinApp.Services
 
         private void notifyUserChanged()
         {
-            MessagingCenter.Send(this, "HomeRefreshUser");
+            MessagingCenter.Send(this, "UserChanged");
         }
 
         public void Logout()

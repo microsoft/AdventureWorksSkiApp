@@ -13,6 +13,7 @@ namespace SkiResort.XamarinApp.ViewModels
     
     class MainMenuViewModel : BaseViewModel
     {
+        #region Properties
         private ObservableCollection<MainMenuItem> mainMenuItems { get; set; }
         public ObservableCollection<MainMenuItem> MainMenuItems
         {
@@ -27,33 +28,46 @@ namespace SkiResort.XamarinApp.ViewModels
             }
         }
 
-        public ICommand ClickLogoutCommand { get; set; }
-        public ICommand ItemSelectedCommand { get; set; }
+        public bool ShowLogoutButton
+        {
+            get
+            {
+                return _authService.User != null;
+            }
+            set { }
+        }
+        #endregion
 
+        #region Commands
+        public ICommand ClickLogoutCommand => new Command(clickLogoutCommandHandler);
+        private void clickLogoutCommandHandler()
+        {
+            _authService.Logout();
+            MessagingCenter.Send(this, "LogoutButtonClicked");
+        }
+        public ICommand ItemSelectedCommand => new Command<MainMenuItem>(itemSelectedCommandHandler);
+        private void itemSelectedCommandHandler(MainMenuItem item)
+        {
+            MessagingCenter.Send(this, "MainMenuItemSelected", item);
+        }
+        #endregion
+
+        #region Dependencies
         private AuthService _authService { get; set; }
+        #endregion
 
         public MainMenuViewModel ()
         {
             _authService = AuthService.Instance;
 
-            ClickLogoutCommand = new Command(ClickLogoutCommandHandler);
-            ItemSelectedCommand = new Command<MainMenuItem>(ItemSelectedCommandHandler);
+            MessagingCenter.Subscribe<AuthService>(this, "UserChanged", (sender) => {
+                OnPropertyChanged("ShowLogoutButton");
+            });
 
-            InitializeOptions();
+            initializeOptions();
         }
 
-        private void ClickLogoutCommandHandler()
-        {
-            _authService.Logout();
-            MessagingCenter.Send(this, "LogoutButtonClicked");
-        }
-
-        private void ItemSelectedCommandHandler(MainMenuItem item)
-        {
-            MessagingCenter.Send(this, "MainMenuItemSelected", item);
-        }
-
-        private void InitializeOptions()
+        private void initializeOptions()
         {
             MainMenuItems = new ObservableCollection<MainMenuItem>()
             {

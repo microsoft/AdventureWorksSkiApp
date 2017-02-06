@@ -35,8 +35,8 @@ namespace SkiResort.XamarinApp.Services
             MasterDetailPage.Master = CreatePage(typeof(MainMenuViewModel));
             MasterDetailPage.Detail = new CustomNavigationPage(CreatePage(homeViewModel));
 
-            MessagingCenter.Subscribe<MainMenuViewModel, MainMenuViewModel.MainMenuItem>(this, "MainMenuItemSelected", OnMenuItemSelected);
-            MessagingCenter.Subscribe<MainMenuViewModel>(this, "LogoutButtonClicked", OnLogoutButtonClicked);
+            MessagingCenter.Subscribe<MainMenuViewModel, MainMenuViewModel.MainMenuItem>(this, "MainMenuItemSelected", onMenuItemSelected);
+            MessagingCenter.Subscribe<MainMenuViewModel>(this, "LogoutButtonClicked", onLogoutButtonClicked);
         }
 
         public async Task NavigateTo(Type viewModelType, params object[] parameters)
@@ -88,7 +88,7 @@ namespace SkiResort.XamarinApp.Services
             return page;
         }
 
-        void OnMenuItemSelected(MainMenuViewModel sender, MainMenuViewModel.MainMenuItem item)
+        private void onMenuItemSelected(MainMenuViewModel sender, MainMenuViewModel.MainMenuItem item)
         {
             if (item != null && item.TargetType != null)
             {
@@ -97,7 +97,7 @@ namespace SkiResort.XamarinApp.Services
             MasterDetailPage.IsPresented = false;
         }
 
-        void OnLogoutButtonClicked(MainMenuViewModel sender)
+        private void onLogoutButtonClicked(MainMenuViewModel sender)
         {
             MasterDetailPage.IsPresented = false;
         }

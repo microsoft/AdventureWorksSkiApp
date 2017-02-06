@@ -11,6 +11,7 @@ namespace SkiResort.XamarinApp.ViewModels
 {
     class DiningDetailViewModel : BaseViewModel
     {
+        #region Properties
         private Restaurant restaurant { get; set; }
         public Restaurant Restaurant
         {
@@ -81,16 +82,17 @@ namespace SkiResort.XamarinApp.ViewModels
             }
             set { }
         }
+        #endregion
 
         public DiningDetailViewModel(Restaurant restaurant)
         {
             Restaurant = restaurant;
             RecommendedRestaurants = new ObservableCollection<Restaurant>();
 
-            FetchRecommendedRestaurants();
+            fetchRecommendedRestaurants();
         }
 
-        private async void FetchRecommendedRestaurants()
+        private async void fetchRecommendedRestaurants()
         {
             var restaurantsService = new RestaurantsService();
             RecommendedRestaurants = new ObservableCollection<Restaurant>(await restaurantsService.GetRecommendedRestaurants(Restaurant.RestaurantId));

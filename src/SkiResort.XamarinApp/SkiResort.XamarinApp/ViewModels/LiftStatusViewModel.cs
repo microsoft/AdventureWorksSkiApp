@@ -14,6 +14,7 @@ namespace SkiResort.XamarinApp.ViewModels
 {
     class LiftStatusViewModel : BaseViewModel
     {
+        #region Properties
         private ObservableCollection<LiftGroup> liftGroups { set; get; }
         public ObservableCollection<LiftGroup> LiftGroups
         {
@@ -41,21 +42,23 @@ namespace SkiResort.XamarinApp.ViewModels
                 }
             }
         }
+        #endregion
 
-        public ICommand ItemSelectedCommand => new Command<Lift>(OnSelectItem);
-
-        private async void OnSelectItem(Lift obj)
+        #region Commands
+        public ICommand ItemSelectedCommand => new Command<Lift>(onSelectItem);
+        private async void onSelectItem(Lift obj)
         {
             await NavigationService.Instance.NavigateTo(typeof(LiftDetailViewModel), obj);
         }
+        #endregion
 
         public LiftStatusViewModel()
         {
             LiftGroups = new ObservableCollection<LiftGroup>();
-            FetchLiftStatus();
+            fetchLiftStatus();
         }
 
-        private async void FetchLiftStatus()
+        private async void fetchLiftStatus()
         {
             Loading = true;
             var liftService = new LiftService();

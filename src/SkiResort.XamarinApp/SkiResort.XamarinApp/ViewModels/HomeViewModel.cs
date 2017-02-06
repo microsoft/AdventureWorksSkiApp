@@ -11,6 +11,7 @@ namespace SkiResort.XamarinApp.ViewModels
 {
     class HomeViewModel : BaseViewModel
     {
+        #region Properties
         private User user { get; set; }
         public User User
         {
@@ -44,24 +45,28 @@ namespace SkiResort.XamarinApp.ViewModels
             }
             set { }
         }
+        #endregion
 
+        #region Commands
+        public ICommand ClickLoginCommand => new Command(clickLoginCommandHandler);
+        private async void clickLoginCommandHandler()
+        {
+            await NavigationService.Instance.NavigateTo(typeof(LoginViewModel));
+        }
+        #endregion
+
+        #region Dependencies
         private AuthService _authService;
+        #endregion
 
-        public ICommand ClickLoginCommand { get; set; }
         public HomeViewModel()
         {
             _authService = AuthService.Instance;
             User = _authService.User;
-            ClickLoginCommand = new Command(ClickLoginCommandHandler);
 
-            MessagingCenter.Subscribe<AuthService>(this, "HomeRefreshUser", (sender) => {
+            MessagingCenter.Subscribe<AuthService>(this, "UserChanged", (sender) => {
                 User = _authService.User;
             });
-        }
-
-        private async void ClickLoginCommandHandler()
-        {
-            await NavigationService.Instance.NavigateTo(typeof(LoginViewModel));
         }
     }
 }
