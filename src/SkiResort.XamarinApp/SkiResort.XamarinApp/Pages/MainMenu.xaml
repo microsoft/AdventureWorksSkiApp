@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviours="clr-namespace:SkiResort.XamarinApp.Behaviours;assembly=SkiResort.XamarinApp"
              x:Class="SkiResort.XamarinApp.Pages.MainMenu"
              Title="Menu"
-             BackgroundColor="#141414"
+             BackgroundColor="#1A90C9"
              Padding="0,40,0,0">
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -15,20 +16,32 @@
       <Style x:Key="listViewStyle" TargetType="ListView">
         <Setter Property="VerticalOptions" Value="FillAndExpand" />
         <Setter Property="SeparatorVisibility" Value="None" />
-        <Setter Property="BackgroundColor" Value="#141414" />
+        <Setter Property="BackgroundColor" Value="#00000000" />
       </Style>
       
     </ResourceDictionary>
   </ContentPage.Resources>
   <ContentPage.Content>
     <StackLayout Style="{StaticResource mainStackLayoutStyle}">
-      <ListView x:Name="listView" Style="{StaticResource listViewStyle}">
+      <ListView
+        Style="{StaticResource listViewStyle}"
+        ItemsSource="{Binding MainMenuItems}"
+        behaviours:ItemTappedCommandListView.ItemTappedCommand="{Binding ItemSelectedCommand}" >
         <ListView.ItemTemplate>
           <DataTemplate>
             <ImageCell Text="{Binding Title}" ImageSource="{Binding IconSource}" TextColor="#FFFFFF" />
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
+      <StackLayout Padding="0" Spacing="0">
+        <Button
+          Text="Log out"
+          TextColor="White"
+          BackgroundColor="#1877a4"
+          BorderRadius="0"
+          BorderWidth="0"
+          Command="{Binding ClickLogoutCommand}"/>
+      </StackLayout>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

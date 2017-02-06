@@ -54,7 +54,7 @@ namespace SkiResort.XamarinApp.ViewModels
             User = _authService.User;
             ClickLoginCommand = new Command(ClickLoginCommandHandler);
 
-            MessagingCenter.Subscribe<LoginViewModel>(this, "RefreshUser", (sender) => {
+            MessagingCenter.Subscribe<AuthService>(this, "HomeRefreshUser", (sender) => {
                 User = _authService.User;
             });
         }

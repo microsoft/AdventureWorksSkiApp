@@ -115,7 +115,6 @@ namespace SkiResort.XamarinApp.ViewModels
             var success = await _authService.Login(Username, Password);
             if (success)
             {
-                MessagingCenter.Send(this, "RefreshUser");
                 await _navigationService.NavigateBack();
             }
             else

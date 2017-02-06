@@ -77,9 +77,9 @@ namespace SkiResort.XamarinApp.Services
             {
                 response = await processResponseMessage(await _httpClient.SendAsync(request));
             }
-            catch
+            catch (Exception ex)
             {
-                response = buildExceptionResponse();
+                response = buildExceptionResponse(ex);
             }
 
             return response;
@@ -98,13 +98,14 @@ namespace SkiResort.XamarinApp.Services
             };
         }
 
-        private HTTPServiceResponse buildExceptionResponse()
+        private HTTPServiceResponse buildExceptionResponse(Exception ex)
         {
             return new HTTPServiceResponse()
             {
                 IsSuccessful = false,
                 StatusCode = HttpStatusCode.ServiceUnavailable,
-                Content = null
+                Content = null,
+                Error = ex
             };
         }
     }
@@ -114,5 +115,6 @@ namespace SkiResort.XamarinApp.Services
         public bool IsSuccessful { get; set; }
         public HttpStatusCode StatusCode { get; set; }
         public string Content { get; set; }
+        public Exception Error { get; set; }
     }
 }
