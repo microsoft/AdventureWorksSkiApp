@@ -13,11 +13,17 @@ namespace SkiResort.XamarinApp.Pages
     {
         public CustomNavigationPage(Page root) : base(root)
         {
-            BarBackgroundColor = Color.FromHex("#141414");
-            BarTextColor = Color.FromHex("#FFFFFF");
-            if (root is IBarTint)
+            applyBarColorBasedOnPage(root);
+        }
+
+        private void applyBarColorBasedOnPage(Page page)
+        {
+            BarBackgroundColor = Config.DEFAULT_BAR_COLOR;
+            BarTextColor = Config.DEFAULT_BAR_TEXT_COLOR;
+            if (page is IBarTint)
             {
-                var barTint = (IBarTint)root;
+                var barTint = (IBarTint)page;
+
                 BarBackgroundColor = barTint.GetBarBackgroundColor();
                 BarTextColor = barTint.GetBarTextColor();
             }

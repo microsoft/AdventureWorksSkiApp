@@ -29,7 +29,7 @@ namespace SkiResort.XamarinApp.ViewModels
                 OnPropertyChanged("CanSave");
                 OnPropertyChanged("TotalCost");
                 OnPropertyChanged("SaveButtonBackgroundColor");
-                CheckHighDemand();
+                checkHighDemand();
             }
         }
 
@@ -334,26 +334,13 @@ namespace SkiResort.XamarinApp.ViewModels
         #endregion
 
         #region Commands
-        public ICommand ClickGoalOptionCommand { get; set; }
-        public ICommand ClickSaveCommand { get; set; }
-        #endregion
-
-        public RentalFormViewModel()
-        {
-            ClickGoalOptionCommand = new Command<string>(ClickGoalOptionCommandHandler);
-            ClickSaveCommand = new Command(ClickSaveCommandHandler);
-
-            initializeOptions();
-
-            resetValues();
-        }
-
-        void ClickGoalOptionCommandHandler(string rentalGoalName)
+        public ICommand ClickGoalOptionCommand => new Command<string>(clickGoalOptionCommandHandler);
+        private void clickGoalOptionCommandHandler(string rentalGoalName)
         {
             SelectedRentalGoal = getRentalGoalFromName(rentalGoalName);
         }
-
-        async void ClickSaveCommandHandler()
+        public ICommand ClickSaveCommand => new Command(clickSaveCommandHandler);
+        private async void clickSaveCommandHandler()
         {
             Loading = true;
             var completeStartDate = startDate;
@@ -383,17 +370,25 @@ namespace SkiResort.XamarinApp.ViewModels
             {
                 await App.RootPage.DisplayAlert("Something went wrong", "Sorry, couldn't save the rental. Please, try again later.", "OK");
             }
-            
+
             Loading = false;
         }
+        #endregion
 
-        async void CheckHighDemand()
+        public RentalFormViewModel()
+        {
+            initializeOptions();
+
+            resetValues();
+        }
+
+        private async void checkHighDemand()
         {
             var rentalService = new RentalService();
             HighDemand = await rentalService.CheckHighDemand(startDate);
         }
 
-        RentalGoal getRentalGoalFromName(string rentalGoalName) {
+        private RentalGoal getRentalGoalFromName(string rentalGoalName) {
             RentalGoal matchingRentalGoal = RentalGoal.Demo;
             switch(rentalGoalName)
             {
@@ -410,7 +405,7 @@ namespace SkiResort.XamarinApp.ViewModels
             return matchingRentalGoal;
         }
 
-        string getBackgroundForRentalGoal(RentalGoal rentalGoal) {
+        private string getBackgroundForRentalGoal(RentalGoal rentalGoal) {
             return SelectedRentalGoal == rentalGoal ? "#1A90C9" : "#323232";
         }
 

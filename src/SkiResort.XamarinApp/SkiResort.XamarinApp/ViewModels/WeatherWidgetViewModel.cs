@@ -10,6 +10,7 @@ namespace SkiResort.XamarinApp.ViewModels
 {
     class WeatherWidgetViewModel : BaseViewModel
     {
+        #region Properties
         string weather, temperature, wind, baseDepth;
         double itemsOpacity = 0.2;
         bool loading = true;
@@ -91,12 +92,14 @@ namespace SkiResort.XamarinApp.ViewModels
             }
         }
 
+        #endregion
+
         public WeatherWidgetViewModel()
         {
-            FetchWeatherSummary();
+            fetchWeatherSummary();
         }
 
-        private async void FetchWeatherSummary()
+        private async void fetchWeatherSummary()
         {
             var weatherService = new WeatherService();
             var weatherSummary = await weatherService.GetSummary();

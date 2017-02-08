@@ -26,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -79,7 +80,6 @@
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainMasterDetailPage.cs" />
     <Compile Include="Pages\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
@@ -109,6 +109,7 @@
     <Compile Include="ViewModels\LiftStatusViewModel.cs" />
     <Compile Include="ViewModels\DiningViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\RentalFormViewModel.cs" />
     <Compile Include="ViewModels\RentalListViewModel.cs" />
     <Compile Include="ViewModels\RentalViewModel.cs" />
