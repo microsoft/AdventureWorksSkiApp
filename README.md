@@ -15,8 +15,6 @@ Prerequisites
 
     - npm install powerbi-cli -g
 
--   Visual Studio updated with the latest Xamarin version.
-
 -   [Java Jdk 1.8] (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 -   **gulp and bower installed as global**
