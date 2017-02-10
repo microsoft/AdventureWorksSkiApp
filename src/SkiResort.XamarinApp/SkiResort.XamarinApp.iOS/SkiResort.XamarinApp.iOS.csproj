@@ -100,6 +100,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BaseUrl.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
@@ -305,6 +306,18 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\style.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\powerbi.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Report.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\report.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

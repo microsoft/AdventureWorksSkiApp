@@ -64,6 +64,7 @@ namespace SkiResort.XamarinApp.Services
             viewModelPageMapping.Add(typeof(RentalListViewModel), typeof(RentalListPage));
             viewModelPageMapping.Add(typeof(RentalFormViewModel), typeof(RentalFormPage));
             viewModelPageMapping.Add(typeof(DiningViewModel), typeof(DiningPage));
+            viewModelPageMapping.Add(typeof(ReportViewModel), typeof(ReportPage));
 
             viewModelPageMapping.Add(typeof(LiftDetailViewModel), typeof(LiftDetailPage));
             viewModelPageMapping.Add(typeof(DiningDetailViewModel), typeof(DiningDetailPage));
