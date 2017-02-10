@@ -128,7 +128,7 @@ if ($results) {
 	Write-Host 'Import PowerBI report'
 	$deployScript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'reports\deploy.ps1'))
 	$report = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'reports\SkiApp.pbix'))
-	& $deployScript $ResourceGroupName $deployScript $results.Outputs.powerbiname.value $results.Outputs.powerbikey.value $report
+	& $deployScript $ResourceGroupName $results.Outputs.powerbiname.value $results.Outputs.powerbikey.value $report
 
 	Write-Host "WebSite basic: $serverurl"
 	Write-Host "SQL Server VM Connection String: $($results.Outputs.defaultConnection.value)"
