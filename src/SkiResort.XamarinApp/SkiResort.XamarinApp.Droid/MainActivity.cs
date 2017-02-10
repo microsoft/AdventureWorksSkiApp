@@ -32,5 +32,6 @@ namespace SkiResort.XamarinApp.Droid
             LoadApplication(new App());
         }
     }
+
 }
 

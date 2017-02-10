@@ -64,6 +64,7 @@
     <Compile Include="Entities\Restaurant.cs" />
     <Compile Include="Entities\WeatherSummary.cs" />
     <Compile Include="Interfaces\IBarTint.cs" />
+    <Compile Include="Interfaces\IBaseUrl.cs" />
     <Compile Include="Pages\CustomNavigationPage.cs" />
     <Compile Include="Pages\DiningDetailPage.xaml.cs">
       <DependentUpon>DiningDetailPage.xaml</DependentUpon>
@@ -93,6 +94,7 @@
       <DependentUpon>RentalListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\RentalPage.cs" />
+    <Compile Include="Pages\ReportPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\GeolocationService.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="ViewModels\RentalFormViewModel.cs" />
     <Compile Include="ViewModels\RentalListViewModel.cs" />
     <Compile Include="ViewModels\RentalViewModel.cs" />
+    <Compile Include="ViewModels\ReportViewModel.cs" />
     <Compile Include="ViewModels\WeatherWidgetViewModel.cs" />
     <Compile Include="Views\BindablePickerView.cs" />
     <Compile Include="Views\DiningView.xaml.cs">

@@ -76,7 +76,8 @@ namespace SkiResort.XamarinApp.ViewModels
                 new MainMenuItem("Rental Reservation", "rental.png",typeof(RentalViewModel)),
                 new MainMenuItem("Dining", "dining.png", typeof(DiningViewModel)),
                 new MainMenuItem("Live Webcams", "webcam.png", null),
-                new MainMenuItem("Lift Tickets", "ticket.png", null)
+                new MainMenuItem("Lift Tickets", "ticket.png", null),
+                new MainMenuItem("Report", "report.png", typeof(ReportViewModel))
             };
         }
 
