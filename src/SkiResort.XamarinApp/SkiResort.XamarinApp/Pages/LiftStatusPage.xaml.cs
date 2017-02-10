@@ -20,7 +20,7 @@ namespace SkiResort.XamarinApp.Pages
             InitializeComponent();
         }
 
-        public Color GetBarBackgroundColor() => Color.FromHex("#15719E");
-        public Color GetBarTextColor() => Color.FromHex("#FFFFFF");
+        public Color GetBarBackgroundColor() => Config.BLUE_BAR_COLOR;
+        public Color GetBarTextColor() => Config.DEFAULT_BAR_TEXT_COLOR;
     }
 }

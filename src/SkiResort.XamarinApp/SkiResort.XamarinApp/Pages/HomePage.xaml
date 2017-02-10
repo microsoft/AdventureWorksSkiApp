@@ -31,8 +31,7 @@
         <Setter Property="Padding" Value="20" />
       </Style>
 
-      <Style x:Key="loginButtonStyle" TargetType="Button">
-        <Setter Property="Text" Value="Login" />
+      <Style x:Key="actionButtonStyle" TargetType="Button">
         <Setter Property="BackgroundColor" Value="#141414" />
         <Setter Property="TextColor" Value="#FFFFFF" />
       </Style>
@@ -54,7 +53,7 @@
           </StackLayout>
         </StackLayout>
         <StackLayout Style="{StaticResource stackLayoutButtonContainerStyle}" IsVisible="{Binding ShowLoginButton}">
-          <Button Style="{StaticResource loginButtonStyle}" Command="{Binding ClickLoginCommand}" />
+          <Button Text="Login" Style="{StaticResource actionButtonStyle}" Command="{Binding ClickLoginCommand}" />
         </StackLayout>
         <views:WeatherWidget />
       </StackLayout>

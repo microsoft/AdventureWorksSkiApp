@@ -26,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -63,6 +64,7 @@
     <Compile Include="Entities\Restaurant.cs" />
     <Compile Include="Entities\WeatherSummary.cs" />
     <Compile Include="Interfaces\IBarTint.cs" />
+    <Compile Include="Interfaces\IBaseUrl.cs" />
     <Compile Include="Pages\CustomNavigationPage.cs" />
     <Compile Include="Pages\DiningDetailPage.xaml.cs">
       <DependentUpon>DiningDetailPage.xaml</DependentUpon>
@@ -79,7 +81,6 @@
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainMasterDetailPage.cs" />
     <Compile Include="Pages\MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
@@ -93,6 +94,7 @@
       <DependentUpon>RentalListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\RentalPage.cs" />
+    <Compile Include="Pages\ReportPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\GeolocationService.cs" />
@@ -109,9 +111,11 @@
     <Compile Include="ViewModels\LiftStatusViewModel.cs" />
     <Compile Include="ViewModels\DiningViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="ViewModels\RentalFormViewModel.cs" />
     <Compile Include="ViewModels\RentalListViewModel.cs" />
     <Compile Include="ViewModels\RentalViewModel.cs" />
+    <Compile Include="ViewModels\ReportViewModel.cs" />
     <Compile Include="ViewModels\WeatherWidgetViewModel.cs" />
     <Compile Include="Views\BindablePickerView.cs" />
     <Compile Include="Views\DiningView.xaml.cs">

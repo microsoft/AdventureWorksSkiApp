@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace SkiResort.XamarinApp.Services
 {
@@ -49,12 +50,25 @@ namespace SkiResort.XamarinApp.Services
             {
                 AccessToken = loginResponse.AccessToken;
                 await fetchUserInfo();
+                notifyUserChanged();
                 return true;
             }
             else
             {
                 return false;
             }
+        }
+
+        private void notifyUserChanged()
+        {
+            MessagingCenter.Send(this, "UserChanged");
+        }
+
+        public void Logout()
+        {
+            User = null;
+            AccessToken = null;
+            notifyUserChanged();
         }
 
         private HttpContent buildLoginForm(string username, string password)

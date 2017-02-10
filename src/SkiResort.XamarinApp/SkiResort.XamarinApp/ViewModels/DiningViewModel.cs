@@ -13,6 +13,7 @@ namespace SkiResort.XamarinApp.ViewModels
 {
     class DiningViewModel : BaseViewModel
     {
+        #region Properties
         private ObservableCollection<Restaurant> restaurants { set; get; }
         public ObservableCollection<Restaurant> Restaurants
         {
@@ -130,12 +131,15 @@ namespace SkiResort.XamarinApp.ViewModels
             }
         }
 
-        public ICommand ItemSelectedCommand => new Command<Restaurant>(OnSelectItem);
+        #endregion
 
-        private async void OnSelectItem(Restaurant obj)
+        #region Commands
+        public ICommand ItemSelectedCommand => new Command<Restaurant>(onSelectItem);
+        private async void onSelectItem(Restaurant obj)
         {
             await NavigationService.Instance.NavigateTo(typeof(DiningDetailViewModel), obj);
         }
+        #endregion
 
         public DiningViewModel()
         {
@@ -149,10 +153,10 @@ namespace SkiResort.XamarinApp.ViewModels
                 "Family Friendly"
             };
             Restaurants = new ObservableCollection<Restaurant>();
-            FetchRestaurants();
+            fetchRestaurants();
         }
 
-        private async void FetchRestaurants()
+        private async void fetchRestaurants()
         {
             Loading = true;
 

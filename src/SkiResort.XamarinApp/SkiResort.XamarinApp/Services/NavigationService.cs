@@ -27,17 +27,16 @@ namespace SkiResort.XamarinApp.Services
 
         private Dictionary<Type, Type> viewModelPageMapping;
         private Type homeViewModel;
-        private MainMenu mainMenu;
 
         public NavigationService()
         {
             registerViewModels();
-            mainMenu = new MainMenu();
             MasterDetailPage = new MasterDetailPage();
-            MasterDetailPage.Master = mainMenu;
+            MasterDetailPage.Master = CreatePage(typeof(MainMenuViewModel));
             MasterDetailPage.Detail = new CustomNavigationPage(CreatePage(homeViewModel));
 
-            mainMenu.ListView.ItemSelected += OnMenuItemSelected;
+            MessagingCenter.Subscribe<MainMenuViewModel, MainMenuViewModel.MainMenuItem>(this, "MainMenuItemSelected", onMenuItemSelected);
+            MessagingCenter.Subscribe<MainMenuViewModel>(this, "LogoutButtonClicked", onLogoutButtonClicked);
         }
 
         public async Task NavigateTo(Type viewModelType, params object[] parameters)
@@ -65,9 +64,12 @@ namespace SkiResort.XamarinApp.Services
             viewModelPageMapping.Add(typeof(RentalListViewModel), typeof(RentalListPage));
             viewModelPageMapping.Add(typeof(RentalFormViewModel), typeof(RentalFormPage));
             viewModelPageMapping.Add(typeof(DiningViewModel), typeof(DiningPage));
+            viewModelPageMapping.Add(typeof(ReportViewModel), typeof(ReportPage));
 
             viewModelPageMapping.Add(typeof(LiftDetailViewModel), typeof(LiftDetailPage));
             viewModelPageMapping.Add(typeof(DiningDetailViewModel), typeof(DiningDetailPage));
+
+            viewModelPageMapping.Add(typeof(MainMenuViewModel), typeof(MainMenu));
         }
 
         public Page CreatePage(Type viewModelType, params object[] parameters)
@@ -87,19 +89,17 @@ namespace SkiResort.XamarinApp.Services
             return page;
         }
 
-        void OnMenuItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void onMenuItemSelected(MainMenuViewModel sender, MainMenuViewModel.MainMenuItem item)
         {
-            var item = e.SelectedItem as MainMenuItem;
             if (item != null && item.TargetType != null)
             {
                 MasterDetailPage.Detail = new CustomNavigationPage(CreatePage(item.TargetType));
             }
-            CloseMenu();
+            MasterDetailPage.IsPresented = false;
         }
 
-        void CloseMenu()
+        private void onLogoutButtonClicked(MainMenuViewModel sender)
         {
-            (mainMenu).ListView.SelectedItem = null;
             MasterDetailPage.IsPresented = false;
         }
     }

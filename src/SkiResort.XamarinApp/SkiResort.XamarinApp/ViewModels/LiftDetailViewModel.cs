@@ -9,6 +9,7 @@ namespace SkiResort.XamarinApp.ViewModels
 {
     class LiftDetailViewModel : BaseViewModel
     {
+        #region Properties
         private Lift lift { get; set; }
         public Lift Lift
         {
@@ -25,6 +26,7 @@ namespace SkiResort.XamarinApp.ViewModels
                 }
             }
         }
+        #endregion
 
         public LiftDetailViewModel(Lift lift)
         {
