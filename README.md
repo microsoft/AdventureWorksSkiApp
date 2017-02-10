@@ -3,13 +3,21 @@ Prerequisites
 
 -   [SQL Server 2016 Developer Edition](http://aka.ms/skiapp)
 
--   [Visual Studio 2015 Update 2](https://www.visualstudio.com/products/vs-2015-product-editions)
+-   [Visual Studio 2015 Update 3](https://www.visualstudio.com/products/vs-2015-product-editions)
 
 -   [Microsoft Azure SDK](https://www.microsoft.com/web/handlers/webpi.ashx/getinstaller/VWDOrVs2015AzurePack.appids) for Visual Studio 2015
 
 -   [Microsoft Azure subscription](https://azure.microsoft.com/en-us/free/)
 
 -   [.NET Core SDK Visual Studio Tools](https://go.microsoft.com/fwlink/?LinkId=798481)
+
+-   Power BI command line tool 
+
+    - npm install powerbi-cli -g
+
+-   Visual Studio updated with the latest Xamarin version.
+
+-   [Java Jdk 1.8] (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 -   **gulp and bower installed as global**
 
