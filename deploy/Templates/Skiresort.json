@@ -781,6 +781,9 @@
         "displayName": "azuremlplan"
       },
       "location": "[variables('mlLocation')]",
+      "dependsOn": [
+        "[concat('Microsoft.StreamAnalytics/streamingjobs/', variables('streamAnalytics_JobName'))]"
+      ],
       "sku": {
         "name": "[parameters('billingPlanTier')]",
         "tier": "[variables('planSkuTier')]",
@@ -1335,6 +1338,9 @@
       "apiVersion": "2016-01-29",
       "name": "[variables('powerbiname')]",
       "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.StreamAnalytics/streamingjobs/', variables('streamAnalytics_JobName'))]"
+      ],
       "tags": {
         "displayName": "PowerBI"
       },
