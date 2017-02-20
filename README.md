@@ -36,7 +36,9 @@ Most every day apps, from consumer to enterprise can deliver greater customer or
 AdventureWorks SkiResort
 ========================
 
-The AdventureWorks Ski App provides a sample application that can be used to demonstrate the value of building in intelligence into an existing application. This apache cordova based intelligent mobile webapp was first demoed at //build 2016. It also contains a Xamarin Forms client.
+The AdventureWorks Ski App provides a sample application that can be used to demonstrate the value of building in intelligence into an existing application. This apache cordova based intelligent mobile webapp was first demoed at //build 2016. 
+
+It also contains a Xamarin Forms client that works on Android and iOS mobile devices.
 
 **Basic App**
 
@@ -45,6 +47,8 @@ The AdventureWorks Ski App provides a sample application that can be used to dem
 **Intelligent App**
 
 > <img src="./media/image3.png" width="226" height="302" />
+
+> <img src="docs\hols\img\image4.jpg"  />
 
 Microsoft Azure Services
 ==================================
