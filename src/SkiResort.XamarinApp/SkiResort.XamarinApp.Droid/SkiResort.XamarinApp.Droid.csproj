@@ -193,9 +193,6 @@
     <AndroidAsset Include="Assets\Report.html" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\powerbi.min.js" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="Assets\style.css" />
   </ItemGroup>
   <ItemGroup>

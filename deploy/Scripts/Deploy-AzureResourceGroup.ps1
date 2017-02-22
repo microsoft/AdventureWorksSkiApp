@@ -125,17 +125,6 @@ if ($results) {
 	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
     & $replacescript -Pattern '__SERVERURI__' -Replacement $serverurl -Overwrite -Path $configPath
 
-	Write-Host 'Import PowerBI report'
-
-	$deployScript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'reports\deploy.ps1'))
-	$report = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'reports\SkiApp.pbix'))
-	& $deployScript $ResourceGroupName $results.Outputs.powerbiname.value $results.Outputs.powerbikey.value $report
-
-	$configRelativePath = "..\..\..\..\..\..\reports\.powerbirc"
-	$configPath = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, $configRelativePath))
-    & $replacescript -Pattern '__POWERBINAME__' -Replacement $results.Outputs.powerbiname.value -Overwrite -Path $configPath
-	& $replacescript -Pattern '__POWERBIKEY__' -Replacement $results.Outputs.powerbikey.value -Overwrite -Path $configPath
-
 	Write-Host "WebSite basic: $serverurl"
 	Write-Host "SQL Server VM Connection String: $($results.Outputs.defaultConnection.value)"
 }

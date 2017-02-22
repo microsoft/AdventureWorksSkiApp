@@ -13,9 +13,6 @@ Prerequisites
 
 -   [Java Jdk 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
--   **Power BI command line tool**
-    - npm install powerbi-cli -g
-
 -   **gulp and bower installed as global**
     -   npm install bower -g
     -   npm install gulp -g
@@ -68,6 +65,7 @@ These Microsoft Azure services are used:
 - Azure Machine Learning.
 - Application Insights.
 
+
 How to sign up for Microsoft Azure
 ==================================
 
@@ -94,6 +92,8 @@ Deployment & Setup
 1.  <a href="docs/setup/08.DataGeneration.md">Data Generation</a>
 
 1.  <a href="docs/setup/09.Xamarin.md">Xamarin</a>
+
+1.  <a href="docs/setup/10.PowerBI.md">Power BI</a>
 
 Demonstration 
 ========================

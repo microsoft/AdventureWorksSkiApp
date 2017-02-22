@@ -44,8 +44,6 @@
     <Content Include="Scripts\default-publish.ps1" />
     <Content Include="WebApp\SkiResortAdvanced.zip" />
     <Content Include="Scripts\DocumentDB.ps1" />
-    <Content Include="Scripts\reports\deploy.ps1" />
-    <Content Include="Scripts\reports\SkiApp.pbix" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>

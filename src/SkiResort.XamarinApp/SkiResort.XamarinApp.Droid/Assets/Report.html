@@ -6,39 +6,6 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div id="reportContainer"></div>
-        <script type="text/javascript" src="powerbi.min.js"></script>
-        <script type="text/javascript">
-
-            function getUrlParams() {
-                var result = {};
-                var rawParams = window.location.search.replace('?', '').split('&');
-                for(var i = 0; i < rawParams.length; i++) {
-                    var param = rawParams[i].split('=');
-                    result[param[0]] = param[1];
-                }
-                return result;
-            }
-
-            var urlParams = getUrlParams();
-
-            var config = {
-                type: 'report',
-                accessToken: urlParams.accessToken,
-                embedUrl: 'https://embedded.powerbi.com/appTokenReportEmbed',
-                id: urlParams.reportId,
-                settings: {
-                    filterPaneEnabled: true,
-                    navContentPaneEnabled: true
-                }
-            };
-
-            // Grab the reference to the div HTML element that will host the report.
-            var reportContainer = document.getElementById("reportContainer");
-
-            // Embed the report and display it within the div container.
-            var report = powerbi.embed(reportContainer, config);
-        </script>
-
+        <iframe src="_YOUR_REPORT_URI" frameborder="0" allowFullScreen="true"></iframe>
     </body>
 </html>
