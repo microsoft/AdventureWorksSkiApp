@@ -311,9 +311,6 @@
     <BundleResource Include="Resources\style.css" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\powerbi.min.js" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\Report.html" />
   </ItemGroup>
   <ItemGroup>

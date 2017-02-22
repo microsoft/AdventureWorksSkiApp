@@ -4,13 +4,13 @@
     overflow: hidden;
 }
 
-iframe {
+body {
     width: 100%;
     height: 100%;
-    border: none;
 }
 
-#reportContainer {
+iframe {
+    border: none;
     position: absolute;
     top: 0;
     left: 0;

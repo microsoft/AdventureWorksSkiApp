@@ -185,8 +185,7 @@
     "mlLocation": "eastus2",
     "cognetivename": "[concat('cognetive', uniqueString(resourceGroup().id))]",
     "cognetivelocation": "westus",
-    "cognetiveapiType": "Recommendations",
-    "powerbiname": "[concat('powerbi', uniqueString(resourceGroup().id))]"
+    "cognetiveapiType": "Recommendations"
 
   },
   "resources": [
@@ -1333,22 +1332,6 @@
         "name": "[parameters('cognetivesku')]"
       },
       "properties": {}
-    },
-    {
-      "apiVersion": "2016-01-29",
-      "name": "[variables('powerbiname')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.StreamAnalytics/streamingjobs/', variables('streamAnalytics_JobName'))]"
-      ],
-      "tags": {
-        "displayName": "PowerBI"
-      },
-      "sku": {
-        "name": "S1",
-        "tier": "Standard"
-      },
-      "type": "Microsoft.PowerBI/workspaceCollections"
     }
   ],
   "outputs": {
@@ -1435,14 +1418,6 @@
     "recommendationsKey": {
       "type": "string",
       "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts/', variables('cognetivename')), '2016-02-01-preview').key1]"
-    },
-    "powerbikey": {
-      "type": "string",
-      "value": "[listKeys(resourceId('Microsoft.PowerBI/workspaceCollections/', variables('powerbiname')), '2016-01-29').key1]"
-    },
-    "powerbiname": {
-      "type": "string",
-      "value": "[variables('powerbiname')]"
     }
   }
 }

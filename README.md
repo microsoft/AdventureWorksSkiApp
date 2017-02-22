@@ -68,6 +68,7 @@ These Microsoft Azure services are used:
 - Azure Machine Learning.
 - Application Insights.
 
+
 How to sign up for Microsoft Azure
 ==================================
 
@@ -94,6 +95,8 @@ Deployment & Setup
 1.  <a href="docs/setup/08.DataGeneration.md">Data Generation</a>
 
 1.  <a href="docs/setup/09.Xamarin.md">Xamarin</a>
+
+1.  <a href="docs/setup/10.PowerBI.md">Power BI</a>
 
 Demonstration 
 ========================
