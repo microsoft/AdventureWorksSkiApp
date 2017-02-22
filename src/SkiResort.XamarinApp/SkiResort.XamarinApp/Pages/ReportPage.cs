@@ -37,15 +37,10 @@ namespace SkiResort.XamarinApp.Pages
             var htmlSource = new HtmlWebViewSource();
             htmlSource.BaseUrl = DependencyService.Get<IBaseUrl>().Get();
 
-            var reportUrl = string.Format(
-                "./Report.html?accessToken={0}&reportId={1}",
-                Config.POWERBI_ACCESS_TOKEN,
-                Config.POWERBI_REPORT_ID);
-
             htmlSource.Html = 
                 string.Format(@"<html><head>
-                  <script type=""text/javascript"">window.location.href = '{0}';</script>
-                  </head><body></body></html>", reportUrl);
+                  <script type=""text/javascript"">window.location.href = './Report.html';</script>
+                  </head><body></body></html>");
 
             return htmlSource;
         }
