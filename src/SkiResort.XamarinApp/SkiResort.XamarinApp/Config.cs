@@ -4,7 +4,7 @@ namespace SkiResort.XamarinApp
 {
     public static class Config
     {
-        public const string API_URL = "http://websiteadv6jz37bruvu5u6.azurewebsites.net";
+        public const string API_URL = "__SERVERURI__";
         public const double USER_DEFAULT_POSITION_LATITUDE = 40.7201013;
         public const double USER_DEFAULT_POSITION_LONGITUDE = -74.0101931;
 
