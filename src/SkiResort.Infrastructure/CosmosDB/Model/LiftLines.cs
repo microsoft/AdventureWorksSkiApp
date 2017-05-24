@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SkiResort.Infrastructure.DocumentDB.Model
+namespace SkiResort.Infrastructure.CosmosDB.Model
 {
     public class LiftLines
     {

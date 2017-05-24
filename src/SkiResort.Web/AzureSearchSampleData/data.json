@@ -118,7 +118,7 @@
           }
         }
       },
-      "Name": "DocumentDB Bar",
+      "Name": "CosmosDB Bar",
       "Phone": "5555-5555",
       "PriceLevel": 2,
       "Rating": 3,
@@ -150,7 +150,7 @@
           }
         }
       },
-      "Name": "DocumentDB Grill",
+      "Name": "CosmosDB Grill",
       "Phone": "5555-5555",
       "PriceLevel": 1,
       "Rating": 4,
@@ -182,7 +182,7 @@
           }
         }
       },
-      "Name": "DocumentDB Caf?",
+      "Name": "CosmosDB Caf?",
       "Phone": "5555-5555",
       "PriceLevel": 2,
       "Rating": 4,
@@ -214,7 +214,7 @@
           }
         }
       },
-      "Name": "DocumentDB Snack Shack",
+      "Name": "CosmosDB Snack Shack",
       "Phone": "5555-5555",
       "PriceLevel": 2,
       "Rating": 4,
@@ -246,7 +246,7 @@
           }
         }
       },
-      "Name": "DocumentDB BrewPub",
+      "Name": "CosmosDB BrewPub",
       "Phone": "5555-5555",
       "PriceLevel": 2,
       "Rating": 4,
@@ -278,7 +278,7 @@
           }
         }
       },
-      "Name": "DocumentDB Restaurant",
+      "Name": "CosmosDB Restaurant",
       "Phone": "5555-5555",
       "PriceLevel": 2,
       "Rating": 3,
@@ -310,7 +310,7 @@
           }
         }
       },
-      "Name": "DocumentDB Tavern",
+      "Name": "CosmosDB Tavern",
       "Phone": "5555-5555",
       "PriceLevel": 2,
       "Rating": 4,

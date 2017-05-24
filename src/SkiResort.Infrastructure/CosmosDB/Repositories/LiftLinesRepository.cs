@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using AdventureWorks.SkiResort.Infrastructure.DocumentDB.Helpers;
+using AdventureWorks.SkiResort.Infrastructure.CosmosDB.Helpers;
 using Newtonsoft.Json;
-using SkiResort.Infrastructure.DocumentDB.Model;
+using SkiResort.Infrastructure.CosmosDB.Model;
 
-namespace AdventureWorks.SkiResort.Infrastructure.DocumentDB.Repositories
+namespace AdventureWorks.SkiResort.Infrastructure.CosmosDB.Repositories
 {
     public class LiftLinesRepository
-        : DocumentDBRequest
+        : CosmosDBRequest
     {
 
         public LiftLinesRepository(IConfigurationRoot configuration)

@@ -1,7 +1,7 @@
 ﻿using AdventureWorks.SkiResort.Infrastructure.AzureSearch;
 using AdventureWorks.SkiResort.Infrastructure.Infraestructure;
 using AdventureWorks.SkiResort.Infrastructure.Repositories;
-using AdventureWorks.SkiResort.Infrastructure.DocumentDB.Repositories;
+using AdventureWorks.SkiResort.Infrastructure.CosmosDB.Repositories;
 using AdventureWorks.SkiResort.Web.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

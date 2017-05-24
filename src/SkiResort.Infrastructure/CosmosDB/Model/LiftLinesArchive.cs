@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SkiResort.Infrastructure.DocumentDB.Model
+namespace SkiResort.Infrastructure.CosmosDB.Model
 {
     public class LiftLinesArchive
     {
