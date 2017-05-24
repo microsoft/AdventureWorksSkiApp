@@ -266,7 +266,7 @@ namespace AdventureWorks.SkiResort.Infrastructure.Infraestructure
         async Task CreateAdditionalRestaurant(SkiResortContext context)
         {
             string[] azurewords = {"SQL Server", "App Service", "Azure", "Virtual Machine", "Logic App", "Mobile App",
-                "API App", "DocumentDB", "Redis", "Data Lake", "ServiceBus", "Storage", "Files", "Batch", "HPC"};
+                "API App", "CosmosDB", "Redis", "Data Lake", "ServiceBus", "Storage", "Files", "Batch", "HPC"};
 
             string[] types = { "Bar", "Grill", "Café", "Snack Shack", "BrewPub", "Restaurant" };
 

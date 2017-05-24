@@ -51,10 +51,10 @@ if ($results) {
 	$storagescript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'ConfigureStorage.ps1'))
 	& $storagescript $ResourceGroupName $StorageName
 
-	Write-Host 'Create documentDB collections'
-	$documentdbscript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'DocumentDB.ps1'))
-	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlines" "liftlines"
-	& $documentdbscript $results.Outputs.documentDBAccount.value $results.Outputs.documentDBKey.value "skiresortliftlinesarchive" "liftlinesarchive"
+	Write-Host 'Create CosmosDB collections'
+	$CosmosDBscript = [System.IO.Path]::GetFullPath([System.IO.Path]::Combine($PSScriptRoot, 'CosmosDB.ps1'))
+	& $CosmosDBscript $results.Outputs.CosmosDBAccount.value $results.Outputs.CosmosDBKey.value "skiresortliftlines" "liftlines"
+	& $CosmosDBscript $results.Outputs.CosmosDBAccount.value $results.Outputs.CosmosDBKey.value "skiresortliftlinesarchive" "liftlinesarchive"
 
 	Write-Host 'Deploy ASP.NET app (Basic)'
 	$webAppName = $results.Outputs.webSiteName.value
@@ -90,8 +90,8 @@ if ($results) {
 	& $replacescript -Pattern '__YOUR_INSTRUMENTATION_KEY__' -Replacement $results.Outputs.applicationInsightsKey.value -Overwrite -Path $configPath
 	& $replacescript -Pattern '__SEARCHSERVICENAME__' -Replacement $results.Outputs.searchServiceName.value  -Overwrite -Path $configPath
 	& $replacescript -Pattern '__SEARCHKEY__' -Replacement $results.Outputs.searchServiceKey.value -Overwrite -Path $configPath
-	& $replacescript -Pattern '__DOCUMENTDBENDPOINT__' -Replacement $results.Outputs.documentDBEndpoint.value -Overwrite -Path $configPath
-	& $replacescript -Pattern '__DOCUMENTDBKEY__' -Replacement $results.Outputs.documentDBKey.value -Overwrite -Path $configPath
+	& $replacescript -Pattern '__COSMOSDBENDPOINT__' -Replacement $results.Outputs.CosmosDBEndpoint.value -Overwrite -Path $configPath
+	& $replacescript -Pattern '__COSMOSDBKEY__' -Replacement $results.Outputs.CosmosDBKey.value -Overwrite -Path $configPath
 
 	Write-Host 'Configure Data Generation apps'
 

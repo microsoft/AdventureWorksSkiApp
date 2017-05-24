@@ -42,6 +42,7 @@
   "buildOptions": {
     "emitEntryPoint": true,
     "preserveCompilationContext": true,
+    "nowarn": [ "CS0618" ],
     "warningsAsErrors": true
   },
 

@@ -58,7 +58,7 @@ These Microsoft Azure services are used:
 - SQL Database.
 - Stream Analytics.
 - Event Hub.
-- DocumentDB.
+- Cosmos DB.
 - Azure Storage.
 - Search Service.
 - Cognitive Services.

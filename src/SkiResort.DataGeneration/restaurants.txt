@@ -54,13 +54,13 @@
 54,API App BrewPub,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=1,Rating=4,TakeAway=False
 55,API App Restaurant,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=1,Rating=5,TakeAway=False
 56,API App Tavern,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=3,Rating=3,TakeAway=False
-57,DocumentDB Bar,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=2,PriceLevel=2,Rating=5,TakeAway=False
-58,DocumentDB Grill,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=1,Rating=4,TakeAway=False
-59,DocumentDB Café,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=2,Rating=5,TakeAway=False
-60,DocumentDB Snack Shack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=3,PriceLevel=2,Rating=5,TakeAway=False
-61,DocumentDB BrewPub,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=2,Rating=4,TakeAway=False
-62,DocumentDB Restaurant,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=2,PriceLevel=3,Rating=4,TakeAway=False
-63,DocumentDB Tavern,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=1,Rating=5,TakeAway=False
+57,CosmosDB Bar,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=2,PriceLevel=2,Rating=5,TakeAway=False
+58,CosmosDB Grill,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=1,Rating=4,TakeAway=False
+59,CosmosDB Café,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=2,Rating=5,TakeAway=False
+60,CosmosDB Snack Shack,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=3,PriceLevel=2,Rating=5,TakeAway=False
+61,CosmosDB BrewPub,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=2,Rating=4,TakeAway=False
+62,CosmosDB Restaurant,,,FamilyFriendly=True,FoodType=2,LevelOfNoise=2,PriceLevel=3,Rating=4,TakeAway=False
+63,CosmosDB Tavern,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=2,PriceLevel=1,Rating=5,TakeAway=False
 64,Redis Bar,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=3,Rating=3,TakeAway=False
 65,Redis Grill,,,FamilyFriendly=False,FoodType=2,LevelOfNoise=3,PriceLevel=2,Rating=5,TakeAway=False
 66,Redis Café,,,FamilyFriendly=True,FoodType=1,LevelOfNoise=1,PriceLevel=1,Rating=3,TakeAway=False

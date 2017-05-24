@@ -7,8 +7,8 @@ using AdventureWorks.SkiResort.Infrastructure.Model;
 using AdventureWorks.SkiResort.Infrastructure.Model.Enums;
 using AdventureWorks.SkiResort.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using AdventureWorks.SkiResort.Infrastructure.DocumentDB.Repositories;
-using SkiResort.Infrastructure.DocumentDB.Model;
+using AdventureWorks.SkiResort.Infrastructure.CosmosDB.Repositories;
+using SkiResort.Infrastructure.CosmosDB.Model;
 
 namespace AdventureWorks.SkiResort.API.Controllers
 {

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Encodings.Web;
 
-namespace AdventureWorks.SkiResort.Infrastructure.DocumentDB.Helpers
+namespace AdventureWorks.SkiResort.Infrastructure.CosmosDB.Helpers
 {
     public static class DocumentAuthorization
     {
